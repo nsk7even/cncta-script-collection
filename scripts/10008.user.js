@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name        Maelstrom ADDON Basescanner
+// @name        Maelstrom ADDON Basescanner Basic
 // @namespace   http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @description Maelstrom ADDON Basescanner
 // @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @version     1.8.5
+// @version     1.9.0.B
 // @author      BlinDManX
 // @grant       none
 // @copyright   2012+, Claus Neumann
@@ -11,7 +11,7 @@
 // ==/UserScript==
 (function () {
 	var MaelstromTools_Basescanner = function () {
-		window.__msbs_version = "1.8.5";
+		window.__msbs_version = "1.9.0 Basic";
 		function createMaelstromTools_Basescanner() {
 
 			qx.Class.define("Addons.BaseScannerGUI", {
@@ -36,7 +36,7 @@
 						this.setDecorator(null);
 						this.setPadding(5);
 						this.setLayout(new qx.ui.layout.VBox(3));
-						this.stats.src = 'http://goo.gl/DrJ2x'; //1.5
+
 
 						this.FI();
 						this.FH();
@@ -51,7 +51,7 @@
 						this.add(this.ZN);
 
 						this.add(this.ZP);
-						this.ZL.setData(this.ZE);							
+						this.ZL.setData(this.ZE);
 
 					} catch (e) {
 						console.debug("Addons.BaseScannerGUI.construct: ", e);
@@ -59,7 +59,7 @@
 				},
 				members : {
 					// pictures
-					stats : document.createElement('img'),
+
 					T : null,
 					ZA : 0,
 					ZB : null,
@@ -88,7 +88,7 @@
 					ZS : {},
 					YZ : null,
 					YY : null,
-					
+
 					openWindow : function (title) {
 						try {
 							this.setCaption(title);
@@ -97,7 +97,7 @@
 							} else {
 								MT_Cache.updateCityCache();
 								MT_Cache = window.MaelstromTools.Cache.getInstance();
-								var cname;								
+								var cname;
 								this.ZC.removeAll();
 								for (cname in MT_Cache.Cities) {
 									var item = new qx.ui.form.ListItem(cname, null, MT_Cache.Cities[cname].Object);
@@ -105,7 +105,7 @@
 									if (Addons.LocalStorage.getserver("Basescanner_LastCityID") == MT_Cache.Cities[cname].Object.get_Id()) {
 										this.ZC.setSelection([item]);
 									}
-								}							
+								}
 								this.open();
 								this.moveTo(100, 100);
 							}
@@ -173,18 +173,18 @@
 								}));
 							tcm.setDataCellRenderer(19, new qx.ui.table.cellrenderer.Boolean());
 
-							
+
 							if (PerforceChangelist >= 436669) { // 15.3 patch
 								var eventType = "cellDbltap";
 							} else { //old
 								var eventType = "cellDblclick";
 							}
-				
+
 							this.ZN.addListener(eventType, function (e) {
 								Addons.BaseScannerGUI.getInstance().FB(e);
 							}, this);
 
-							
+
 							tcm.addListener("widthChanged", function (e) {
 								//console.log(e, e.getData());
 								var col = e.getData().col;
@@ -289,7 +289,7 @@
 							this.ZC.setMargin(5);
 							MT_Cache.updateCityCache();
 							MT_Cache = window.MaelstromTools.Cache.getInstance();
-							var cname;							
+							var cname;
 							for (cname in MT_Cache.Cities) {
 								var item = new qx.ui.form.ListItem(cname, null, MT_Cache.Cities[cname].Object);
 								this.ZC.add(item);
@@ -297,7 +297,7 @@
 									this.ZC.setSelection([item]);
 								}
 							}
-							this.ZC.addListener("changeSelection", function (e) {								
+							this.ZC.addListener("changeSelection", function (e) {
 								this.FP(0, 1, 200);
 								this.ZH = false;
 								this.ZG.setLabel(this.T.get("Scan"));
@@ -404,7 +404,7 @@
 							}, this);
 							oOptions.add(this.ZG);
 
-							var border = new qx.ui.decoration.Single(2, "solid", "blue");
+							var border = new qx.ui.decoration.Decorator(2, "solid", "blue");
 							this.ZV = new qx.ui.container.Composite(new qx.ui.layout.Basic()).set({
 									decorator : border,
 									backgroundColor : "red",
@@ -450,6 +450,8 @@
 							this.ZJ.setWidth(150);
 							this.ZJ.setHeight(25);
 							this.ZJ.setMargin(5);
+							var item = new qx.ui.form.ListItem(this.T.get("All Layouts"), null, 0);
+							this.ZJ.add(item);
 							var item = new qx.ui.form.ListItem("7 " + this.T.get(MaelstromTools.Statics.Tiberium) + " 5 " + this.T.get(MaelstromTools.Statics.Crystal), null, 7);
 							this.ZJ.add(item);
 							item = new qx.ui.form.ListItem("6 " + this.T.get(MaelstromTools.Statics.Tiberium) + " 6 " + this.T.get(MaelstromTools.Statics.Crystal), null, 6);
@@ -1115,9 +1117,9 @@
 								if (selectedtype != rowDataLine[10]) {
 									continue;
 								}
-							} else {
-								continue;
-							}
+							}// else {
+							//	continue;
+							//}
 
 							posData = rowDataLine[3];
 							if (posData != null && posData.split(':').length == 2) {
@@ -1151,7 +1153,7 @@
 								st = st + "</tr>";
 							}
 							st = st + "</table>";
-							console.log("setWidgetLabels ", st);
+							//console.log("setWidgetLabels ", st);
 							var l = new qx.ui.basic.Label().set({
 									backgroundColor : "#303030",
 									value : st,
@@ -1271,7 +1273,7 @@
 					}
 				}
 			});
-			
+
 			if(typeof Addons.Language === 'undefined'){
 				qx.Class.define("Addons.Language", {
 					type : "singleton",
@@ -1281,11 +1283,11 @@
 						debug : false,
 						addtranslateobj : function (o) {
 							if ( o.hasOwnProperty("main") ){
-								this.d[o.main.toString()] = o;								
+								this.d[o.main.toString()] = o;
 								if(this.debug){
 									console.log("Translate Added ", o.main.toString() );
 								}
-								delete o.main;								
+								delete o.main;
 							} else {
 								console.debug("Addons.Language.addtranslateobj main not define");
 							}
@@ -1306,7 +1308,7 @@
 					}
 				});
 			}
-			
+
 			qx.Class.define("qx.ui.table.cellrenderer.Replace", {
 				extend : qx.ui.table.cellrenderer.Default,
 
@@ -1357,10 +1359,10 @@
 					}
 				}
 			});
-			
-			
+
+
 			console.info("Maelstrom_Basescanner initalisiert");
-			
+
 			var T = Addons.Language.getInstance();
 			T.debug = false;
 			T.addtranslateobj( {main:"Point", de: "Position", pt: "Position", fr: "Position"} );
@@ -1370,18 +1372,18 @@
 			T.addtranslateobj( {main:"Player", de: "Spieler", pt: "Jogador", fr: "Joueur"} );
 			T.addtranslateobj( {main:"Bases", de: "Bases", pt: "Bases", fr: "Bases"} );
 			T.addtranslateobj( {main:"Camp,Outpost", de: "Lager,Vorposten", pt: "Camp,posto avançado", fr: "Camp,avant-poste"} );
-			T.addtranslateobj( {main:"Camp", de: "Lager", pt: "Camp", fr: "Camp"} );						
+			T.addtranslateobj( {main:"Camp", de: "Lager", pt: "Camp", fr: "Camp"} );
 			T.addtranslateobj( {main:"Outpost", de: "Vorposten", pt: "posto avançado", fr: "avant-poste"} );
 			T.addtranslateobj( {main:"BaseScanner Layout", de: "BaseScanner Layout", pt: "Layout da Base de Dados de Scanner", fr: "Mise scanner de base"} );
-			T.addtranslateobj( {main:"Show Layouts", de: "Layouts anzeigen", pt: "Mostrar Layouts", fr: "Voir Layouts"} );						
+			T.addtranslateobj( {main:"Show Layouts", de: "Layouts anzeigen", pt: "Mostrar Layouts", fr: "Voir Layouts"} );
 			T.addtranslateobj( {main:"Building state", de: "Gebäudezustand", pt: "construção do Estado", fr: "construction de l'État"} );
 			T.addtranslateobj( {main:"Defense state", de: "Verteidigungszustand", pt: "de Defesa do Estado", fr: "défense de l'Etat"} );
 			T.addtranslateobj( {main:"CP", de: "KP", pt: "CP", fr: "CP"} );
-			T.addtranslateobj( {main:"CP Limit", de: "KP begrenzen", pt: "CP limitar", fr: "CP limiter"} );						
+			T.addtranslateobj( {main:"CP Limit", de: "KP begrenzen", pt: "CP limitar", fr: "CP limiter"} );
 			T.addtranslateobj( {main:"min Level", de: "min. Level", pt: "nível mínimo", fr: "niveau minimum"} );
 			T.addtranslateobj( {main:"clear Cache", de: "Cache leeren", pt: "limpar cache", fr: "vider le cache"} );
 			T.addtranslateobj( {main:"Only center on World", de: "Nur auf Welt zentrieren", pt: "Único centro no Mundial", fr: "Seul centre sur World"} );
-			T.addtranslateobj( {main:"base set up at", de: "Basis errichtbar", pt: "base de configurar a", fr: "mis en place à la base"} );	
+			T.addtranslateobj( {main:"base set up at", de: "Basis errichtbar", pt: "base de configurar a", fr: "mis en place à la base"} );
 			T.addtranslateobj( {main:"Infantry", de: "Infanterie", pt: "Infantaria", fr: "Infanterie"} );
 			T.addtranslateobj( {main:"Vehicle", de: "Fahrzeuge", pt: "Veículos", fr: "Vehicule"} );
 			T.addtranslateobj( {main:"Aircraft", de: "Flugzeuge", pt: "Aeronaves", fr: "Aviation"} );
@@ -1390,11 +1392,12 @@
 			T.addtranslateobj( {main:"Power", de: "Strom", pt: "Potência", fr: "Energie"} );
 			T.addtranslateobj( {main:"Dollar", de: "Credits", pt: "Créditos", fr: "Crédit"} );
 			T.addtranslateobj( {main:"Research", de: "Forschung", pt: "Investigação", fr: "Recherche"} );
+			T.addtranslateobj( {main:"All Layouts", de: "All Layouts", pt: "All Layouts", fr: "All Layouts"} );
 			T.addtranslateobj( {main:"-----", de: "--", pt: "--", fr: "--"} );
-			
 
-			
-			
+
+
+
 			var MT_Lang = null;
 			var MT_Cache = null;
 			var MT_Base = null;
@@ -1414,16 +1417,16 @@
 			}, this);
 			Addons.BaseScannerGUI.getInstance().addListener("close", Addons.BaseScannerGUI.getInstance().FN, Addons.BaseScannerGUI.getInstance());
 			//this.addListener("resize", function(){ }, this );
-			
+
 			MT_Base.addToMainMenu("BaseScanner", openBaseScannerOverview);
-			
+
 			if(typeof Addons.AddonMainMenu !== 'undefined'){
 				var addonmenu = Addons.AddonMainMenu.getInstance();
 				addonmenu.AddMainMenu("Basescanner", function () {
 					Addons.BaseScannerGUI.getInstance().openWindow(T.get("BaseScanner Overview") + " version " + window.__msbs_version);
 				},"ALT+B");
 			}
-			
+
 		}
 
 		function getResourcesPart(cityEntities) {

@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name       C&C Tiberium Alliances Info Sticker (SUPERCompact)
 // @namespace  TAInfoSticker
-// @version    1.11.10
-// @description  Based on Maelstrom Dev Tools. Repair Time label, Resource labels, fixed SUPER compact + MCV.
+// @version    1.11.10+
+// @description  Based on Maelstrom Dev Tools. Repair Time label, Resource labels, fixed SUPER compact + MCV. [+7even: fixed script errors]
 // @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @author unicode *edited by Allwar* *edited by Netquik*
 // ==/UserScript==
@@ -163,7 +163,7 @@
                       if (e.isDisposed()) this.toFlipH.splice(i, 1);
                        else {
                         dele = e.getDecoratorElement().getDomElement();
-						
+
                         if (dele != null) {
                           dele.style['-moz-transform'] = 'scaleX(-1)';
                           dele.style['-o-transform'] = 'scaleX(-1)';
@@ -234,7 +234,7 @@
                 if (!this.locked) {
                   this.infoSticker.show();
                   this.stickerBackground.add(this.mcvPopup);
-                } 
+                }
                 else this.infoSticker.hide();
                 this.lockButton.setIcon(this.locked ? 'FactionUI/icons/icn_thread_locked_active.png' : 'FactionUI/icons/icn_thread_locked_inactive.png');
                 this.updateLockButtonDecoration();
@@ -263,7 +263,7 @@
               var mid = '#9CA4A8';
               var dark = '#cddfd8'; //lock color
               this.lockPane.setDecorator(null);
-              this.lockButtonDecoration = new qx.ui.decoration.Background();
+              this.lockButtonDecoration = new qx.ui.decoration.Decorator();
               this.lockButtonDecoration.setBackgroundColor(this.locked ? dark : light);
               this.lockPane.setDecorator(this.lockButtonDecoration);
             },
@@ -299,7 +299,7 @@
               var mid = '#9CA4A8';
               var dark = '#cddfd8'; //lock color
               this.pinPane.setDecorator(null);
-              this.pinButtonDecoration = new qx.ui.decoration.Background().set({
+              this.pinButtonDecoration = new qx.ui.decoration.Decorator().set({
                 //innerOpacity: 0.5
               });
               //this.pinButtonDecoration.setInnerColor(this.pinned ? mid : light);
@@ -309,7 +309,7 @@
             },
             hideResource: function () {
               try {
-                //if(this.resourceHidden) 
+                //if(this.resourceHidden)
                 if (this.resourcePane.isVisible()) {
                   //this.resourcePane.hide();
                   this.resourcePane.exclude();
@@ -328,7 +328,7 @@
                 var pane = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({
                   //padding: [5, 0, 5, 5],
                   width: 124,
-                  decorator: new qx.ui.decoration.Background().set({
+                  decorator: new qx.ui.decoration.Decorator().set({
                     backgroundImage: 'decoration/pane_messaging_item/messaging_items_pane.png', ///картинка фон
                     backgroundRepeat: 'scale',
                   }),
@@ -512,7 +512,7 @@
                 })).set({
                   paddingLeft: 5,
                   width: 105,
-                  decorator: new qx.ui.decoration.Background()
+                  decorator: new qx.ui.decoration.Decorator()
                 });
                 var menu = new qx.ui.menu.Menu();
                 var menuPinButton = new qx.ui.menu.Button('Pin', 'FactionUI/icons/icn_thread_pin_inactive.png');
@@ -570,7 +570,7 @@
                   cursor: 'pointer',
                   height: 23,
                   width: 50,
-                  
+
                   maxWidth: 28,
                   maxHeight: 25, //icon
                   alignX: 'center'
@@ -634,7 +634,7 @@
                 var mcvC = this.mcvPopup.getChildren();
                 mcvC[mcvC.length - 1].getChildren() [0].add(this.pinPane);
                 mcvC[mcvC.length - 1].getChildren() [0].add(this.lockPane);
-                ////////////////////////////----------------------------------------------------------								
+                ////////////////////////////----------------------------------------------------------
                 this.repairTimeTitleLabel = new qx.ui.basic.Label();
                 this.repairTimeTitleLabel.setValue('Time Repair');
                 this.repairTimeStyle = {
@@ -645,14 +645,14 @@
                   height: 20, //size blok
                   width: 90,
                   textAlign: 'center',
-                  
+
                 };
                 this.repairTimeLabel0 = new qx.ui.basic.Label().set(this.repairTimeStyle);
                 this.repairTimeLabel1 = new qx.ui.basic.Label().set(this.repairTimeStyle);
                 this.repairTimeLabel2 = new qx.ui.basic.Label().set(this.repairTimeStyle);
                 this.repairTimeLabel3 = new qx.ui.basic.Label().set(this.repairTimeStyle);
                 var pane6 = this.createSection(this.mcvPopup, this.repairTimeTitleLabel.set(this.repairTimeStyle), !this.rtHide, 'repairHide');
-                pane6.add(this.createHBox(this.createImage(this.repairIcon), this.repairTimerLabel));  
+                pane6.add(this.createHBox(this.createImage(this.repairIcon), this.repairTimerLabel));
                 pane6.add(this.createHBox(this.createImage("ui/icons/icon_res_repair_air.png"), this.repairTimeLabel0));
                 pane6.add(this.createHBox(this.createImage("ui/icons/icon_res_repair_tnk.png"), this.repairTimeLabel1));
                 pane6.add(this.createHBox(this.createImage("ui/icons/icon_res_repair_inf.png"), this.repairTimeLabel2));
@@ -813,7 +813,7 @@
                   this.stickerBackground = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({
                     //paddingLeft: 5,
                     width: 105,
-                    decorator: new qx.ui.decoration.Background().set({
+                    decorator: new qx.ui.decoration.Decorator().set({
                       backgroundImage: 'webfrontend/ui/common/bgr_region_world_select_scaler.png',
                       backgroundRepeat: 'scale',
                     })
@@ -929,7 +929,7 @@
                     }
                     if (cost[1].Type == ClientLib.Base.EResourceType.Power) {
                       DEFpowCost = cost[1].Count;
-                    } 
+                    }
                     else if (cost[2] !== undefined && cost[2].Type == ClientLib.Base.EResourceType.Power) {
                       DEFpowCost = cost[2].Count;
                     }

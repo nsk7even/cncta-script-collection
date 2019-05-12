@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name       Tiberium Alliances Info Sticker
 // @namespace  TAInfoSticker
-// @version    1.11.10
-// @description  Based on Maelstrom Dev Tools. Modified MCV timer, repair time label, resource labels, fixed compactNumbers function.
+// @version    1.11.10+
+// @description  Based on Maelstrom Dev Tools. Modified MCV timer, repair time label, resource labels, fixed compactNumbers function. [+7even: fixed script errors]
 // @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @author unicode *edited by dbendure*
 // ==/UserScript==
@@ -163,7 +163,7 @@
                       if (e.isDisposed()) this.toFlipH.splice(i, 1);
                        else {
                         dele = e.getDecoratorElement().getDomElement();
-						
+
                         if (dele != null) {
                           dele.style['-moz-transform'] = 'scaleX(-1)';
                           dele.style['-o-transform'] = 'scaleX(-1)';
@@ -234,7 +234,7 @@
                 if (!this.locked) {
                   this.infoSticker.show();
                   this.stickerBackground.add(this.mcvPopup);
-                } 
+                }
                 else this.infoSticker.hide();
                 this.lockButton.setIcon(this.locked ? 'FactionUI/icons/icn_thread_locked_active.png' : 'FactionUI/icons/icn_thread_locked_inactive.png');
                 this.updateLockButtonDecoration();
@@ -263,7 +263,7 @@
               var mid = '#9CA4A8';
               var dark = '#8C9499';
               this.lockPane.setDecorator(null);
-              this.lockButtonDecoration = new qx.ui.decoration.Background();
+              this.lockButtonDecoration = new qx.ui.decoration.Decorator();
               this.lockButtonDecoration.setBackgroundColor(this.locked ? dark : light);
               this.lockPane.setDecorator(this.lockButtonDecoration);
             },
@@ -299,7 +299,7 @@
               var mid = '#9CA4A8';
               var dark = '#8C9499';
               this.pinPane.setDecorator(null);
-              this.pinButtonDecoration = new qx.ui.decoration.Background().set({
+              this.pinButtonDecoration = new qx.ui.decoration.Decorator().set({
                 //innerOpacity: 0.5
               });
               //this.pinButtonDecoration.setInnerColor(this.pinned ? mid : light);
@@ -309,7 +309,7 @@
             },
             hideResource: function () {
               try {
-                //if(this.resourceHidden) 
+                //if(this.resourceHidden)
                 if (this.resourcePane.isVisible()) {
                   //this.resourcePane.hide();
                   this.resourcePane.exclude();
@@ -333,7 +333,7 @@
                     5
                   ],
                   width: 124,
-                  decorator: new qx.ui.decoration.Background().set({
+                  decorator: new qx.ui.decoration.Decorator().set({
                     backgroundImage: 'decoration/pane_messaging_item/messaging_items_pane.png',
                     backgroundRepeat: 'scale',
                   }),
@@ -476,7 +476,7 @@
                 this.mcvPane = this.lastPane;
                 this.lastPane.setMarginLeft(7);
               } catch (e) {
-                console.log('InfoSticker.createMCVPopup', e.toString());
+                console.log('InfoSticker.createMCVPane', e.toString());
               }
             },
             moveStickerUp: function () {
@@ -517,7 +517,7 @@
                 })).set({
                   paddingLeft: 5,
                   width: 105,
-                  decorator: new qx.ui.decoration.Background()
+                  decorator: new qx.ui.decoration.Decorator()
                 });
                 var menu = new qx.ui.menu.Menu();
                 var menuPinButton = new qx.ui.menu.Button('Pin', 'FactionUI/icons/icn_thread_pin_inactive.png');
@@ -687,7 +687,7 @@
                 pane5.add(this.createHBox(this.createImage(this.cryIcon), this.contProductionLabelCrystal));
                 pane5.add(this.createHBox(this.createImage(this.powIcon), this.contProductionLabelPower));
                 pane5.add(this.createHBox(this.createImage(this.creditIcon), this.contProductionLabelCredit));
-                ////////////////////////////----------------------------------------------------------								
+                ////////////////////////////----------------------------------------------------------
                 this.repairTimeTitleLabel = new qx.ui.basic.Label();
                 this.repairTimeTitleLabel.setValue('RepairTimes');
                 this.repairTimeStyle = {
@@ -767,10 +767,10 @@
             },
             disposeRecover: function () {
               try {
-                if (this.mcvPane.isDisposed()) {
+                if (this.mcvPane == null || this.mcvPane.isDisposed()) {
                   this.createMCVPane();
                 }
-                if (this.mcvPopup.isDisposed()) {
+                if (this.mcvPopup == null || this.mcvPopup.isDisposed()) {
                   this.createMCVPopup();
                   this.repositionSticker();
                 }
@@ -865,7 +865,7 @@
                   this.stickerBackground = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({
                     //paddingLeft: 5,
                     width: 105,
-                    decorator: new qx.ui.decoration.Background().set({
+                    decorator: new qx.ui.decoration.Decorator().set({
                       backgroundImage: 'webfrontend/ui/common/bgr_region_world_select_scaler.png',
                       backgroundRepeat: 'scale',
                     })
@@ -981,7 +981,7 @@
                     }
                     if (cost[1].Type == ClientLib.Base.EResourceType.Power) {
                       DEFpowCost = cost[1].Count;
-                    } 
+                    }
                     else if (cost[2] !== undefined && cost[2].Type == ClientLib.Base.EResourceType.Power) {
                       DEFpowCost = cost[2].Count;
                     }

@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name            WarChiefs - Tiberium Alliances Sector HUD
-// @description     Displays a tiny HUD with the Sector you are viewing.
+// @description     Displays a tiny HUD with the Sector you are viewing. [+7even: fixed script error]
 // @author          Eistee
-// @version         13.12.18
+// @version         13.12.18+
 // @namespace       https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @include         https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @icon            http://eistee82.github.io/ta_simv2/icon.png
@@ -22,7 +22,7 @@
 						font : "font_size_11"
 					});
 					var HUD = new qx.ui.container.Composite(new qx.ui.layout.HBox()).set({
-						decorator : new qx.ui.decoration.Background().set({
+						decorator : new qx.ui.decoration.Decorator().set({
 							backgroundRepeat : "no-repeat",
 							backgroundImage : "webfrontend/ui/menues/notifications/bgr_ticker_container.png",
 							backgroundPositionX : "center"

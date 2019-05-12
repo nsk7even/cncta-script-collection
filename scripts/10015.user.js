@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version       1
+// @version       1.1
 // @name          C&C:TA View Player Base
 // @namespace     http://www.ld-software.co.uk/
 // @icon          http://cncopt.com/favicon.ico
@@ -14,21 +14,21 @@
 // @grant         GM_xmlhttpRequest
 // @grant         GM_updatingEnabled
 // @grant         unsafeWindow
-// @contributor   
-// @contributor   
+// @contributor
+// @contributor
 // ==/UserScript==
-/* 
-/* 
+/*
+/*
 ***********************************************************************************/
 
     var scity = null;
     var tcity = null;
     var tbase = null;
     try {
-      window.__cncoptA_version = "1.7.5";
+      unsafeWindow.__cncoptA_version = "1.7.5";
       (function () {
         var cncoptA_main = function () {
-     
+
           var defense_unit_map = {
             /* GDI Defense Units */"GDI_Wall": "w",
             "GDI_Cannon": "c",
@@ -60,7 +60,7 @@
             "NOD_Def_Reckoner": "g",
             "NOD_Def_Scorpion Tank": "d",
             "NOD_Def_Wall": "w",
-     
+
             /* Forgotten Defense Units */"FOR_Wall": "w",
             "FOR_Barbwire_VS_Inf": "b",
             "FOR_Barrier_VS_Veh": "t",
@@ -80,7 +80,7 @@
             "FOR_Turret_VS_Air_ranged": "e",
             "": ""
           };
-     
+
           var offense_unit_map = {
             /* GDI Offense Units */"GDI_APC Guardian": "g",
             "GDI_Commando": "c",
@@ -96,7 +96,7 @@
             "GDI_Riflemen": "r",
             "GDI_Sniper Team": "s",
             "GDI_Zone Trooper": "z",
-     
+
             /* Nod Offense Units */"NOD_Attack Bike": "b",
             "NOD_Avatar": "a",
             "NOD_Black Hand": "z",
@@ -113,8 +113,8 @@
             "NOD_Vertigo": "t",
             "": ""
           };
-     
-     
+
+
           function findTechLayout(city) {
             for (var k in city) {
               //console.log(typeof(city[k]), "1.city[", k, "]", city[k])
@@ -128,7 +128,7 @@
             }
             return null;
           }
-     
+
           function findBuildings(city) {
             var cityBuildings = city.get_CityBuildingsData();
             for (var k in cityBuildings) {
@@ -143,15 +143,15 @@
               }
             }
           }
-     
+
           function isOffenseUnit(unit) {
             return (unit.get_UnitGameData_Obj().n in offense_unit_map);
           }
-     
+
           function isDefenseUnit(unit) {
             return (unit.get_UnitGameData_Obj().n in defense_unit_map);
           }
-     
+
           function getUnitArrays(city) {
             var ret = [];
             for (var k in city) {
@@ -185,7 +185,7 @@
             }
             return ret;
           }
-     
+
           function getDefenseUnits(city) {
             var arr = getUnitArrays(city);
             for (var i = 0; i < arr.length; ++i) {
@@ -197,7 +197,7 @@
             }
             return [];
           }
-     
+
           function getOffenseUnits(city) {
             var arr = getUnitArrays(city);
             for (var i = 0; i < arr.length; ++i) {
@@ -209,13 +209,12 @@
             }
             return [];
           }
-     
-     
+
+
           function cncoptA_create() {
             console.log("cncoptA Link Button v" + window.__cncoptA_version + " loaded");
             var cncoptA = {
               selected_base: null,
-
               keymap: {
                 /* GDI Buildings */"GDI_Accumulator": "a",
                 "GDI_Refinery": "r",
@@ -262,7 +261,7 @@
                 //"NOD_Tech Lab": "",
                 //"NOD_Recruitment Hub": "X",
                 //"NOD_Temple of Nod": "X",
-     
+
                 /* GDI Defense Units */"GDI_Wall": "w",
                 "GDI_Cannon": "c",
                 "GDI_Antitank Barrier": "t",
@@ -293,7 +292,7 @@
                 "NOD_Def_Reckoner": "g",
                 "NOD_Def_Scorpion Tank": "d",
                 "NOD_Def_Wall": "w",
-     
+
                 /* Forgotten Defense Units */"FOR_Wall": "w",
                 "FOR_Barbwire_VS_Inf": "b",
                 "FOR_Barrier_VS_Veh": "t",
@@ -311,7 +310,7 @@
                 "FOR_Turret_VS_Veh_ranged": "d",
                 "FOR_Turret_VS_Air": "f",
                 "FOR_Turret_VS_Air_ranged": "e",
-     
+
                 /* GDI Offense Units */"GDI_APC Guardian": "g",
                 "GDI_Commando": "c",
                 "GDI_Firehawk": "f",
@@ -326,7 +325,7 @@
                 "GDI_Riflemen": "r",
                 "GDI_Sniper Team": "s",
                 "GDI_Zone Trooper": "z",
-     
+
                 /* Nod Offense Units */"NOD_Attack Bike": "b",
                 "NOD_Avatar": "a",
                 "NOD_Black Hand": "z",
@@ -341,7 +340,7 @@
                 "NOD_Specter Artilery": "p",
                 "NOD_Venom": "v",
                 "NOD_Vertigo": "t",
-     
+
                 "<last>": "."
               },
               make_sharelink: function () {
@@ -427,7 +426,7 @@
                       defense_units[unit.get_CoordX()][unit.get_CoordY() + 8] = unit;
                     }
                   }
-     
+
                   offense_units = []
                   for (var i = 0; i < 20; ++i) {
                     var col = [];
@@ -436,7 +435,7 @@
                     }
                     offense_units.push(col)
                   }
-     
+
                   var offense_unit_list = getOffenseUnits(city);
                   if (PerforceChangelist >= 376877) {
                     for (var i in offense_unit_list) {
@@ -449,7 +448,7 @@
                       offense_units[unit.get_CoordX()][unit.get_CoordY() + 16] = unit;
                     }
                   }
-     
+
                   var techLayout = findTechLayout(city);
                   var buildings = findBuildings(city);
                   for (var i = 0; i < 20; ++i) {
@@ -473,7 +472,7 @@
                       if (level > 1) {
                         link += level;
                       }
-     
+
                       switch (i > 16 ? 0 : city.GetResourceType(j, i)) {
                         case 0:
                           if (building) {
@@ -545,7 +544,7 @@
                     link += "|" + alliance.get_POIAirBonus();
                     link += "|" + alliance.get_POIDefenseBonus();
                   }
-     
+
                   //console.log(link);
                   window.open(link, "_blank");
                 } catch (e) {
@@ -556,7 +555,7 @@
             if (!webfrontend.gui.region.RegionCityMenu.prototype.__cncoptA_real_showMenu) {
               webfrontend.gui.region.RegionCityMenu.prototype.__cncoptA_real_showMenu = webfrontend.gui.region.RegionCityMenu.prototype.showMenu;
             }
-     
+
             var check_ct = 0;
             var check_timer = null;
             var button_enabled = 123456;
@@ -573,7 +572,7 @@
                   for (var i in this) {
                     try {
                       if (this[i] && this[i].basename == "Composite") {
-                        var link = new qx.ui.form.Button("View Base", "http://cncopt.com/favicon.ico");
+                        var link = new qx.ui.form.Button("View Player Base", "http://cncopt.com/favicon.ico");
                         link.addListener("execute", function () {
                           var bt = qx.core.Init.getApplication();
                           bt.getBackgroundArea().closeCityInfo();
@@ -611,9 +610,9 @@
                     tf = true;
                     break;
                 }
-     
+
                 var orig_tf = tf;
-     
+
                 function check_if_button_should_be_enabled() {
                   try {
                     tf = orig_tf;
@@ -622,7 +621,7 @@
                     if (check_timer != null) {
                       clearTimeout(check_timer);
                     }
-     
+
                     /* When a city is selected, the data for the city is loaded in the background.. once the
                      * data arrives, this method is called again with these fields set, but until it does
                      * we can't actually generate the link.. so this section of the code grays out the button
@@ -661,7 +660,7 @@
                     tf = false;
                   }
                 }
-     
+
                 check_ct = 50;
                 check_if_button_should_be_enabled();
               } catch (e) {
@@ -670,8 +669,8 @@
               this.__cncoptA_real_showMenu(selected_base);
             }
           }
-     
-     
+
+
           /* Nice load check (ripped from AmpliDude's LoU Tweak script) */
           function cnc_check_if_loaded() {
             try {
@@ -688,12 +687,12 @@
             } catch (e) {
               if (typeof console != 'undefined') console.log(e);
               else if (window.opera) opera.postError(e);
-             else console.log(e);
+              else GM_log(e);
             }
           }
           if (/commandandconquer\.com/i.test(document.domain)) window.setTimeout(cnc_check_if_loaded, 1000);
         }
-     
+
         // injecting because we can't seem to hook into the game interface via unsafeWindow
         //   (Ripped from AmpliDude's LoU Tweak script)
         var script_block = document.createElement("script");
@@ -703,5 +702,5 @@
         if (/commandandconquer\.com/i.test(document.domain)) document.getElementsByTagName("head")[0].appendChild(script_block);
       })();
     } catch (e) {
-      console.log(e);
+      GM_log(e);
     }

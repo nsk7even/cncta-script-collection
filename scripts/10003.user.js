@@ -3,9 +3,7 @@
 // @description Tunnel info
 // @namespace TATI
 // @include http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @version 2.2
-// @updateURL https://userscripts.org/scripts/source/293295.meta.js
-// @downloadURL https://userscripts.org/scripts/source/293295.user.js
+// @version 2.3
 // @author KRS_L
 // ==/UserScript==
 (function () {
@@ -210,7 +208,7 @@
 					addTunnelMarker : function (tunnelX, tunnelY, color) {
 						try {
 							var tunnelMarker = new qx.ui.container.Composite(new qx.ui.layout.HBox(5)).set({
-									decorator : new qx.ui.decoration.Single(1, "solid", "#000000").set({
+									decorator : new qx.ui.decoration.Decorator(1, "solid", "#000000").set({
 										backgroundColor : color
 									}),
 									width : this.tunnelMarkerWidth,

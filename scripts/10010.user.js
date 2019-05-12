@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name          PluginsLib - mhNavigator - Tiberium Alliances
-// @namespace     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @description   Creates compass poiting to the currently selected base (compass points from itself).
-// @version       1.35
+// @namespace     http*://*.alliances.commandandconquer.com/*/index.aspx*
+// @description   Creates compass poiting to the currently selected base (compass points from itself). [+7even: modified init to start minimized]
+// @version       1.36+
 // @author        MrHIDEn (in game PEEU) based on Caine code. Extended
-// @include       http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include       http*://*.alliances.commandandconquer.com/*/index.aspx*
 // @grant         none
 // ==/UserScript==
 (function () {
@@ -188,7 +188,7 @@ function injectBody()
         try {
           this.stats.src = 'http://goo.gl/aeCxf';//1.0.0 1.1.0 1.2.0 1.3x
           this.Self = this;
-          var backColor = '#eeeeff';          
+          var backColor = '#eeeeff';
           //var STATIC = PluginsLib[this.basename];
           var serv = ClientLib.Data.MainData.GetInstance().get_Server();
           this.cenX = serv.get_ContinentWidth() / 2;
@@ -424,7 +424,7 @@ function injectBody()
           // add
           this.extItems.push(cntButtons);
 
-          for(var k in this.extItems) this.win.add(this.extItems[k]);
+          //for(var k in this.extItems) this.win.add(this.extItems[k]);
 
           this.win.open();
 
@@ -435,7 +435,7 @@ function injectBody()
           //this.constructor.ONPLUGIN = function(){this.constructor.getInstance().open();};
           //this.constructor.ONOPTIONS = function(){this.constructor.getInstance().open();};//test
           PluginsLib.Menu.getInstance().RegisterPlugin(this);
-          
+
           //READY
           console.info("Plugin '"+pluginName+"' LOADED");
         } catch (e) {
@@ -448,7 +448,7 @@ function injectBody()
         winName: '',
         win: null,
         extItems: [],
-        extMinimized: false,
+        extMinimized: true,
         winXY: null,
         txtXY: null,
         posTimer: null,
@@ -636,7 +636,7 @@ function injectBody()
         if (app.initDone===true)
         {
           if(!created) CreateClasses();
-          
+
           var plugin = PluginsLib[pluginName];
           var ready = true;
           if(plugin.REQUIRES.length > 0) {

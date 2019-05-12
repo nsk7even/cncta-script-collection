@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name infernal wrapper
-// @description Supplies some wrapper functions for public use 
+// @description Supplies some wrapper functions for public use
 // @namespace infernal_wrapper
-// @include https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @version 0.390737.6
+// @include https://*.alliances.commandandconquer.com/*/index.aspx*
+// @version 0.390737.7
 // @author infernal_me, KRS_L, krisan
 // ==/UserScript==
 (function () {
@@ -21,7 +21,7 @@
                 System = $I;
                 SharedLib = $I;
                 var strFunction;
-                
+
                 // SharedLib.Combat.CbtSimulation.prototype.DoStep
                 for (var x in $I) {
                     for (var key in $I[x].prototype) {

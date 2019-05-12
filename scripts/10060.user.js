@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name            TAMarkerFix.js
+// @name            OBSOLETE ~Bug Fixed > TAMarkerFix
 // @description     Fix an script error when selecting marker.
 // @author          VisiG
-// @version         0.1
+// @version         0.11
 // @namespace       https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @include         https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
@@ -10,7 +10,7 @@
 (function () {
     var TAMarkerFix_main = function () {
         function TAMarkerFix_checkIfLoaded() {
-        	if (PerforceChangelist >= 443425) { // patch 16.1 
+        	if (PerforceChangelist >= 443425) { // patch 16.1
         		try {
 					if (typeof qx !== 'undefined' && typeof qx.core !== 'undefined' && typeof qx.core.Init !== 'undefined') {
 						try {
@@ -31,7 +31,7 @@
 			window.setTimeout(TAMarkerFix_checkIfLoaded, 1000);
 		}
     }
-    
+
   try {
     var script = document.createElement("script");
     script.innerHTML = "(" + TAMarkerFix_main.toString() + ")();";
@@ -40,5 +40,5 @@
   } catch (e) {
     console.log("AMarkerFix: init error: ", e);
   }
-  
+
 })();

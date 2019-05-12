@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name           TACS (Tiberium Alliances Combat Simulator)
 // @description    Allows you to simulate combat before actually attacking.
-// @namespace      https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @include        https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @version        3.50b
+// @namespace      https://*.alliances.commandandconquer.com/*/index.aspx*
+// @include        https://*.alliances.commandandconquer.com/*/index.aspx*
+// @version        3.53b
 // @author         KRS_L | Contributions/Updates by WildKatana, CodeEcho, PythEch, Matthias Fuchs, Enceladus, TheLuminary, Panavia2, Da Xue, MrHIDEn, TheStriker, JDuarteDJ, null, g3gg0.de
 // @translator     TR: PythEch | DE: Matthias Fuchs, Leafy & sebb912 | PT: JDuarteDJ & Contosbarbudos | IT: Hellcco | NL: SkeeterPan | HU: Mancika | FR: Pyroa & NgXAlex | FI: jipx | RO: MoshicVargur
 // @grant none
 // ==/UserScript==
+window.TACS_version = GM_info.script.version;
 (function () {
 	'use strict';
 	var TASuite_mainFunction = function () {
@@ -441,7 +442,7 @@
 							this._PlayArea = this._Application.getPlayArea();
 							this._armyBarContainer = this._Application.getArmySetupAttackBar();
 							this._armyBar = this._Application.getUIItem(ClientLib.Data.Missions.PATH.BAR_ATTACKSETUP);
-							
+
 							if (PerforceChangelist >= 443425) { // 16.1 patch
 								for (var i in this._armyBarContainer) {
 									if (typeof this._armyBarContainer[i] == "object" && this._armyBarContainer[i] != null) {
@@ -957,7 +958,7 @@
 								row : 1,
 								column : 1
 							});
-							
+
 							// Available RT/Attacks Vertical Box
 							container = new qx.ui.container.Composite();
 							layout = new qx.ui.layout.Grid();
@@ -989,7 +990,7 @@
 								row : 1,
 								column : 1
 							});
-							
+
 							// Resource Summary Vertical Box
 							this.resourceSummaryVerticalBox = new qx.ui.container.Composite();
 							var layout = new qx.ui.layout.Grid();
@@ -1001,7 +1002,7 @@
 							if (this.saveObj.checkbox.showLootSummary) {
 								this.statsPage.add(this.resourceSummaryVerticalBox);
 							}
-							
+
 							// Research Icon/Label
 							this.labels.resourcesummary.research = new qx.ui.basic.Atom("0", "webfrontend/ui/common/icn_res_research_mission.png");
 							this.resourceSummaryVerticalBox.add(this.labels.resourcesummary.research, {
@@ -1422,7 +1423,7 @@
 								column : 0,
 								colSpan : 3
 							});
-							
+
 							// showResourceLayoutWindow Checkbox
 							this.options.showResourceLayoutWindow = new qx.ui.form.CheckBox(lang("Show Resource Layout Window"));
 							this.options.showResourceLayoutWindow.saveLocation = "showResourceLayoutWindow";
@@ -1433,7 +1434,7 @@
 								column : 0,
 								colSpan : 3
 							});
-							
+
 							// showStatsDuringAttack Checkbox
 							this.options.showStatsDuringAttack = new qx.ui.form.CheckBox(lang("Show Stats During Attack"));
 							this.options.showStatsDuringAttack.saveLocation = "showStatsDuringAttack";
@@ -1649,7 +1650,7 @@
 									this.toolBar.setZIndex(1);
 								}
 							}, this);
-							
+
 							this._armyBarContainer.addListener("appear", function () {
 								//console.log("_armyBarContainer appeared");
 								this._armyBarContainer.setZIndex(3);
@@ -1715,10 +1716,10 @@
 						try {
 							////////////////// Interface Side ////////////////////
 							localStorage.ta_sim_side = JSON.stringify(this.options.rightSide.getValue());
-							
+
 							// qx.core.Init.getApplication().getPlayArea()
 							// might need to use this instead, mouseovers are not being registered during attacks
-							
+
 							var playArea = this._Application.getUIItem(ClientLib.Data.Missions.PATH.OVL_PLAYAREA);
 							var playAreaWidth = this._Application.getUIItem(ClientLib.Data.Missions.PATH.OVL_PLAYAREA).getLayoutParent().getLayoutParent().getBounds().width;
 							this.armybarClickCount = 0;
@@ -1824,7 +1825,7 @@
 							this.toolBar.setHeight(53);
 							this.toolBar.setWidth(this.TOOL_BAR_WIDTH);
 							this.toolBar.set({
-								decorator : new qx.ui.decoration.Background().set({
+								decorator : new qx.ui.decoration.Decorator().set({
 									backgroundImage : "FactionUI/menues/victory_screen/bgr_victscr_header.png"
 								}),
 								visibility : false
@@ -1855,8 +1856,8 @@
 							this.toolBarMouse.setBackgroundColor("#FF0000");
 							this.toolBarMouse.setOpacity(0);
 							this.toolBarMouse.setZIndex(10);
-							
-							
+
+
 							this.initToolBarListeners();
 							/*
 							// does the game init in combat mode?
@@ -2041,7 +2042,7 @@
 								appearance : "button-text-small",
 								toolTipText : "<strong>"+lang("Refresh Stats")+"</strong>"
 							});
-							
+
 							// The new stats window button
 							this.buttons.attack.toolbarShowStats = new qx.ui.form.Button("", statsIcon);
 							this.buttons.attack.toolbarShowStats.addListener("click", this.toggleTools, this);
@@ -2053,7 +2054,7 @@
 								appearance : "button-text-small",
 								toolTipText : "<strong>"+lang("Open Stats Window")+"</strong>"
 							});
-							
+
 							// Undo
 							this.buttons.attack.toolbarUndo = new qx.ui.form.Button("", undoIcon);
 							this.buttons.attack.toolbarUndo.addListener("click", function(){console.log("Undo");}, this);
@@ -2066,7 +2067,7 @@
 								enabled : false,
 								toolTipText : "<strong>"+lang("Undo")+"</strong>"
 							});
-							
+
 							// Redo (if possible)
 							this.buttons.attack.toolbarRedo = new qx.ui.form.Button("", redoIcon);
 							this.buttons.attack.toolbarRedo.addListener("click", function(){console.log("Redo");}, this);
@@ -2079,8 +2080,8 @@
 								enabled : false,
 								toolTipText : "<strong>"+lang("Redo")+"</strong>"
 							});
-							
-							
+
+
 
 							// Options Button
 							this.buttons.attack.options = new qx.ui.form.Button().set({
@@ -2145,7 +2146,7 @@
 								top : 10,
 								right : 275
 							});
-							
+
 
 							if (this.userInterface) {
 								this._armyBar.remove(this.userInterface);
@@ -2175,7 +2176,7 @@
 							this.userInterface.setHeight(160);
 							this.userInterface.setWidth(canvasWidth);
 							this.userInterface.set({
-								decorator : new qx.ui.decoration.Background().set({
+								decorator : new qx.ui.decoration.Decorator().set({
 									backgroundImage : interfaceBG
 								})
 							});
@@ -2371,7 +2372,7 @@
 						}
 					},
 					refreshStatistics : function () {
-						
+
 						try {
 							var ownCity = this._MainData.get_Cities().get_CurrentOwnCity();
 							if (!this.getAllUnitsDeactivated() && ownCity.GetOffenseConditionInPercent() > 0) {
@@ -3038,7 +3039,7 @@
 							if (PerforceChangelist >= 448942) {
 								var countDownInterval = 300;
 							} else {
-								var countDownInterval = 1000;	
+								var countDownInterval = 1000;
 							}
 							if (this.count == 10) this.counter = setInterval(this.countDownToNextSimulation, countDownInterval);
 
@@ -3196,19 +3197,19 @@
 							bt : 0
 						};
 						*/
-						
+
 					},
 					wipeUndoStateAfter : function (timestamp) {
 						var i;
 						for (i = 0; i < this.undoCache.length; i++) {
 							if (this.undoCache[i].t > timestamp){
-								
+
 								break;
 							}
 						}
 						this.undoCache = this.undoCache.slice(0,i);
 					},
-					
+
 					//Layouts
 					updateLayoutsList : function () {
 						try {
@@ -3590,7 +3591,7 @@
 
 								_this.repairButtons[i] = new qx.ui.form.Button("", "data:image/png;base64,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%3D%3D");
 								_this.repairButtons[i].set({
-									decorator : new qx.ui.decoration.Background().set({
+									decorator : new qx.ui.decoration.Decorator().set({
 										backgroundColor : 'transparent'
 									}),
 									width : gridWidth,
@@ -3658,12 +3659,12 @@
 							_this.labels.repairinfos.infantry.setValue(phe.cnc.Util.getTimespanString(availableInfRT - _this.stats.repair.available));
 							_this.labels.repairinfos.vehicle.setValue(phe.cnc.Util.getTimespanString(availableVehRT - _this.stats.repair.available));
 							_this.labels.repairinfos.aircraft.setValue(phe.cnc.Util.getTimespanString(availableAirRT - _this.stats.repair.available));
-							
+
 							/*var unitGroupData = phe.cnc.gui.RepairUtil.getUnitGroupCityData(ownCity);
 							if (unitGroupData[ClientLib.Data.EUnitGroup.Infantry].lowestUnitDmgRatio == 1) console.log("No damage to Infantry");
 							if (unitGroupData[ClientLib.Data.EUnitGroup.Vehicle].lowestUnitDmgRatio == 1) console.log("No damage to Vehicles");
 							if (unitGroupData[ClientLib.Data.EUnitGroup.Aircraft].lowestUnitDmgRatio == 1) console.log("No damage to Aircraft");*/
-							
+
 						} catch (e) {
 							console.log(e);
 						}
@@ -3805,7 +3806,7 @@
 									qx.core.Init.getApplication().getArmyUnitTooltipOverlay().setVisibility_Original(a);
 								}
 							};
-						
+
 						} else {
 							TASuite_timeout++;
 							window.setTimeout(TASuite_checkIfLoaded, 1000);

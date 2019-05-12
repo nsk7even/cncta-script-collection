@@ -26,20 +26,20 @@ var DEFAULT_SCRIPTS = [ {
 	name : "C&C TA Compass - ALT (points from the center of the screen)",
 	cat : "gui",
 	version : "  1.0.1",
-	enabled : false		
+	enabled : false
 }, {
 	id : 10048,
 	greasyfork: 13925,
 	name : "New Custom Flunik Tools (SaberTooths-Fix-for-Awesome)",
 	cat : "tool",
-	version : "  1.3.3.1",
-	enabled : false		
+	version : "  1.4.3",
+	enabled : false
 }, {
 	id : 10015,
 	greasyfork: 11647,
 	name : "C&C TA View Player Base",
 	cat : "infotool",
-	version : "  1.0",
+	version : "  1.1",
 	enabled : false
 }, {
 	id : 10012,
@@ -55,7 +55,7 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "infotool",
 	hot: true,
 	version : "  1.7.7b",
-	enabled : true	
+	enabled : false
 }, {
 	id : 10040,
 	greasyfork: 1998,
@@ -74,8 +74,8 @@ var DEFAULT_SCRIPTS = [ {
 	greasyfork: 1934,
 	name : "C&C Tiberium Alliances POIs Analyser",
 	cat : "infotool",
-	version : "  2.0.2",
-	enabled : false
+	version : "  2.0.2+",
+	enabled : true
 }, {
     id : 10018,
 	greasyfork: 1856,
@@ -103,30 +103,30 @@ var DEFAULT_SCRIPTS = [ {
 	name : "C&C: Tiberium Alliances Chat Helper Enhanced Yiannis Mod",
 	cat : "mail",
 	hot: true,
-	version : "  3.2.0",
-	enabled : true	
+	version : "  3.2.1",
+	enabled : false
 }, {
 	id : 10047,
 	greasyfork: 10382,
 	name : "C&C: Tiberium Alliances - xTr1m's Base Overlay- Display Ratio 4:3",
 	cat : "gui",
 	version : "  1.13",
-	enabled : false		
+	enabled : false
 }, {
 	id : 10034,
 	greasyfork: 715,
 	name : "C&C MHTools Tiberium Alliances Available Loot Summary + Info",
 	cat : "infotool",
 	hot: true,
-	version : "  1.8.3",
-	enabled : false
+	version : "  1.8.3+",
+	enabled : true
 }, {
 	id : 10041,
 	greasyfork: 13916,
 	name : "CityMoveInfoExtend",
 	cat : "infotool",
 	version : "  14.06.17",
-	enabled : false
+	enabled : true
 }, {
 	id : 10042,
 	greasyfork: 1901,
@@ -140,7 +140,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "infernal wrapper",
 	cat : "wrapper",
 	hot: true,
-	version : "  0.390737.6",
+	version : "  0.390737.7",
 	enabled : true
 }, {
 	id : 10020,
@@ -155,7 +155,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "MaelstromTools Dev (Modv1.5 for MCV)",
 	cat : "tool",
 	hot: true,
-	version : "  0.1.4.6",
+	version : "  0.1.4.6+",
 	enabled : true
 }, {
 	id : 10008,
@@ -164,7 +164,7 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "tool",
 	unique: 1,
 	hot: true,
-	version : "  1.8.5",
+	version : "  1.9.0.B",
 	enabled : true
 },{
 	id : 10069,
@@ -174,7 +174,7 @@ var DEFAULT_SCRIPTS = [ {
 	unique: 1,
 	hot : true,
 	version : "  1.8.5+",
-	enabled : false	
+	enabled : false
 }, {
 	id : 10021,
 	greasyfork: 10436,
@@ -195,30 +195,30 @@ var DEFAULT_SCRIPTS = [ {
 	name : "PluginsLib - mhLoot - Tiberium Alliances",
 	cat : "infotool",
 	version : "  2.06",
-	enabled : false	
+	enabled : false
 }, {
 	id : 10010,
 	greasyfork: 1860,
 	name : "PluginsLib - mhNavigator - Tiberium Alliances",
 	cat : "gui",
 	hot: true,
-	version : "  1.35",
+	version : "  1.36+",
 	enabled : true
 }, {
 	id : 10051,
 	greasyfork: 15741,
 	name : "Tiberium Alliances Report Summary",
 	cat: "gui",
-	version : "  12.11.16",
-	enabled : false	
+	version : "  14.06.16",
+	enabled : true
 }, {
 	id : 10043,
 	greasyfork: 17032,
 	name : "Shockr - Tiberium Alliances Tools - BaseScanner MailVersion- reMod 1.2",
 	cat : "tool",
 	hot: true,
-	version : "  2.7.2.29",
-	enabled : false
+	version : "  2.7.2.29+",
+	enabled : true
 }, {
 	id : 10038,
 	greasyfork: 13802,
@@ -226,34 +226,42 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "tool",
 	hot: true,
 	version : "  0.61",
-	enabled : false
+	enabled : true
 }, {
 	id : 10046,
 	userscript: 154546,
 	name : "The Green Cross - Tiberium Alliances Combat Simulator",
 	cat : "simulator",
 	version : "  3.2.2",
-	enabled : false	
+	enabled : false
 }, {
 	id : 10022,
 	greasyfork: 11916,
 	name : "Tiberium Alliances Attack Range",
 	version : "  2.1",
-	enabled : false
+	enabled : true
 }, {
 	id : 10028,
+	greasyfork: 1859,
+	name : "C&C Tiberium Alliances Landingpage Autologin",
+	cat : "login",
+	hot: false,
+	version : "  1.0.1DL",
+	enabled : false
+}, {
+	id : 10070,
 	greasyfork: 13711,
-	name : "Tiberium Alliances Battle Simulator - V2",
+	name : "Tiberium Alliances Battle Simulator - V3",
 	cat : "simulator",
-	hot: true,
-	version : "  16.03.21",
-	enabled : true
+	hot: false,
+	version : "  17.06.07",
+	enabled : false
 }, {
 	id : 10000,
 	greasyfork: 14830,
 	name : "Tiberium Alliances Combat Simulator - TACS",
 	cat : "simulator",
-	version : "  3.50b",
+	version : "  3.53b",
 	enabled : false
 }, {
 	id : 10009,
@@ -261,13 +269,13 @@ var DEFAULT_SCRIPTS = [ {
 	name : "Tiberium Alliances Formation Saver",
 	cat : "tool",
 	hot: true,
-	version : "  2.2",
+	version : "  2.3",
 	enabled : true
 }, {
 	id : 10033,
 	greasyfork: 1828,
 	name : "Tiberium Alliances Info Sticker",
-	version : "  1.11.10",
+	version : "  1.11.10+",
 	hot: true,
 	cat : "infotool",
 	enabled : false
@@ -285,7 +293,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "Tiberium Alliances - New Resource Trade Window",
 	cat : "gui",
 	hot: true,
-	version : "  1.4.9",
+	version : "  1.5.1",
 	enabled : false
 }, {
 	id : 10054,
@@ -300,8 +308,8 @@ var DEFAULT_SCRIPTS = [ {
 	name : "Tiberium Alliances ReplayShare",
 	cat : "tool",
 	hot: true,
-	version : "  0.4.1",
-	enabled : false
+	version : "  0.4.3",
+	enabled : true
 }, {
 	id : 10026,
 	greasyfork: 18245,
@@ -328,10 +336,10 @@ var DEFAULT_SCRIPTS = [ {
 	id : 10003,
 	greasyfork: 1900,
 	name : "Tiberium Alliances Tunnel Info",
-	version : "  2.2",
+	version : "  2.3",
 	hot: true,
 	cat : "infotool",
-	enabled : true	
+	enabled : true
 }, {
 	id : 10005,
 	userscript: 204128,
@@ -368,16 +376,16 @@ var DEFAULT_SCRIPTS = [ {
 	name : "WarChiefs - Tiberium Alliances Upgrade Base/Defense/Army",
 	cat : "tool",
 	hot: true,
-	version : "  13.11.11",
-	enabled : true	
+	version : "  2017.06.06",
+	enabled : true
 }, {
 	id : 10060,
 	greasyfork: 17351,
-	name : "TAMarkerFix",
+	name : "OBSOLETE ~Bug Fixed > TAMarkerFix",
 	cat : "tweak",
-	hot: true,
-	version : "  0.1",
-	enabled : true	
+	hot: false,
+	version : "  0.11",
+	enabled : false
 }, {
 	id : 10062,
 	name : "MENU FIX Chrome 55",
@@ -386,76 +394,76 @@ var DEFAULT_SCRIPTS = [ {
 	hot: true,
 	unique: 2,
 	version : "  1.1",
-	enabled : true	
+	enabled : true
 },{
 	id : 10063,
 	greasyfork: 24720,
 	name : "C&C Tiberium Alliances Info Sticker (SUPERCompact)",
 	cat : "gui",
-	version : "  1.11.10",
-	enabled : false	
+	version : "  1.11.10+",
+	enabled : true
 },{
 	id : 10064,
 	name : "CnC TA: Crucial Script CNC-Map.com link",
 	cat : "gui",
 	lib : "parse.min",
 	version : "  1.0.10",
-	enabled : false	
+	enabled : false
 },{
 	id : 10035,
 	name : "TACS (Tiberium Alliances Combat Simulator) OLD NOSTALGIA VERSION",
 	cat : "simulator",
 	version : "  3.07b",
-	enabled : false	
+	enabled : false
 },{
 	id : 10065,
 	name : "AllianceMemberOnline",
 	cat : "infotool",
 	version : "  0.1.3.0",
-	enabled : false	
+	enabled : false
 },{
 	id : 10067,
 	name : "Tiberium Alliances Upgrade Top (ModButtonPos)",
 	info: "https://openuserjs.org/scripts/tb23911/Tiberium_Alliances_Upgrade_Top",
 	cat : "tool",
 	version : "  0.9.0",
-	enabled : false	
+	enabled : false
 },{
 	id : 10068,
 	name : "Tiberium Alliances Zoom",
 	greasyfork: 11149,
 	cat : "gui",
 	version : "  1.0.1",
-	enabled : false	
+	enabled : false
 }  ];
 
 var updateopen = false;
 
-	
+
 	function openupdate()  {
 		if (updateopen === true){
        chrome.tabs.create({
        url: chrome.runtime.getURL('updated.html')
     });
-       updateopen = false;  
+       updateopen = false;
 	   }
        }
-	
-	
-	
+
+
+
 
 if (chrome && chrome.runtime && chrome.runtime.onInstalled) {
 	chrome.runtime.onInstalled.addListener(function(){
-	updateopen = true; 
-	openupdate();	  
-       
+	updateopen = true;
+	openupdate();
+
 });
-	
+
 } else {
-	
+
 	updateopen = true;
 }
-	
+
 var CURRENT_VERSION = chrome.runtime.getManifest().version;
 var PREVIOUS_VERSION = localStorage.getItem('CNCTA_VERSION');
 if (CURRENT_VERSION !== PREVIOUS_VERSION) {
@@ -465,7 +473,7 @@ if (CURRENT_VERSION !== PREVIOUS_VERSION) {
 	localStorage.setItem('CNCTA_VERSION', CURRENT_VERSION);
 	localStorage.setItem('CNCTA_SCRIPTS', JSON.stringify(DEFAULT_SCRIPTS));
 
-	
+
 }
 	var enabled = JSON.parse(localStorage.getItem('CNCTA_ENABLED'));
 	if (enabled === null || typeof enabled !== 'object') {
@@ -473,11 +481,11 @@ if (CURRENT_VERSION !== PREVIOUS_VERSION) {
 		var tmp = {};
 
 	for (var i in DEFAULT_SCRIPTS) {
-		var script = DEFAULT_SCRIPTS[i];		
+		var script = DEFAULT_SCRIPTS[i];
 		tmp[script.id] = enabled[script.id] || script.enabled;
 	}
 	localStorage.setItem('CNCTA_ENABLED', JSON.stringify(tmp));
-	} 
+	}
 
 
 function processRequest(request, sender, sendResponse) {

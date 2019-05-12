@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        MaelstromTools Dev (Modv1.5 for MCV)
 // @namespace   MaelstromTools
-// @description Just a set of statistics & summaries about repair time and base resources. Mainly for internal use, but you are free to test and comment it.
-// @version     0.1.4.6
+// @description Just a set of statistics & summaries about repair time and base resources. Mainly for internal use, but you are free to test and comment it. [+7even: fixed mcv popup jumping out of visibility]
+// @version     0.1.4.6+
 // @author      Maelstrom, HuffyLuf, KRS_L,Krisan,DLwarez, NetquiK (mod for MCV)
 // @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
@@ -465,7 +465,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
 
                   if (rearrange && this.itemsInMainMenu[desktopPosition] > 1) {
                     var tmpItems = {};
-                    // remove notifications 
+                    // remove notifications
                     for (var itemName in this.itemsOnDesktop) {
                       if (this.itemsInMainMenu[itemName] == null) {
                         continue;
@@ -547,7 +547,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
 
                   if (rearrange && this.itemsOnDesktopCount[desktopPosition] > 1) {
                     var tmpItems = {};
-                    // remove notifications 
+                    // remove notifications
                     for (var itemName in this.itemsOnDesktop) {
                       if (this.itemsOnDesktop[itemName] == null) {
                         continue;
@@ -612,7 +612,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                     }
                   }
                 }
-                
+
                 var self = this;
                 setTimeout(function () {
                   self.runMainTimer();
@@ -868,7 +868,8 @@ var cd=cr.GetResearchItemFomMdbId(cj);
             mcvPopupY : 0,
             mcvTimerLabel: null,
             mcvCreditProcentageLabel: null,
-               mcvResearchTimerLabel: null,
+            mcvResearchTimerLabel: null,
+
             calculateCostsForNextMCV: function () {
               try {
                 if (!MT_Preferences.Settings.showCostsForNextMCV) {
@@ -891,147 +892,139 @@ var cd=cr.GetResearchItemFomMdbId(cj);
 
                 if (!this.mcvPopup) {
                   this.mcvPopup = new qx.ui.window.Window("").set({
-                    contentPadding : 4,
+                    contentPadding : 0,
                     //showMinimize : false,
                     showMaximize : false,
                     showClose : false,
                     resizable : false,
-					allowMaximize: false,
-					//allowMinimize: false,
-					allowClose: false
-					
+                    allowMaximize: false,
+                    //allowMinimize: false,
+                    allowClose: false
                   });
-				  
-				  
- 
-				  
-				  
-				 
-				   
+
                   this.mcvPopup.setLayout(new qx.ui.layout.VBox());
-				  
-				 
-				  
+
                   this.mcvPopup.addListener("move", function (e) {
                     var base = MaelstromTools.Base.getInstance();
-                    var size = qx.core.Init.getApplication().getRoot().getBounds();
-                    var value = size.width - e.getData().left;
-                    base.mcvPopupX = value < 0 ? 150 : value;
-                    value = size.height - e.getData().top;
-                    base.mcvPopupY = value < 0 ? 70 : value;
+                    //var size = qx.core.Init.getApplication().getRoot().getBounds();
+                    //var value = size.width - e.getData().left;
+                    var value = e.getData().left;
+                    base.mcvPopupX = value < 0 ? 120 : value;
+                    //value = size.height - e.getData().top;
+                    value = e.getData().top;
+                    base.mcvPopupY = value < 0 ? 0 : value;
                     MaelstromTools.LocalStorage.set("mcvPopup", {
                       x : base.mcvPopupX,
                       y : base.mcvPopupY
                     });
                   });
-				  this.mcvPopup.addListener("minimize",function(e) {
-					  
-            if(this.extMinimized) {
-              this.extMinimized = false;
-			  this.mcvPopup.remove(this.mcvplace);
-              for(var k in this.extItems) this.mcvPopup.add(this.extItems[k]);
-            }
-            else {
-			
-              this.extMinimized = true;
-              this.mcvPopup.removeAll();
-			  this.mcvPopup.add(this.mcvplace);
-			 
-            }
-            this.mcvPopup.restore();//trick
-          },this);
-				  
-				  
-				  
-				  
-				  
+                  this.mcvPopup.addListener("minimize",function(e) {
+                    if(this.extMinimized) {
+                      this.extMinimized = false;
+                      this.mcvPopup.remove(this.mcvplace);
+                      for(var k in this.extItems) this.mcvPopup.add(this.extItems[k]);
+                    }
+                    else
+                    {
+                      this.extMinimized = true;
+                      this.mcvPopup.removeAll();
+                      this.mcvPopup.add(this.mcvplace);
+                    }
+                    this.mcvPopup.restore();//trick
+                  },this);
+
                   var font1 = qx.bom.Font.fromString('bold').set({
-                    size: 14
+                    size: 12
                   });
-		  var font2 = qx.bom.Font.fromString('bold').set({
-                     size: 14
+                  var font2 = qx.bom.Font.fromString('bold').set({
+                     size: 12
                   });
                   var font3 = qx.bom.Font.fromString('bold').set({
-                     size: 14
+                     size: 12
                   });
-				  var font4 = qx.bom.Font.fromString('bold').set({
-                     size: 14
+                  var font4 = qx.bom.Font.fromString('bold').set({
+                     size: 12
                   });
+
                   this.mcvTimerLabel = new qx.ui.basic.Label().set({
                     font: font1,
-                     textColor: 'cyan',
-                     width: 190,
-					 allowGrowX: true,
-                     textAlign: 'center',
-                     marginBottom : 2,
-					 
-					 rich:true
+                    textColor: 'cyan',
+                    width: 150,
+                    allowGrowX: true,
+                    textAlign: 'center',
+                    marginBottom : 0,
+                    rich:true
                    });
+
                    this.mcvCreditProcentageLabel = new qx.ui.basic.Label().set({
                      font: font2,
                      textColor: 'yellow',
-                    width: 190,
-					allowGrowX: true,
-                    textAlign: 'center',
-                    marginBottom : 2,
-					
-					
-					rich:true
-                  });
-                    this.mcvResearchTimerLabel = new qx.ui.basic.Label().set({
-                     font: font3,
-                     textColor: 'yellow',
-                     width: 190,
-					 allowGrowX: true,
+                     width: 150,
+                     allowGrowX: true,
                      textAlign: 'center',
-                     marginBottom : 2,
-					
-				
-					 rich:true
-                   });
-				   this.mcvplace = new qx.ui.basic.Label().set({					 
-                     width: 100,
-					 font: font4,
-                     textColor: 'yellow',
-					  textAlign: 'center',
-					  rich:true,
-					  marginBottom : 2
-                    
-                   });
-                     this.mcvPopup.add(this.mcvTimerLabel);
-                     this.mcvPopup.add(this.mcvCreditProcentageLabel);
-                     this.mcvPopup.add(this.mcvResearchTimerLabel);
-					 this.mcvPopup.setToolTipText('Minimize to Toggle View');
-					 
-                     var serverBar = qx.core.Init.getApplication().getServerBar().getBounds();
+                     marginBottom : 0,
+                     rich:true
+                  });
+
+                  this.mcvResearchTimerLabel = new qx.ui.basic.Label().set({
+                    font: font3,
+                    textColor: 'yellow',
+                    width: 150,
+                    allowGrowX: true,
+                    textAlign: 'center',
+                    marginBottom : 0,
+                    rich:true
+                  });
+
+                  this.mcvplace = new qx.ui.basic.Label().set({
+                    width: 100,
+                    font: font4,
+                    textColor: 'yellow',
+                    textAlign: 'center',
+                    rich:true,
+                    marginBottom : 0
+                  });
+
+                  this.mcvPopup.add(this.mcvTimerLabel);
+                  this.mcvPopup.add(this.mcvCreditProcentageLabel);
+                  this.mcvPopup.add(this.mcvResearchTimerLabel);
+                  this.mcvPopup.setToolTipText('Minimize to Toggle View');
+
+                  var serverBar = qx.core.Init.getApplication().getServerBar().getBounds();
+
                   var pos = MaelstromTools.LocalStorage.get("mcvPopup", {
-                      x : serverBar.width + 150,
-                      y : 70
-                    });
+                    //x : serverBar.width + 0,
+                    x : 0,
+                    y : 0
+                  });
+
                   this.mcvPopupX = pos.x;
                   this.mcvPopupY = pos.y;
                   this.mcvPopup.open();
-				  this.mcvPopup.minimize();
+                  this.mcvPopup.minimize();
                 }
-                var size = qx.core.Init.getApplication().getRoot().getBounds();
-                this.mcvPopup.moveTo(size.width - this.mcvPopupX, size.height - this.mcvPopupY);
-				
+
+                this.mcvPopup.moveTo(this.mcvPopupX, this.mcvPopupY);
+
+                //var size = qx.core.Init.getApplication().getRoot().getBounds();
+                //this.mcvPopup.moveTo(size.width - this.mcvPopupX, size.height - this.mcvPopupY);
 
                 var nextLevelInfo = cd.get_NextLevelInfo_Obj();
-				
                 var resourcesNeeded = [];
+
                 for (var i in nextLevelInfo.rr) {
                   if (nextLevelInfo.rr[i].t > 0) {
                     resourcesNeeded[nextLevelInfo.rr[i].t] = nextLevelInfo.rr[i].c;
                   }
                 }
+
                 var researchNeeded = resourcesNeeded[ClientLib.Base.EResourceType.ResearchPoints];
-                 var currentResearchPoints = player.get_ResearchPoints();
+                var currentResearchPoints = player.get_ResearchPoints();
 					XY = 100 / researchNeeded
 					XYX = currentResearchPoints
 					PercentageOfResearchPoints = XYX * XY
 					//PercentageOfResearchPoints = 150.23
-				
+
                 var creditsNeeded = resourcesNeeded[ClientLib.Base.EResourceType.Gold];
                 var creditsResourceData = player.get_Credits();
                 var creditGrowthPerHour = (creditsResourceData.Delta + creditsResourceData.ExtraBonusDelta) * ClientLib.Data.MainData.GetInstance().get_Time().get_StepsPerHour();
@@ -1041,15 +1034,15 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                  var ZXZ = player.GetCreditsCount();
                  var PercentageOfCredits = ZXZ * ZX
                      //PercentageOfCredits = ZXZ * 1% of ZX
-  
+
                  //if (creditGrowthPerHour == 0 || creditTimeLeftInHours <= 0) {
                  //  if (this.mcvPopup) {
                  //    this.mcvPopup.close();
                  //  }
                  //  return;
                  //}
-                  
-                this.mcvPopup.setCaption(Lang.gt("NEXT MCV"));
+
+                this.mcvPopup.setCaption(Lang.gt("MCV"));
                   if (creditTimeLeftInHours > 0) {
  					this.mcvTimerLabel.setValue("TIMER C$ - " + creditTimeLeftInDays);//+ MaelstromTools.Wrapper.FormatTimespan(creditTimeLeftInHours * 60 * 60)
  				} else {
@@ -1058,8 +1051,8 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                    if (PercentageOfCredits >= 100) {
                    this.mcvCreditProcentageLabel.setValue("<span style='color: #92ff7f;'>CREDIT - OK!</span> <span style='color: #ff8f00;'>" +MaelstromTools.Wrapper.FormatNumbersCompact(ZXZ) + "</span> / <span style='font-size:12px;'>" + MaelstromTools.Wrapper.FormatNumbersCompact(creditsNeeded) + "</span>");
 				   this.mcvplace.setValue("<span style='color: #92ff7f;'>C$ (+" +MaelstromTools.Wrapper.FormatNumbersCompact(Math.abs(creditsNeeded-ZXZ)) + ")</span>");
-				   
-				   
+
+
                  }
                    if (PercentageOfCredits < 100) {
                    this.mcvCreditProcentageLabel.setValue("<span style='color: #ff8a7f;'>CREDIT</span> -  <span style='color: #ff8f00;'>" + MaelstromTools.Wrapper.FormatNumbersCompact(creditsNeeded-ZXZ) + "</span> / <span style='font-size:12px;'>" +MaelstromTools.Wrapper.FormatNumbersCompact(creditsNeeded) + " @ " + (PercentageOfCredits).toFixed(1) + "%</span>");
@@ -1077,7 +1070,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
 				this.extItems.push(this.mcvTimerLabel);
 				this.extItems.push(this.mcvCreditProcentageLabel);
 				this.extItems.push(this.mcvResearchTimerLabel);
-						
+
                 if (!this.mcvPopup.isVisible()) {
                   this.mcvPopup.open();
                 }
@@ -1407,7 +1400,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                   }
                   var ncity = MT_Cache.Cities[cname].Object;
                   if (typeof (this.Cache[cname]) !== 'object') this.Cache[cname] = {};
-                  if (typeof (this.Cache[cname][MaelstromTools.Statics.Tiberium]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Tiberium] = {}; // all have to be checked, 
+                  if (typeof (this.Cache[cname][MaelstromTools.Statics.Tiberium]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Tiberium] = {}; // all have to be checked,
                   if (typeof (this.Cache[cname][MaelstromTools.Statics.Crystal]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Crystal] = {}; // this.Cache[cname] can be created inside different namespaces
                   if (typeof (this.Cache[cname][MaelstromTools.Statics.Power]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Power] = {}; // like the RepairTime etc... without those objs
                   if (typeof (this.Cache[cname][MaelstromTools.Statics.Dollar]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Dollar] = {};
@@ -1985,7 +1978,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                       /*
                       var cityX = ncity.get_PosX();
                       var cityY = ncity.get_PosY();
-                      
+
                       var mainData = ClientLib.Data.MainData.GetInstance();
                       var visRegion = ClientLib.Vis.VisMain.GetInstance().get_Region();
 
@@ -1995,7 +1988,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                       //console.log("x: " + cityX + " y: " + cityY);
 
                       var worldObj = visRegion.GetObjectFromPosition((this.Cache[cname]["SupportedCityX"]*gridW), (this.Cache[cname]["SupportedCityY"]*gridH));
-                      
+
                       //ClientLib.Vis.Region.RegionCity
                       if (worldObj == null) {
                         this.Cache[cname]["SupportTime"] = "";
@@ -2003,7 +1996,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                         console.log(cname);
                         //console.log(worldObj.CalibrationSupportDuration());
                         var weaponState = worldObj.get_SupportWeaponStatus();
-                        
+
                         //console.log(this.calcDuration(ncity, worldObj));
                         var cities = ClientLib.Data.MainData.GetInstance().get_Cities();
                         cities.set_CurrentOwnCityId(ncity.get_Id());
@@ -2042,7 +2035,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
             /*
             calcDuration: function(currOwnCity, regionCity) {
               var targetCity = MaelstromTools.Wrapper.GetCity(regionCity.get_Id());
-              
+
               var supportBase=regionCity.get_SupportData();
               if(supportBase == null)
               {
@@ -2497,7 +2490,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                 if(!building) {
                   continue;
                 }
-                
+
                 //console.log(building.get_TechName() + " - " + ncity.get_CityFaction() + " - " + ClientLib.Base.Tech.GetTechIdFromTechNameAndFaction(building.get_TechName(), ncity.get_CityFaction()) + " at lvl " + building.get_CurrentLevel());
                 buildings.push(building);
               //buildings[count++] = building;
@@ -2579,18 +2572,18 @@ var cd=cr.GetResearchItemFomMdbId(cj);
 				j = ~~(hx/(24));
 				jx = ~~((j)*24);
   				h = ~~((hx-jx));
-  				m =  ~~(((hx-jx) - h) *60); 
+  				m =  ~~(((hx-jx) - h) *60);
 
 				h = h < 10 ?  "0"+h : h ;
     			m = m < 10 ?  "0"+m : m ;
-   
+
 
   				 t =j + "d." + h + ":" +m;
   			 return t;
-				
-				
+
+
 			},
-		
+
 
             GetDateTimeString: function (value) {
                 return phe.cnc.Util.getDateTimeString(value);
@@ -2637,7 +2630,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
               return (Math.floor(ncity.get_LvlBase() * 100) / 100).toFixed(2);
             }
             /*,
-            
+
             GetPointsByLevelWithThresholds: function (_levelThresholds,_levelFactors,_iLevel) {
               var result=0;
               var lastLevel=_iLevel;
@@ -2661,11 +2654,11 @@ var cd=cr.GetResearchItemFomMdbId(cj);
               var armyPoints = MaelstromTools.Wrapper.GetPointsByLevelWithThresholds(m_iArmyPointsPerLevelThresholds, m_fArmyPointsPerLevel, _iLevel);
               return Math.min(armyPoints, server.get_MaxArmyPoints());
             },
-            
+
             GetBuilding: function(ncity, techName) {
               return ncity.get_CityBuildingsData().GetUniqueBuildingByTechName(techName)
             },
-            
+
             GetCommandCenter: function(ncity) {
               //var techName = ClientLib.Base.Tech.GetTechIdFromTechNameAndFaction(ClientLib.Base.ETechName.Command_Center, ClientLib.Data.MainData.GetInstance().get_Player().get_Faction());
 
@@ -2859,7 +2852,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
               - Persistent filter by city, top and affordable per resource type
               - Reload onTabChange for speed optimization
               - Estimated time until upgrade is affordable
-              
+
               ToDo:
               - let the user decide to sort by colums he like i.e. timefactor or cost/gain and save it in the configuration
               - integrate buttons to transfer resources ?
@@ -2904,7 +2897,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
 				} else { //old
 					var eventType = "cellClick";
 				}
-				
+
                 this.createTabPage(ClientLib.Base.EResourceType.Tiberium);
                 this.createTable(ClientLib.Base.EResourceType.Tiberium);
                 this.HT_Tables[ClientLib.Base.EResourceType.Tiberium].addListener(eventType, function (e) {
@@ -3298,7 +3291,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                 //var buildings = MaelstromTools.Wrapper.GetBuildings(city.get_CityBuildingsData());
                 var buildings = city.get_Buildings().d;
 
-                // 376877 & old fixes 
+                // 376877 & old fixes
                 var objbuildings = [];
                 if (PerforceChangelist >= 376877) { //new
                   for (var o in buildings) objbuildings.push(buildings[o]);

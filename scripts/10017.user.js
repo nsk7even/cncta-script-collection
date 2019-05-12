@@ -2,7 +2,7 @@
 // @name            WarChiefs - Tiberium Alliances Upgrade Base/Defense/Army
 // @description     Upgrade your Base,Defense Army to a specific Level.
 // @author          Eistee
-// @version         13.11.11
+// @version         2017.06.06
 // @namespace       https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @include         https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @icon            http://eistee82.github.io/ta_simv2/icon.png
@@ -745,8 +745,8 @@
 
 			// German
 			localeManager.addTranslation("de", {
-				"Selected building": "Markiertes Geb�ude",
-				"All buildings": "Alle Geb�ude",
+				"Selected building": "Markiertes Gebäude",
+				"All buildings": "Alle Gebäude",
 				"Selected defense unit": "Markierte Abwehrstellung",
 				"All defense units": "Alle Abwehrstellungen",
 				"Selected army unit": "Markierte Armee-Einheit",
@@ -755,22 +755,22 @@
 
 			// Hungarian
 			localeManager.addTranslation("hu", {
-				"Selected building": "Kiv�lasztott l�tes�tm�ny",
-				"All buildings": "�sszes l�tes�tm�ny",
-				"Selected defense unit": "Kiv�lasztott v�delmi egys�g",
-				"All defense units": "Minden v�delmi egys�g",
-				"Selected army unit": "Kiv�lasztott katonai egys�g",
-				"All army units": "Minden katonai egys�g"
+				"Selected building": "Kiválasztott létesítmény",
+				"All buildings": "Összes létesítmény",
+				"Selected defense unit": "Kiválasztott védelmi egység",
+				"All defense units": "Minden védelmi egység",
+				"Selected army unit": "Kiválasztott katonai egység",
+				"All army units": "Minden katonai egység"
 			});
 
 			// Russian
 			localeManager.addTranslation("ru", {
-				"Selected building": "?????????? ??????",
-				"All buildings": "??? ??????",
-				"Selected defense unit": "????????? ????????? ????",
-				"All defense units": "??? ????????? ?????",
-				"Selected army unit": "?????????? ???? ?????",
-				"All army units": "??? ????? ?????"
+				"Selected building": "Вывбранное здание",
+				"All buildings": "Все здания",
+				"Selected defense unit": "Выбранный оборонный юнит",
+				"All defense units": "Все оборонные юниты",
+				"Selected army unit": "Выделенный юнит атаки",
+				"All army units": "Все юниты атаки"
 			});
 		}
 		function waitForGame() {

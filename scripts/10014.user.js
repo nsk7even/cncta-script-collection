@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name        C&C Tiberium Alliances POIs Analyser
-// @description Display alliance's POIs scores and next tier requirements.
+// @description Display alliance's POIs scores and next tier requirements. [+7even: fixed script error]
 // @namespace   https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @include     https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @version     2.0.2
+// @version     2.0.2+
 // @grant none
 // @author zdoom
 // ==/UserScript==
 
 (function()
-{	
+{
 	var injectScript = function()
 	{
 		function create_ccta_pa_class()
@@ -18,7 +18,7 @@
 			{
 				type: 'singleton',
 				extend: qx.ui.tabview.Page,
-				
+
 				construct: function()
 				{
 					try
@@ -38,7 +38,7 @@
 						var newFont = defaultFont.clone();
 						newFont.setSize(32);
 						abr.setFont(newFont);
-						var deco = new qx.ui.decoration.Background().set({backgroundImage: "http://archeikhmeri.co.uk/images/fop2.png"});
+						var deco = new qx.ui.decoration.Decorator().set({backgroundImage: "http://archeikhmeri.co.uk/images/fop2.png"});
 						var imgCont = new qx.ui.container.Composite(new qx.ui.layout.VBox());
 						imgCont.set({minWidth: 363, minHeight: 356, maxWidth: 363, maxHeight: 356, decorator: deco, alignX: 'center'});
 						var scrl = new qx.ui.container.Scroll();
@@ -55,7 +55,7 @@
 						grid.add(buttonCont, {row: 1, column: 1});
 						grid.add(tableCont, {row: 1, column: 2});
 						var noAllianceLabel = new qx.ui.basic.Label('No Alliance found, please create or join an alliance.').set({maxHeight: 30});
-						
+
 						var data = ClientLib.Data.MainData.GetInstance();
 						var alliance = data.get_Alliance();
 						var exists = alliance.get_Exists();
@@ -74,7 +74,7 @@
 						var maxPoiLevel = ClientLib.Data.MainData.GetInstance().get_Server().get_MaxCenterLevel();
 						var poiInfo = phe.cnc.gui.util.Text.getPoiInfosByType;
 						var startRank = ClientLib.Base.EPOIType.RankedTypeBegin;
-						
+
 						var tiersData = [], scoreData = [], bonusData = [], tiers = [];
 						for (var i = 0; i < 50; i++)
 						{
@@ -95,13 +95,13 @@
 							scoreData.push([i, getScore(i)]);
 						}
 						for (var i = 1; i < 41; i++) tiersData.push([i, '+' + getMultiplier(i) + '%']);
-						
+
 						var createTable = function()
 						{
-							
+
 							var columns = [["POI Level", "Score"], ["Tier", "Score Required", "Bonus", "Percentage"], ["Rank", "Multiplier"]];
 							var rows = [scoreData, bonusData, tiersData];
-							
+
 							var make = function(n)
 							{
 								var model = new qx.ui.table.model.Simple().set({columns: columns[n], data: rows[n]});
@@ -120,7 +120,7 @@
 							this.Multiplier = make(2);
 						};
 						var tables = new createTable();
-						
+
 						['Scores', 'Multiplier', 'Tiers'].map(function(key)
 						{
 							var table = tables[key];
@@ -135,7 +135,7 @@
 						});
 
 						info.add(grid);
-						
+
 						var tabview = new qx.ui.tabview.TabView().set({marginTop: 20, maxWidth: 500, maxHeight: 500});
 						var coordsButton = new qx.ui.form.Button('Coords').set({width: 100, margin: [10, 10, 0, 10]});
 						coordsButton.addListener('execute', function()
@@ -144,7 +144,7 @@
 							tableCont.add(tabview);
 							scrl.scrollChildIntoViewY(tableCont, 'top');
 						}, this);
-						var res = 
+						var res =
 						[
 							"ui/common/icn_res_tiberium.png",
 							"ui/common/icn_res_chrystal.png",
@@ -175,7 +175,7 @@
 							pages.push(page);
 						}
 						this.__poisCoordsPages = pages;
-						
+
 					//Simulator
 						var wrapper = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({decorator: 'tabview-pane-clear', padding: [10, 14, 13, 10], marginTop: 20});
 						var header = new qx.ui.container.Composite(new qx.ui.layout.HBox()).set({decorator: 'pane-light-opaque', padding: [8, 12]});
@@ -193,7 +193,7 @@
 						}
 						var mainCont = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({maxWidth: 480});
 						var modifierCont = new qx.ui.container.Composite(new qx.ui.layout.HBox());
-						
+
 						var rankingModel = new qx.ui.table.model.Simple().set({columns: ['Rank', 'Name', 'Score', 'Multiplier', 'Total Bonus']});
 						var custom =
 						{
@@ -204,12 +204,12 @@
 						};
 						var rankingTable = new qx.ui.table.Table(rankingModel, custom);
 						rankingTable.set({
-							columnVisibilityButtonVisible: false, 
-							headerCellHeight: 25, 
-							marginTop: 3, 
-							showCellFocusIndicator: false, 
+							columnVisibilityButtonVisible: false,
+							headerCellHeight: 25,
+							marginTop: 3,
+							showCellFocusIndicator: false,
 							statusBarVisible: false,
-							keepFirstVisibleRowComplete: false, 
+							keepFirstVisibleRowComplete: false,
 							height: 105});
 						for (var n = 0; n < 5; n++)
 						{
@@ -223,7 +223,7 @@
 						rankingTableResizeBehavior.setWidth(2, 100);
 						rankingTableResizeBehavior.setWidth(3, 70);
 						rankingTableResizeBehavior.setWidth(4, 100);
-						
+
 						var resultsModel = new qx.ui.table.model.Simple().set({columns: ['Property', 'Value']});
 						var resultsTable = new qx.ui.table.Table(resultsModel, custom);
 						var resultsTableColumnModel = resultsTable.getTableColumnModel();
@@ -231,25 +231,25 @@
 						resultsTableResizeBehavior.setWidth(0, 100);
 						resultsTableResizeBehavior.setWidth(1, "2*");
 						resultsTable.set({
-							columnVisibilityButtonVisible: false, 
-							headerCellHeight: 25, 
-							marginTop: 5, 
-							width: 210, 
-							maxWidth: 210, 
-							showCellFocusIndicator: false, 
+							columnVisibilityButtonVisible: false,
+							headerCellHeight: 25,
+							marginTop: 5,
+							width: 210,
+							maxWidth: 210,
+							showCellFocusIndicator: false,
 							height: 300});
 						resultsTable.getTableColumnModel().setDataCellRenderer(0, new qx.ui.table.cellrenderer.Html());
 						resultsTable.getTableColumnModel().setDataCellRenderer(1, new qx.ui.table.cellrenderer.Html());
 						var codeToString = function(s){ return String.fromCharCode(s).toLowerCase() };
 						label.setValue(String.fromCharCode(77) + [65,68,69,32,66,89,32,90,68,79,79,77].map(codeToString).join().replace(/,/g, ''));
-						
+
 						var poisColumns = ['Coords', 'Level', 'Score', 'Enabled'];
 						var poisModel = new qx.ui.table.model.Simple().set({columns: poisColumns  });
 						var poisTable = new qx.ui.table.Table(poisModel, custom);
 						poisTable.set({
-							columnVisibilityButtonVisible: false, 
-							headerCellHeight: 25, 
-							marginTop: 5, 
+							columnVisibilityButtonVisible: false,
+							headerCellHeight: 25,
+							marginTop: 5,
 							marginLeft: 5,
 							showCellFocusIndicator: false,
 							height: 300});
@@ -284,7 +284,7 @@
 							this.__setRankingRows(score);
 							table.setUserData('score', score);
 						}, this);
-					
+
 						var addRowCont = new qx.ui.container.Composite(new qx.ui.layout.HBox()).set({decorator: 'pane-light-opaque', padding: [8, 12], marginTop: 5});
 						var selectPoiLabelCont = new qx.ui.container.Composite(new qx.ui.layout.HBox());
 						var selectPoiLabel = new qx.ui.basic.Label('Select POI\'s Level').set({margin: [5, 10], font: 'font_size_11'});
@@ -314,7 +314,7 @@
 						addRowCont.add(addButton);
 						addRowCont.add(resetButton);
 						mainCont.add(addRowCont);
-						
+
 						var selectBox = new qx.ui.form.SelectBox().set({padding: [5,20]});
 						for (var i = 0; i < 7; i++)
 						{
@@ -329,12 +329,12 @@
 							this.__selectedSimPoi = type;
 							this.__initSim();
 						}, this);
-						
+
 						header.add(selectBox);
 						header.add(initValCont, {flex: 1});
 						wrapper.add(header);
 						wrapper.add(mainCont);
-						
+
 						this.__simLabels = valueLabels;
 						this.__rankingModel = rankingModel;
 						this.__resultsModel = resultsModel;
@@ -343,7 +343,7 @@
 						this.__selectPoiLevel = selectLevel;
 						this.__simCont = wrapper;
 						this.__selectedSimPoi = poiInfo(startRank).type;
-						
+
 						var simulatorButton = new qx.ui.form.Button('Simulator').set({width: 100, margin: [10, 10, 0, 10]});
 						simulatorButton.addListener('execute', function()
 						{
@@ -352,8 +352,8 @@
 							tableCont.add(wrapper);
 						}, this);
 						////////////////////////////////////////////////////////////////////////////////////////////////////////
-						
-						
+
+
 						var showImage = true;
 						if (typeof localStorage.ccta_pa == 'undefined')
 						{
@@ -361,7 +361,7 @@
 						}
 						else showImage = JSON.parse(localStorage.ccta_pa).showImage;
 						checkBox.setValue(showImage);
-						
+
 						var toggleImage = function()
 						{
 							var isChecked = checkBox.getValue();
@@ -370,7 +370,7 @@
 							else cont.addAt(imgCont, 0);
 						};
 						checkBox.addListener('changeValue', toggleImage, this);
-						
+
 						footer.add(checkBox, {row: 0, column: 0});
 						footer.add(label, {row: 0, column: 1});
 						scrl.add(cont);
@@ -401,9 +401,9 @@
 							noAllianceLabel.setValue('No Alliance found, please create or join an alliance.');
 							this.__isReset = true;
 						}
-						
-						this.__models = models;	
-						this.__tableCont = tableCont;						
+
+						this.__models = models;
+						this.__tableCont = tableCont;
 						this.__timer = new qx.event.Timer(1000);
 						this.__tiers = tiers;
 						this.__timer.addListener('interval', this.__update, this);
@@ -453,7 +453,7 @@
 								console.log(e.toString())
 							}
 						}, this);
-						
+
 						var overlay = webfrontend.gui.alliance.AllianceOverlay.getInstance();
 						var mainTabview = overlay.getChildren()[12].getChildren()[0];
 							mainTabview.addAt(this, 0);
@@ -510,9 +510,9 @@
 						{
 							"graph": {"borderBottom": "3px solid #333", "height": "200px"},
 							"tr": {"fontSize": "11px", "borderBottom": "1px solid #333",  "backgroundColor": "#d6dde1"}
-						}      
+						}
 					},
-					
+
 					__element: function(tag)
 					{
 						var elm = document.createElement(tag), root = this;
@@ -546,7 +546,7 @@
 						this.__style = {};
 						this.__instanceof = 'element';
 					},
-					
+
 					__format: function(n)
 					{
 						var f = "", n = n.toString();
@@ -557,7 +557,7 @@
 						}
 						return f;
 					},
-					
+
 					__update: function()
 					{
 						this.__timer.stop();
@@ -576,7 +576,7 @@
 							this.__updateRanks();
 						}
 					},
-					
+
 					__updatePOIList: function()
 					{
 						var alliance = ClientLib.Data.MainData.GetInstance().get_Alliance();
@@ -600,7 +600,7 @@
 							pages[i].setLabel(rows.length);
 						}
 					},
-					
+
 					__updateRanks: function()
 					{
 						this.__ranks = {}, this.__isolatedRanks = {}, root = this, allianceName = this.__allianceName;
@@ -610,7 +610,7 @@
 						var getPoiRanks = function(type, poiType, increment)
 						{
 							ClientLib.Net.CommunicationManager.GetInstance().SendSimpleCommand("RankingGetData",
-							{'ascending': true, 'firstIndex': 0, 'lastIndex': 100, 'rankingType': poiType, 'sortColumn': 200 + increment, 'view': 1}, 
+							{'ascending': true, 'firstIndex': 0, 'lastIndex': 100, 'rankingType': poiType, 'sortColumn': 200 + increment, 'view': 1},
 							phe.cnc.Util.createEventDelegate(ClientLib.Net.CommandResult, root, function(context, data)
 							{
 								if (data !== null)
@@ -635,7 +635,7 @@
 						};
 						if (startRank) for (var n = 0; n < 7; n++) getPoiRanks(poiInfo(getPoiRankType(n + startRank)).type, n + startRank, n);
 					},
-					
+
 					__setSimLabels: function()
 					{
 						var labels = this.__simLabels, pois = this.__pois, type = this.__selectedSimPoi, format = this.__format;
@@ -647,7 +647,7 @@
 							labels[3].setValue(pois[type].tb);
 						}
 					},
-					
+
 					__setRankingRows: function(score)
 					{
 						var isolatedRanks = this.__isolatedRanks, format = this.__format, allianceName = this.__allianceName, type = this.__selectedSimPoi, pois = this.__pois;
@@ -659,7 +659,7 @@
 							var x = isolatedRanks[type][i], score = (x.pois || 0), name = webfrontend.gui.util.BBCode.createAllianceLinkText(x.an);
 							var bonus = getBonus(pois[type].index, score), multiplier = getMultiplier(nr), totalBonus = bonus + (bonus * multiplier / 100);
 							totalBonus = (pois[type].bonusType == 1) ? format(Math.round(totalBonus)) : Math.round(totalBonus * 100) / 100 + '%';
-							return [nr, name, format(score), '+' + multiplier + '%',  totalBonus] 
+							return [nr, name, format(score), '+' + multiplier + '%',  totalBonus]
 						};
 						getMyRanking = function(s, i, p)
 						{
@@ -668,7 +668,7 @@
 							var tb = b + (b * m / 100);
 							tb = (pois[p].bonusType == 1) ? format(Math.round(tb)) : Math.round(tb * 100) / 100 + '%';
 							var n = webfrontend.gui.util.BBCode.createAllianceLinkText(allianceName);
-							return [i, n, format(s), '+' + m + '%',  tb]; 
+							return [i, n, format(s), '+' + m + '%',  tb];
 						};
 						var getRankingRows = function(s, type)
 						{
@@ -690,7 +690,7 @@
 						var rankingRows = getRankingRows(score, type);
 						if (rankingRows) this.__rankingModel.setData(rankingRows);
 					},
-								
+
 					__setResultsRows: function(score)
 					{
 						var pois = this.__pois, tiers = this.__tiers, format = this.__format, type = this.__selectedSimPoi, ranks = this.__isolatedRanks;
@@ -764,7 +764,7 @@
 						var resultsRows = getSimulatedData(score, type);
 						if (resultsRows) this.__resultsModel.setData(resultsRows);
 					},
-					
+
 					__setPoisRows: function()
 					{
 						var poiUtil = ClientLib.Base.PointOfInterestTypes;
@@ -783,7 +783,7 @@
 						});
 						if (poisRows) this.__poisModel.setData(poisRows);
 					},
-					
+
 					__initSim: function()
 					{
 						var score = this.__pois[this.__selectedSimPoi].score;
@@ -795,7 +795,7 @@
 						this.__poisTable.resetSelection();
 						this.__selectPoiLevel.setSelection([this.__selectPoiLevel.getSelectables()[0]]);
 					},
-			
+
 					__updateGraph: function()
 					{
 						try
@@ -847,7 +847,7 @@
 								var f_rank = rank + ' (' + multiplier + '%)';
 								var f_totalBonus = (poiType == 1) ? format(totalBonus) : Math.round(totalBonus * 100) / 100 + ' %';
 								nextTotalBonus = (poiType == 1) ? format(nextTotalBonus) : Math.round(nextTotalBonus * 100) / 100 + ' %';
-								pois[name] = 
+								pois[name] =
 								{
 									'score': score,
 									'tier': tier,
@@ -857,16 +857,16 @@
 									'bonusType': poiType,
 									'rank': rank,
 									'multiplier': multiplier,
-									't': tier, 
-									's': f_score, 
-									'r': f_rank, 
-									'nt': nextTier, 
-									'tb': f_totalBonus, 
-									'ntb': nextTotalBonus, 
-									'c': color, 
+									't': tier,
+									's': f_score,
+									'r': f_rank,
+									'nt': nextTier,
+									'tb': f_totalBonus,
+									'ntb': nextTotalBonus,
+									'c': color,
 									'h': height
 								};
-							}							
+							}
 							console.log('data ready')
 							this.__pois = pois;
 							this.__graph.call(this);
@@ -876,7 +876,7 @@
 							console.log(e.toString());
 						}
 					},
-					
+
 					__graph: function()
 					{
 						console.log('creating graph');
@@ -908,9 +908,9 @@
 								td.text(arr[key]);
 								row.append(td);
 							}
-							table.append(row); 
+							table.append(row);
 						};
-					
+
 						var table = create('table', style.table);
 						var	gc = create('tr', style.rows.graph);
 						var	gh = create('td');
@@ -919,7 +919,7 @@
 						gh.append(ul);
 						gc.append(gh);
 						table.append(gc);
-						
+
 						var score = [], tier = [], nextTier = [], bns = [], nextBns = [], poiRank = [], m = 0;
 						for (var key in pois)
 						{
@@ -931,14 +931,14 @@
 								li    = create('li', style.icon.li),
 								icon  = create('div', style.icon.div),
 								p     = create('p', style.icon.p);
-								
+
 								bns[m]      = pois[key].tb;
 								poiRank[m]  = pois[key].r;
 								score[m]    = pois[key].s;
 								tier[m]     = pois[key].t;
 								nextTier[m] = pois[key].nt;
 								nextBns[m]  = pois[key].ntb;
-					
+
 							div.css({'backgroundColor': color, 'height': h * 2 - 3 + 'px'});
 							td.append(div);
 							gc.append(td);
@@ -949,26 +949,26 @@
 							ul.append(li);
 							m++;
 						}
-						
+
 						addRow('Tier', tier, table, 0);
-						addRow('Alliance Rank', poiRank, table, 0);		
+						addRow('Alliance Rank', poiRank, table, 0);
 						addRow('Score', score, table);
 						addRow('Next Tier Requires', nextTier, table, 0);
 						addRow('Bonus', bns, table, 1);
 						addRow('Next Tier Bonus', nextBns, table, 0);
 						document.getElementById('graph').appendChild(table.elm);
-					}		
+					}
 				}
 			});
 		}
-		
-		function initialize_ccta_pa() 
+
+		function initialize_ccta_pa()
 		{
 			console.log('poiAnalyser: ' + 'POIs Analyser retrying...');
-			if (typeof qx != 'undefined' && typeof qx.core != 'undefined' && typeof qx.core.Init != 'undefined' && typeof ClientLib != 'undefined' && typeof webfrontend != 'undefined' && typeof phe != 'undefined') 
+			if (typeof qx != 'undefined' && typeof qx.core != 'undefined' && typeof qx.core.Init != 'undefined' && typeof ClientLib != 'undefined' && typeof webfrontend != 'undefined' && typeof phe != 'undefined')
 			{
 				var app = qx.core.Init.getApplication();
-				if (app.initDone == true) 
+				if (app.initDone == true)
 				{
 					try
 					{
@@ -1003,14 +1003,14 @@
 					{
 						console.log('poiAnalyser: ' + e.toString());
 					}
-				} 
+				}
 				else window.setTimeout(initialize_ccta_pa, 10000);
-			} 
+			}
 			else window.setTimeout(initialize_ccta_pa, 10000);
 		};
-		window.setTimeout(initialize_ccta_pa, 10000);  
+		window.setTimeout(initialize_ccta_pa, 10000);
 	};
-	
+
 	function inject()
 	{
 		var script = document.createElement("script");
@@ -1022,5 +1022,5 @@
 			}
 	};
 	inject();
-	
+
 })();
