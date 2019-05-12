@@ -1,0 +1,179 @@
+<html>
+<head>
+	<meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
+	<title>CnCTA SoO (SinsofOmission) SCRIPT PACK</title>
+    <link href="CSS/lc_switch.css" rel="stylesheet" />
+    <link href="CSS/jquery-ui.min.css" rel="stylesheet" />
+<style>
+body {
+	font: normal 80.5% "Trebuchet MS", Verdana, Helvetica, Arial,sans-serif !important;
+
+}
+a {
+	text-decoration: none;
+	font-weight: bold;
+	color:darkgray;
+}
+input, label {
+	vertical-align:middle;
+	  margin-left: 2;
+}
+#title {
+    font-size: 2em;
+	font-weight: bold;
+	margin: auto;
+	height: 48px;
+	line-height: 48px;
+	background: url(icon.png) left no-repeat;
+	padding-left: 60px;
+	width: 567px;
+}
+#content {
+	color: white;
+	width: 640px;
+	overflow: auto;
+	margin: auto;
+	margin-top: 5px;
+	-webkit-border-radius: 5px;
+	padding: 15px;
+	border: 1px solid #333;
+	background-image: -webkit-linear-gradient(135deg, rgb(23, 109, 108) 30%, rgba(0,0,0,1) 98%);
+	text-align: left;
+}
+#description {
+    color: #ff2323;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    background-color: #000;
+    height: 50px;
+    padding-top: 20px;
+}
+span.version {
+	color: #ccc;
+	font-size: 11px;
+	font-weight: bold;
+	vertical-align:middle
+}
+button {
+margin-top: 10px;
+float: right;
+}
+#message {
+	color: red;
+	opacity: 0;
+	font-weight: bold;
+	font-size: 18px;
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	text-transform:uppercase;
+}
+.cat {
+	margin-top: 5px;
+	padding: 0px 2px;
+}
+.cat legend {
+	color: rgba(211,101,6,1.00);
+	font-size:16px;
+	font-weight:bold;
+	margin-bottom: 2px;
+}
+#test {
+	margin: 20px 0px;
+    border: solid 1px rgba(243,249,51,1.00);
+    padding: 5px 2px;
+}
+#test legend {
+	color: rgba(243,249,51,1.00);
+}
+#hot {
+
+    width: 12;
+    vertical-align: middle;
+    margin-left: 10;
+    margin-top: -2;
+	
+}
+#toggle {
+
+        font-size: 16px;
+    text-align: right;
+    padding: 6 5;
+	
+}
+fieldset {
+	border: 1px solid #666;
+}
+#p {
+    color: white;
+	font-size: 20;
+	font-weight: bold;
+	margin: auto;
+	-webkit-border-radius: 5px;
+	height: 48px;
+	border: 1px solid #333;
+	line-height: 48px;
+	background-image: -webkit-linear-gradient(135deg, black 20%, FireBrick 98%);
+	text-align: center;
+	width: 450px;
+	}
+
+.ui-widget {
+    font-size: 2em;
+}
+</style>
+<script src="libs/jquery-3.1.1.min.js"></script>
+<script src="libs/lc_switch.js" type="text/javascript"></script>
+<script src="libs/jquery-ui.min.js" type="text/javascript"></script>
+
+<script src="js/options.js"></script>
+</head>
+<body>
+
+
+
+<div id="title">CnCTA SoO (SinsofOmission) SCRIPT PACK</div>
+
+<div id="content">
+<div  id="toggle"><span>VIEWING ALL SCRIPTS </span><input type="checkbox" name="toggleview" value="1" /></div>
+<fieldset>
+	<legend>Scripts</legend>
+	<div id="scripts">
+    <div id="wrapper" class="cat"><legend>WRAPPER</legend></div>
+    <div id="simulator" class="cat"><legend>SIMULATOR</legend></div>
+    <div id="infotool" class="cat"><legend>GET INFO HELPER</legend></div>
+    <div id="tool" class="cat"><legend>TOOL AND TOOL-PACK</legend></div>
+    <div id="gui" class="cat"><legend>GUI ENHANCER</legend></div>
+    <div id="login" class="cat"><legend>LOGIN AND SESSION</legend></div>
+    <div id="mail" class="cat"><legend>MAIL AND MESSAGE</legend></div>
+    <div id="tweak" class="cat"><legend>TWEAKS AND FIX</legend></div>
+    <div id="other" class="cat"><legend>OTHER</legend></div>
+    <div id="del" class="cat"><legend>TO REMOVE</legend></div>
+    <div id="test" class="cat"><legend>TEST DEV</legend></div>
+
+    
+    </div>
+	<div id="description">Select what you want to enable and press save Button</div>
+</fieldset>
+<fieldset>
+	<legend>Contact</legend>
+	<p>e-mail:
+	<a href="mailto:netquik@gmail.com">netquik@gmail.com</a></p>
+<style>
+    a:link    {color:white; background-color:transparent; text-decoration:none}
+    a:visited {color:white; background-color:transparent; text-decoration:none}
+    a:hover   {color:red; background-color:transparent; text-decoration:none}
+    a:active  {color:white; background-color:transparent; text-decoration:none}
+	p  { font-size: 1.5em; }
+	h1  { font-size: 1.0em; }
+</style>
+</fieldset>
+<button id="close">Close</button>
+<button id="save">Save</button>
+</div>
+<div id="message"> Options saved and then reload the game to continue!</div>
+</body>
+</html>

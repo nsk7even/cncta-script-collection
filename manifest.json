@@ -1,0 +1,35 @@
+{
+   "background": {
+      "scripts": [ "js/background.js" ]
+   },
+   "content_scripts": [ {
+      "js": [ "js/content.js" ],
+      "matches": [ "https://*.alliances.commandandconquer.com/*", "https://*.tiberiumalliances.com/*" ]
+   } ],
+   "content_security_policy": "script-src 'self'; object-src 'self'",
+   "description": "A script collection for C&C:Tiberium Alliances online game. All credits go to individual authors.",
+   "developer": {
+      "name": "netquik"
+   },
+   "icons": {
+      "20": "imgs/icon-20.png",
+      "48": "imgs/icon.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz/CSUyQ2e8BP7KPFvqgZq8b+tCMoxJDtuaum2mcJAMBewEYfkRM1VTsnxvJLVHHGiWb0goAzu0Tdhrktq2MjnLMw2+oiBA6R/6nCO+HX0rqGW+k1IHL69uhP+ABmWghKa5fyE9bZenMmSPoeHkipIm8W8INyPwXr53OMamf12Ce+xsYfTLpRW9BntBlq+HsbZA4wUV6RuAJXCYPbYpbKqjXfjTgXyZUaSdQFd9/HGYU7W/JMprS729FZAt5RNK6XxUPw0XaRVdAIYLAc12J4cYW6x8s9pRSaZagad6sC++Q4N8CY9dWZecx9J24o/CsmPyNVaYPAUgfhb2Gp2hqV4wIDAQAB",
+   "manifest_version": 2,
+   "name": "CnCTA SoO SCRIPT PACK - Opera",
+   "options_ui": {
+      "chrome_style": true,
+      "open_in_tab": true,
+      "page": "options.html"
+   },
+   "page_action": {
+      "default_icon": "imgs/icon-20.png",
+      "default_title": "CnCTA SoO SCRIPT PACK Options"
+   },
+   "permissions": [ "tabs", "https://*.alliances.commandandconquer.com/*", "https://replayshare.parseapp.com/*", "http://baseinfo.scriptarea.net/*", "http://cnc-map.com/*", "http://cncopt.com/*" ],
+   "short_name": "CnCTA SoO Opera",
+   "update_url": "https://extension-updates.opera.com/api/omaha/update/",
+   "version": "1.1.2",
+   "web_accessible_resources": [ "libs/parse.min.js", "scripts/10000.user.js", "scripts/10001.user.js", "scripts/10002.user.js", "scripts/10003.user.js", "scripts/10004.user.js", "scripts/10005.user.js", "scripts/10006.user.js", "scripts/10007.user.js", "scripts/10008.user.js", "scripts/10009.user.js", "scripts/10010.user.js", "scripts/10011.user.js", "scripts/10012.user.js", "scripts/10014.user.js", "scripts/10015.user.js", "scripts/10016.user.js", "scripts/10017.user.js", "scripts/10018.user.js", "scripts/10019.user.js", "scripts/10020.user.js", "scripts/10021.user.js", "scripts/10022.user.js", "scripts/10023.user.js", "scripts/10025.user.js", "scripts/10026.user.js", "scripts/10027.user.js", "scripts/10028.user.js", "scripts/10029.user.js", "scripts/10030.user.js", "scripts/10032.user.js", "scripts/10033.user.js", "scripts/10034.user.js", "scripts/10035.user.js", "scripts/10036.user.js", "scripts/10038.user.js", "scripts/10039.user.js", "scripts/10040.user.js", "scripts/10041.user.js", "scripts/10042.user.js", "scripts/10043.user.js", "scripts/10044.user.js", "scripts/10045.user.js", "scripts/10046.user.js", "scripts/10047.user.js", "scripts/10048.user.js", "scripts/10049.user.js", "scripts/10050.user.js", "scripts/10051.user.js", "scripts/10052.user.js", "scripts/10054.user.js", "scripts/10060.user.js", "scripts/10062.user.js", "scripts/10063.user.js", "scripts/10064.user.js", "scripts/10065.user.js", "scripts/10067.user.js", "scripts/10068.user.js", "scripts/10069.user.js" ]
+}
