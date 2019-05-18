@@ -435,6 +435,11 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "gui",
 	version : "  1.0.1",
 	enabled : false
+},{
+	id : 10071,
+	name : "Next MCV Info HUD",
+	cat : "infotool",
+	version : "  1.0 alpha"
 }  ];
 
 var updateopen = false;

@@ -15,7 +15,7 @@
 	{
 		function createClasses()
 		{
-			qx.Class.define("SectorHUD",
+			qx.Class.define("InfoHUD",
 			{
 				type: "singleton",
 				extend: qx.core.Object,
@@ -29,7 +29,7 @@
 						font : "font_size_11"
 					});
 
-					var HUD = new qx.ui.container.Composite(new qx.ui.layout.HBox()).set(
+					this.HUD = new qx.ui.container.Composite(new qx.ui.layout.HBox()).set(
 					{
 						decorator : new qx.ui.decoration.Decorator().set(
 						{
@@ -41,16 +41,18 @@
 						opacity: 0.8
 					});
 
-					HUD.add(this.SectorText);
-
-					HUD.addListener("click", function (e)
+					this.HUD.setToolTipText('Click to Toggle View');
+					this.HUD.addListener("click", function (e)
 					{
 						if (e.getButton() == "left") null;
 						if (e.getButton() == "right") null;
 					}, this);
 
+					//this.HUD.add(this.SectorText);
+
 					this.__refresh = false;
-					qx.core.Init.getApplication().getDesktop().add(HUD, {left: 128, top: 20});
+					qx.core.Init.getApplication().getDesktop().add(this.HUD, {left: 128, top: 20});
+					this.run_UpdateTimer();
 					//phe.cnc.Util.attachNetEvent(ClientLib.Vis.VisMain.GetInstance().get_Region(), "PositionChange", ClientLib.Vis.PositionChange, this, this._update);
 				},
 
@@ -58,15 +60,33 @@
 				{
 					__refresh: null,
 					SectorText: null,
-					extItems: [],
 					mcvTimerLabel: null,
 					mcvCreditProcentageLabel: null,
 					mcvResearchTimerLabel: null,
 					mcvplace: null,
+					HUD: null,
 
 					get_FormatNumbersCompact: function(i)
 					{
 						return i;
+					},
+
+					run_UpdateTimer: function ()
+					{
+						try
+						{
+							this._update();
+
+							var self = this;
+							setTimeout(function ()
+							{
+								self.run_UpdateTimer();
+							}, 10000);
+						}
+						catch (e)
+						{
+							console.log("MaelstromTools.runSecondlyTimer: ", e);
+						}
 					},
 
 					get_NextMcvCosts: function ()
@@ -147,11 +167,6 @@
 									marginBottom : 0
 								});
 
-							this.mcvPopup.add(this.mcvTimerLabel);
-							this.mcvPopup.add(this.mcvCreditProcentageLabel);
-							this.mcvPopup.add(this.mcvResearchTimerLabel);
-							this.mcvPopup.setToolTipText('Click to Toggle View');
-
 							var serverBar = qx.core.Init.getApplication().getServerBar().getBounds();
 							var nextLevelInfo = cd.get_NextLevelInfo_Obj();
 							var resourcesNeeded = [];
@@ -170,7 +185,6 @@
 							XYX = currentResearchPoints
 							PercentageOfResearchPoints = XYX * XY
 							//PercentageOfResearchPoints = 150.23
-
 							var creditsNeeded = resourcesNeeded[ClientLib.Base.EResourceType.Gold];
 							var creditsResourceData = player.get_Credits();
 							var creditGrowthPerHour = (creditsResourceData.Delta + creditsResourceData.ExtraBonusDelta) * ClientLib.Data.MainData.GetInstance().get_Time().get_StepsPerHour();
@@ -180,8 +194,6 @@
 							var ZXZ = player.GetCreditsCount();
 							var PercentageOfCredits = ZXZ * ZX
 							//PercentageOfCredits = ZXZ * 1% of ZX
-
-							this.mcvPopup.setCaption(Lang.gt("MCV"));
 
 							if (creditTimeLeftInHours > 0)
 							{
@@ -220,6 +232,8 @@
 							this.extItems.push(this.mcvTimerLabel);
 							this.extItems.push(this.mcvCreditProcentageLabel);
 							this.extItems.push(this.mcvResearchTimerLabel);
+
+							return this.extItems;
 						}
 						catch (e)
 						{
@@ -237,8 +251,13 @@
 
 					__update: function ()
 					{
-						var McvCosts = this.get_NextMcvCosts();
-						this.SectorText.setValue(McvCosts);
+						var McvCostItems = this.get_NextMcvCosts();
+
+						for (i in McvCostItems)
+						{
+						  this.HUD.add(McvCostItems[i])
+						}
+
 						this.__refresh = false;
 					}
 				}
@@ -258,7 +277,7 @@
 						{
 							console.time("loaded in");
 							createClasses();
-							SectorHUD.getInstance();
+							InfoHUD.getInstance();
 							console.group("Next MCV Info HUD");
 							console.timeEnd("loaded in");
 							console.groupEnd();
