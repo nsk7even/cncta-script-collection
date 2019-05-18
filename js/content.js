@@ -9,7 +9,7 @@ function isStorageSupported() {
     }
 }
 if (!isStorageSupported()) {
-    console.warn("Local Storage is supported!");
+    console.warn("Local Storage is not supported!");
 }
 
 function createScriptElement(url) {
@@ -33,16 +33,16 @@ function processResponse(settings) {
             console.log("Attaching lib: " + script.lib + ".js for" + script.name);
 			}
                 url = chrome.extension.getURL('/') + "scripts/" + script.id + ".user.js";
-            
+
             console.log("Attaching script: " + script.name);
             createScriptElement(url);
         }
     }
 }
 
-function sendMessage(request, callback) {    
+function sendMessage(request, callback) {
         chrome.runtime.sendMessage(request, callback);
-   
+
 }
 
 /*------------------------------------------------*/

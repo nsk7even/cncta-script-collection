@@ -870,7 +870,8 @@ var cd=cr.GetResearchItemFomMdbId(cj);
             mcvCreditProcentageLabel: null,
             mcvResearchTimerLabel: null,
 
-            calculateCostsForNextMCV: function () {
+            calculateCostsForNextMCV: function ()
+            {
               try {
                 if (!MT_Preferences.Settings.showCostsForNextMCV) {
                   if (this.mcvPopup) {

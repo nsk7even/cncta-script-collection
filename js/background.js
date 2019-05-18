@@ -253,9 +253,9 @@ var DEFAULT_SCRIPTS = [ {
 	greasyfork: 13711,
 	name : "Tiberium Alliances Battle Simulator - V3",
 	cat : "simulator",
-	hot: false,
+	hot: true,
 	version : "  17.06.07",
-	enabled : false
+	enabled : true
 }, {
 	id : 10000,
 	greasyfork: 14830,
@@ -399,9 +399,9 @@ var DEFAULT_SCRIPTS = [ {
 	id : 10063,
 	greasyfork: 24720,
 	name : "C&C Tiberium Alliances Info Sticker (SUPERCompact)",
-	cat : "gui",
+	cat : "infotool",
 	version : "  1.11.10+",
-	enabled : true
+	enabled : false
 },{
 	id : 10064,
 	name : "CnC TA: Crucial Script CNC-Map.com link",
