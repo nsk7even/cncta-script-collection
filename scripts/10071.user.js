@@ -39,14 +39,14 @@
 							backgroundImage : "webfrontend/ui/menues/notifications/bgr_ticker_container.png",
 							backgroundPositionX : "center"
 						}),
-						padding : 2,
+						padding : 0,
 						opacity: 0.8
 					});
 
-					this.HUD.setToolTipText('Click to Toggle View');
+					this.HUD.setToolTipText('Next MCV Info HUD: Click to Toggle View');
 					this.HUD.addListener("click", function (e)
 					{
-						if (e.getButton() == "left") null;
+						if (e.getButton() == "left") this.toggle_View();
 						if (e.getButton() == "right") null;
 					}, this);
 
@@ -69,6 +69,7 @@
 					mcvResearchTimerLabel: null,
 					mcvplace: null,
 					HUD: null,
+					activeView: 0,
 
 					get_FormatNumbersCompact: function(i)
 					{
@@ -109,7 +110,7 @@
 						}
 						catch (e)
 						{
-							console.log("MaelstromTools.runSecondlyTimer: ", e);
+							console.log("Next MCV Info HUD - run_UpdateTimer error: ", e);
 						}
 					},
 
@@ -141,6 +142,20 @@
 						{
 							this.__refresh = false;
 						}
+					},
+
+					toggle_View : function()
+					{
+						if (this.activeView == 0)
+						{
+							this.activeView = 1;
+						}
+						else
+						{
+							this.activeView = 0;
+						}
+
+						this.__update();
 					},
 
 					get_NextMcvCosts: function ()
@@ -214,11 +229,8 @@
 							this.mcvplace = new qx.ui.basic.Label().set(
 								{
 									width: 100,
-									font: font4,
-									textColor: 'yellow',
-									textAlign: 'center',
+									font: "font_size_11",
 									rich:true,
-									marginBottom : 0
 								});
 
 							var serverBar = qx.core.Init.getApplication().getServerBar().getBounds();
@@ -263,33 +275,44 @@
 
 							if (PercentageOfCredits >= 100)
 							{
-								this.mcvCreditProcentageLabel.setValue("<span style='color: #92ff7f;'>CREDIT - OK!</span> <span style='color: #ff8f00;'>" +this.get_FormatNumbersCompact(ZXZ) + "</span> / <span style='font-size:12px;'>" + this.get_FormatNumbersCompact(creditsNeeded) + "</span>");
+								this.mcvCreditProcentageLabel.setValue("<br><span style='color: #92ff7f;'>CREDIT - OK!</span> <span style='color: #ff8f00;'>" +this.get_FormatNumbersCompact(ZXZ) + "</span> / <span style='font-size:12px;'>" + this.get_FormatNumbersCompact(creditsNeeded) + "</span>");
 								this.mcvplace.setValue("<span style='color: #92ff7f;'>C$ (+" + this.get_FormatNumbersCompact(Math.abs(creditsNeeded-ZXZ)) + ")</span>");
 							}
 
 							if (PercentageOfCredits < 100)
 							{
-								this.mcvCreditProcentageLabel.setValue("<span style='color: #ff8a7f;'>CREDIT</span> -  <span style='color: #ff8f00;'>" + this.get_FormatNumbersCompact(creditsNeeded-ZXZ) + "</span> / <span style='font-size:12px;'>" +this.get_FormatNumbersCompact(creditsNeeded) + " @ " + (PercentageOfCredits).toFixed(1) + "%</span>");
+								this.mcvCreditProcentageLabel.setValue("<br><span style='color: #ff8a7f;'>CREDIT</span> -  <span style='color: #ff8f00;'>" + this.get_FormatNumbersCompact(creditsNeeded-ZXZ) + "</span> / <span style='font-size:12px;'>" +this.get_FormatNumbersCompact(creditsNeeded) + " @ " + (PercentageOfCredits).toFixed(1) + "%</span>");
 								this.mcvplace.setValue("<span style='color: #ff8a7f;'>T$ - "  + creditTime + "</span>");
 							}
 
 							if (PercentageOfResearchPoints >= 100)
 							{
-								this.mcvResearchTimerLabel.setValue("<span style=' color: #92ff7f;'>RP - OK!</span> <span style='color: #ff8f00;'>" +this.get_FormatNumbersCompact(XYX) + "</span> / <span style='font-size:12px;'>" + this.get_FormatNumbersCompact(researchNeeded) + ")</span>");
+								this.mcvResearchTimerLabel.setValue("<br><span style=' color: #92ff7f;'>RP - OK!</span> <span style='color: #ff8f00;'>" +this.get_FormatNumbersCompact(XYX) + "</span> / <span style='font-size:12px;'>" + this.get_FormatNumbersCompact(researchNeeded) + ")</span>");
 								this.mcvplace.setValue(this.mcvplace.$$user_value + "<br><span style='color: #92ff7f;'>RP (+" +this.get_FormatNumbersCompact(Math.abs(researchNeeded-currentResearchPoints)) + ")</span>");
 							}
 
 							if (PercentageOfResearchPoints < 100)
 							{
-								this.mcvResearchTimerLabel.setValue("<span style='color: #ff8a7f;'>RP - </span><span style='color: #ff8f00;'>" + this.get_FormatNumbersCompact(researchNeeded-currentResearchPoints) + "</span> /<span style='font-size:12px;'> " +this.get_FormatNumbersCompact(researchNeeded) + " @ " + (PercentageOfResearchPoints).toFixed(1) + "%</span>");
+								this.mcvResearchTimerLabel.setValue("<br><span style='color: #ff8a7f;'>RP - </span><span style='color: #ff8f00;'>" + this.get_FormatNumbersCompact(researchNeeded-currentResearchPoints) + "</span> /<span style='font-size:12px;'> " +this.get_FormatNumbersCompact(researchNeeded) + " @ " + (PercentageOfResearchPoints).toFixed(1) + "%</span>");
 								this.mcvplace.setValue(this.mcvplace.$$user_value + "<br><span style='color: #ff8a7f;'>RP (@" + (PercentageOfResearchPoints).toFixed(1) + "%)</span>");
 							}
 
 							var extItems=[];
-							extItems.push(this.mcvplace);
-							// extItems.push(this.mcvTimerLabel);
-							// extItems.push(this.mcvCreditProcentageLabel);
-							// extItems.push(this.mcvResearchTimerLabel);
+
+							if (this.activeView == 0)
+							{
+								extItems.push(this.mcvplace);
+							}
+							else if (this.activeView == 1)
+							{
+								extItems.push(this.mcvTimerLabel);
+								extItems.push(this.mcvCreditProcentageLabel);
+								extItems.push(this.mcvResearchTimerLabel);
+							}
+							else
+							{
+								extItems.push(this.mcvplace);
+							}
 
 							return extItems;
 						}
