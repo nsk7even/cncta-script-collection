@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        MaelstromTools Dev (Modv1.5 for MCV)
 // @namespace   MaelstromTools
-// @description Just a set of statistics & summaries about repair time and base resources. Mainly for internal use, but you are free to test and comment it. [+7even: fixed mcv popup jumping out of visibility]
-// @version     0.1.4.6+
+// @description Just a set of statistics & summaries about repair time and base resources. Mainly for internal use, but you are free to test and comment it. [+7even: fixed mcv popup jumping out of visibility][+7even: changed default of SHOWCOSTSFORNEXTMCV to false, in favor of Next MCV Info HUD]
+// @version     0.1.4.6++
 // @author      Maelstrom, HuffyLuf, KRS_L,Krisan,DLwarez, NetquiK (mod for MCV)
 // @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
@@ -1126,7 +1126,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                 this.Settings[MaelstromTools.Preferences.AUTOHIDEMISSIONTRACKER] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOHIDEMISSIONTRACKER, 0) == 1);
                 this.Settings[MaelstromTools.Preferences.AUTOCOLLECTTIMER] = MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOCOLLECTTIMER, 60);
                 this.Settings[MaelstromTools.Preferences.SHOWLOOT] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.SHOWLOOT, 1) == 1);
-                this.Settings[MaelstromTools.Preferences.SHOWCOSTSFORNEXTMCV] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.SHOWCOSTSFORNEXTMCV, 1) == 1);
+                this.Settings[MaelstromTools.Preferences.SHOWCOSTSFORNEXTMCV] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.SHOWCOSTSFORNEXTMCV, 0) == 1);
                 this.Settings[MaelstromTools.Preferences.CHATHISTORYLENGTH] = MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.CHATHISTORYLENGTH, 64);
 
                 if (!CCTAWrapperIsInstalled()) {

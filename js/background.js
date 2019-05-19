@@ -155,7 +155,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "MaelstromTools Dev (Modv1.5 for MCV)",
 	cat : "tool",
 	hot: true,
-	version : "  0.1.4.6+",
+	version : "  0.1.4.6++",
 	enabled : true
 }, {
 	id : 10008,
