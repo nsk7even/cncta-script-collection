@@ -439,7 +439,7 @@ var DEFAULT_SCRIPTS = [ {
 	id : 10071,
 	name : "Next MCV Info HUD",
 	cat : "infotool",
-	version : "  1.0 alpha"
+	version : "  1.0 beta"
 }  ];
 
 var updateopen = false;

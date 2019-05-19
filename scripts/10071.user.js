@@ -2,7 +2,7 @@
 // @name            Next MCV Info HUD
 // @description     Displays a tiny HUD with remaining resource informations for being able to create a new MCV (Mobile Construction Vehicle) = new base
 // @author          7even + Maelstrom (MaelstromTools Dev) + Eistee (WarChiefs - Tiberium Alliances Sector HUD)
-// @version         1.0 alpha
+// @version         1.0 beta
 // @namespace       https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @include         https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
@@ -23,6 +23,8 @@
 
 				construct: function ()
 				{
+					console.log("Init ...");
+
 					this.SectorText = new qx.ui.basic.Label("").set(
 					{
 						textColor : "#FFFFFF",
@@ -54,6 +56,8 @@
 					qx.core.Init.getApplication().getDesktop().add(this.HUD, {left: 128, top: 20});
 					this.run_UpdateTimer();
 					//phe.cnc.Util.attachNetEvent(ClientLib.Vis.VisMain.GetInstance().get_Region(), "PositionChange", ClientLib.Vis.PositionChange, this, this._update);
+
+					console.log("Init complete");
 				},
 
 				members:
@@ -68,7 +72,27 @@
 
 					get_FormatNumbersCompact: function(i)
 					{
+						if (i >= 1000000000)
+						{
+							return (i / 1000000000).toFixed(2) + "G";
+						}
+
+						if (i >= 1000000)
+						{
+							return (i / 1000000).toFixed(2) + "M";
+						}
+
+						if (i >= 1000)
+						{
+							return (i / 1000).toFixed(2) + "K";
+						}
+
 						return i;
+					},
+
+					get_Padded: function(i, d = 2)
+					{
+						return i.toLocaleString('en-US', {minimumIntegerDigits: d, useGrouping:false})
 					},
 
 					run_UpdateTimer: function ()
@@ -86,6 +110,36 @@
 						catch (e)
 						{
 							console.log("MaelstromTools.runSecondlyTimer: ", e);
+						}
+					},
+
+					_update: function ()
+					{
+						if (this.__refresh === false) {
+							this.__refresh = true;
+							setTimeout(this.__update.bind(this), 500);
+						}
+					},
+
+					__update: function ()
+					{
+						try
+						{
+							var McvCostItems = this.get_NextMcvCosts();
+							this.HUD.removeAll();
+
+							for (i in McvCostItems)
+							{
+							  this.HUD.add(McvCostItems[i])
+							}
+						}
+						catch (e)
+						{
+							console.log("Next MCV Info HUD - Update Error: ", e);
+						}
+						finally
+						{
+							this.__refresh = false;
 						}
 					},
 
@@ -188,16 +242,19 @@
 							var creditsNeeded = resourcesNeeded[ClientLib.Base.EResourceType.Gold];
 							var creditsResourceData = player.get_Credits();
 							var creditGrowthPerHour = (creditsResourceData.Delta + creditsResourceData.ExtraBonusDelta) * ClientLib.Data.MainData.GetInstance().get_Time().get_StepsPerHour();
-							var creditTimeLeftInHours = (creditsNeeded - player.GetCreditsCount()) / creditGrowthPerHour;
-							var creditTimeLeftInDays = creditTimeLeftInHours;
+							var creditDelta = creditsNeeded - player.GetCreditsCount();
+							var creditTimeHours = creditDelta / creditGrowthPerHour;
+							var creditTimeMins = Math.abs(((Math.trunc(creditTimeHours % 24) - creditTimeHours % 24) * 60));
+							var creditTimeSecs = Math.trunc(Math.abs(Math.trunc(creditTimeMins) - creditTimeMins) * 60);
+							var creditTime = Math.trunc(creditTimeHours / 24) + "." + this.get_Padded(Math.trunc(creditTimeHours % 24)) + ":" + this.get_Padded(Math.trunc(creditTimeMins)) + ":" + this.get_Padded(creditTimeSecs);
 							var ZX = 100 / creditsNeeded;
 							var ZXZ = player.GetCreditsCount();
 							var PercentageOfCredits = ZXZ * ZX
 							//PercentageOfCredits = ZXZ * 1% of ZX
 
-							if (creditTimeLeftInHours > 0)
+							if (creditTimeHours > 0)
 							{
-								this.mcvTimerLabel.setValue("TIMER C$ - " + creditTimeLeftInDays);
+								this.mcvTimerLabel.setValue("TIMER C$ - " + creditTime);
 							}
 							else
 							{
@@ -213,7 +270,7 @@
 							if (PercentageOfCredits < 100)
 							{
 								this.mcvCreditProcentageLabel.setValue("<span style='color: #ff8a7f;'>CREDIT</span> -  <span style='color: #ff8f00;'>" + this.get_FormatNumbersCompact(creditsNeeded-ZXZ) + "</span> / <span style='font-size:12px;'>" +this.get_FormatNumbersCompact(creditsNeeded) + " @ " + (PercentageOfCredits).toFixed(1) + "%</span>");
-								this.mcvplace.setValue("<span style='color: #ff8a7f;'>T$ - "  + creditTimeLeftInDays + "</span>");
+								this.mcvplace.setValue("<span style='color: #ff8a7f;'>T$ - "  + creditTime + "</span>");
 							}
 
 							if (PercentageOfResearchPoints >= 100)
@@ -228,37 +285,18 @@
 								this.mcvplace.setValue(this.mcvplace.$$user_value + "<br><span style='color: #ff8a7f;'>RP (@" + (PercentageOfResearchPoints).toFixed(1) + "%)</span>");
 							}
 
-							this.extItems=[];
-							this.extItems.push(this.mcvTimerLabel);
-							this.extItems.push(this.mcvCreditProcentageLabel);
-							this.extItems.push(this.mcvResearchTimerLabel);
+							var extItems=[];
+							extItems.push(this.mcvplace);
+							// extItems.push(this.mcvTimerLabel);
+							// extItems.push(this.mcvCreditProcentageLabel);
+							// extItems.push(this.mcvResearchTimerLabel);
 
-							return this.extItems;
+							return extItems;
 						}
 						catch (e)
 						{
 							console.log("get_NextMcvCosts", e);
 						}
-					},
-
-					_update: function ()
-					{
-						if (this.__refresh === false) {
-							this.__refresh = true;
-							setTimeout(this.__update.bind(this), 500);
-						}
-					},
-
-					__update: function ()
-					{
-						var McvCostItems = this.get_NextMcvCosts();
-
-						for (i in McvCostItems)
-						{
-						  this.HUD.add(McvCostItems[i])
-						}
-
-						this.__refresh = false;
 					}
 				}
 			});
@@ -275,10 +313,10 @@
 					{
 						try
 						{
+							console.group("Next MCV Info HUD");
 							console.time("loaded in");
 							createClasses();
 							InfoHUD.getInstance();
-							console.group("Next MCV Info HUD");
 							console.timeEnd("loaded in");
 							console.groupEnd();
 						}
