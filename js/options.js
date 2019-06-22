@@ -33,6 +33,7 @@ function list_scripts (){
 
 
 $(document).ready(function() {
+var UNIQUE_SCRIPTS = [''];
 $( "button" ).button();	
 
     for (var i in CNCTA_SCRIPTS) {
@@ -42,9 +43,12 @@ $( "button" ).button();
 		if (script.cat === "simulator"){
 		unique = " unique";	
 		} else if (script.unique){
-		unique = " unique" +script.unique;	
-			
+		unique = " unique" +script.unique;
+		if (UNIQUE_SCRIPTS.indexOf(script.unique) === -1) {
+        UNIQUE_SCRIPTS.push(script.unique);
+    }   	
 		}
+		
 
         var li = $('<div>');
         var html = "<div class='name'>";
@@ -64,6 +68,9 @@ $( "button" ).button();
 		}
 		else if (script.info) {
 		html += " [ <a target='_blank' href='" + script.info + "'>+info</a> ]";	
+		}
+		if (script.disab) {
+		html += " <span class='disabled'> >>> NOT WORKING</span>";	
 		}
         html += "</div>";
 		var divloc;
@@ -138,24 +145,32 @@ $( "div.lcs_wrap" ).on('lcs-off', function() {
         }
         localStorage.setItem('CNCTA_ENABLED', JSON.stringify(enabled));
 
-
+		$('#content').animate({
+            opacity: 0
+        }, 500, function() {
+            $('#content').delay( 1500 ).animate({
+                opacity: 1
+            }, 2000);
+        });
+		
         $('#message').animate({
             opacity: 1
-        }, 300, function() {
-            $('#message').animate({
-                opacity: 0
-            }, 3000);
+        }, 200, function() {
+			
+            $('#message').delay( 1500 ).animate({
+            opacity: 0
+        });
         });
 
-    
     });
-$('input.unique').click(function() {
-    $('input.unique').filter(':checked').not(this).prop( "checked", false );
+	
+	for (var i in UNIQUE_SCRIPTS){
+		var ucl = UNIQUE_SCRIPTS[i];
+$('input.unique'+ucl).click({ui: ucl}, function(event) {
+    $('input.unique'+event.data.ui).filter(':checked').not(this).prop( "checked", false );
 });
-$('input.unique1').click(function() {
-    $('input.unique1').filter(':checked').not(this).prop( "checked", false );
-});
-$('input.unique2').click(function() {
-    $('input.unique2').filter(':checked').not(this).prop( "checked", false );
-});
+	}
+
+
+$('#content').show();
 });

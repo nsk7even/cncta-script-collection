@@ -5,7 +5,7 @@
 // @license        GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
 // @author         petui
 // @description    Calculates combined RT and CP costs and loot of multiple combat reports
-// @include        http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include        http*://*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
 'use strict';
 

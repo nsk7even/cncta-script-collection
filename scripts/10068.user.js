@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name    		Tiberium Alliances Zoom
 // @description    	Allows you to zoom out further
-// @namespace      	https://prodgame*.alliances.commandandconquer.com/*/index.aspx* 
-// @include        	https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace   	https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include     	https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @version        	1.0.1
 // @author         	Original: Panavia	Updated By: Gryphon
 // ==/UserScript==

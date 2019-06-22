@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        KlickitlikeShing0
-// @namespace   http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace   https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @description optimized defense, credit and power upgrades
-// @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @updateURL   http://userscripts.org/scripts/show/162680
 // @downloadURL http://userscripts.org/scripts/show/162680
 // @version     0.993

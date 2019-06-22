@@ -1,11 +1,12 @@
 // ==UserScript==
-// @name        -:TA Alert Status:-
-// @description Alert if someone attacks your bases.
+// @name        CENTER DRIVEN PvP Alert Status
+// @description You will be alerted if someone attacks your bases.
 // @namespace   https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @icon        http://c2n.me/ivdCY1.png
-// @version     1.0.1
-// @author      der_flake
+// @version     1.00
+// @grant       none
+// @author      der_flake, FORKED by XDaast
 // ==/UserScript==
 
 (function () {
@@ -14,7 +15,7 @@
     var was_attacked   = false;
     
 if(enable_sound) {
-    siren = new Audio('http://booz.ro/tiberium/siren.mp3'); 
+    siren = new Audio('https://www.freesound.org/data/displays/51/51752_616218_wave_L.png'); 
     siren.addEventListener('ended', function() {
         this.currentTime = 0;
         this.play();
@@ -47,7 +48,7 @@ if(enable_sound) {
         }
 
         if(is_alerted && !was_attacked) {
-            window.document.title = 'ALERT - ???? ' + victim + ' ??? ??????!';
+            window.document.title = 'ALERT - База ' + victim + ' под атакой!';
             makeFavicon("alert");
             
             if(enable_sound) {

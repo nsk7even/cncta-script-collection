@@ -5,7 +5,7 @@
 // @license        GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
 // @author         petui
 // @description    Displays how much offense repair time a dead base had at the time of death
-// @include        http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include        http*://*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
 'use strict';
 

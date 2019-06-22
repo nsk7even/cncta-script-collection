@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        Maelstrom ADDON City Online Status Colorer for SC
-// @namespace   http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace   https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @description change the color of cities according to online state of the player
-// @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @version     0.6.5
 // @author      White X Dragon / Debitosphere
 // @author      Der_Flake

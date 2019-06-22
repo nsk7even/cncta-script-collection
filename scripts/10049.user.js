@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        C&C:TA Compass
-// @namespace   http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace   https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @description Creates compass poiting to the currently selected base (compass points from the center of the screen).
 // @version     1.0.1
 // @author      Caine
-// @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
 
 (function () {

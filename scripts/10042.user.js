@@ -376,6 +376,7 @@ var injectFunction = function()
 				
 				getMsgHeaders: function(id, count, type)
 				{
+				
 					type == 0 ? this.inbox.messages = [] : this.outbox.messages = [];
 					type == 0 ? this.inbox.newMessages = [] : this.outbox.newMessages = [];
 					var pages = Math.ceil(count/1000);

@@ -3,7 +3,7 @@
 // @author         ViolentVin, KRS_L, YiannisS
 // @description    Shows PvP/PvE Ranking of the players alliance in the PlayerWindow, also adds POIs the Player holds and splits pve/pvp score. 
 // @namespace      pvp_rank_mod
-// @include        https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include         https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @grant          none
 // @version        1.7.3
 // ==/UserScript==

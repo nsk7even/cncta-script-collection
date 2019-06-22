@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name            C&C: TA Hotkeys
 // @namespace       https://greasyfork.org/users/12491
-// @icon            https://prodgame13.alliances.commandandconquer.com/146/favicon.ico
+// @icon            https://cncapp05.alliances.commandandconquer.com/339/favicon.ico
 // @description     Hotkey script for inserting your player data into multiple areas and Login/Logout for up to 9 accounts.
 // @version         2.2.4
 // @author          Gryphon - Based on MrHIDEn's code. Modified.
 // @license         MIT License
 // @grant           none
 // @include         *tiberiumalliances.com*
-// @include         http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include     	https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @grant           none
 // ==/UserScript==
 

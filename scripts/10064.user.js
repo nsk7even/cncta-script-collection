@@ -6,7 +6,7 @@
 // @homepage    https://www.allyourbasesbelong2us.com
 // @namespace   AllYourBasesbelong2UsCrucialScriptCnCMapLink
 // @include     http*://*alliances*.com/*
-// @include     https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @grant       GM_log
 // @grant       GM_setValue
 // @grant       GM_getValue

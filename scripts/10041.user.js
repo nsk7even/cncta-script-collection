@@ -2,8 +2,8 @@
 // @name CityMoveInfoExtend
 // @version 14.06.17
 // @description Extended move info.
-// @namespace https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @include https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace   https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @author Nogrod
 // ==/UserScript==
 

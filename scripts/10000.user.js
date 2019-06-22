@@ -8,7 +8,7 @@
 // @translator     TR: PythEch | DE: Matthias Fuchs, Leafy & sebb912 | PT: JDuarteDJ & Contosbarbudos | IT: Hellcco | NL: SkeeterPan | HU: Mancika | FR: Pyroa & NgXAlex | FI: jipx | RO: MoshicVargur
 // @grant none
 // ==/UserScript==
-window.TACS_version = GM_info.script.version;
+//window.TACS_version = GM_info.script.version;
 (function () {
 	'use strict';
 	var TASuite_mainFunction = function () {
@@ -442,7 +442,7 @@ window.TACS_version = GM_info.script.version;
 							this._PlayArea = this._Application.getPlayArea();
 							this._armyBarContainer = this._Application.getArmySetupAttackBar();
 							this._armyBar = this._Application.getUIItem(ClientLib.Data.Missions.PATH.BAR_ATTACKSETUP);
-
+							
 							if (PerforceChangelist >= 443425) { // 16.1 patch
 								for (var i in this._armyBarContainer) {
 									if (typeof this._armyBarContainer[i] == "object" && this._armyBarContainer[i] != null) {
@@ -665,6 +665,7 @@ window.TACS_version = GM_info.script.version;
 									contentPaddingBottom : 2,
 									contentPaddingRight : 2,
 									contentPaddingLeft : 6,
+									width : 245,
 									showMaximize : false,
 									showMinimize : false,
 									allowMaximize : false,
@@ -689,6 +690,7 @@ window.TACS_version = GM_info.script.version;
 							}, this);
 							var tabView = new qx.ui.tabview.TabView().set({
 									contentPaddingTop : 3,
+									width : 245,
 									contentPaddingBottom : 6,
 									contentPaddingRight : 7,
 									contentPaddingLeft : 3
@@ -754,7 +756,7 @@ window.TACS_version = GM_info.script.version;
 							layout.setColumnAlign(0, "left", "middle");
 							layout.setColumnAlign(1, "right", "middle");
 							layout.setColumnFlex(0, 1);
-							layout.setRowHeight(0, 15);
+							layout.setRowHeight(0, 22);
 							container.setLayout(layout);
 							container.setThemedFont("bold");
 							container.setThemedBackgroundColor("#eef");
@@ -775,7 +777,8 @@ window.TACS_version = GM_info.script.version;
 
 							this.buttons.attack.refreshStats = new qx.ui.form.Button(lang("Refresh"));
 							this.buttons.attack.refreshStats.set({
-								width : 58,
+								width : 90,
+								height : 21,
 								appearance : "button-text-small",
 								toolTipText : lang("Refresh Stats")
 							});
@@ -958,7 +961,7 @@ window.TACS_version = GM_info.script.version;
 								row : 1,
 								column : 1
 							});
-
+							
 							// Available RT/Attacks Vertical Box
 							container = new qx.ui.container.Composite();
 							layout = new qx.ui.layout.Grid();
@@ -990,7 +993,7 @@ window.TACS_version = GM_info.script.version;
 								row : 1,
 								column : 1
 							});
-
+							
 							// Resource Summary Vertical Box
 							this.resourceSummaryVerticalBox = new qx.ui.container.Composite();
 							var layout = new qx.ui.layout.Grid();
@@ -1002,7 +1005,7 @@ window.TACS_version = GM_info.script.version;
 							if (this.saveObj.checkbox.showLootSummary) {
 								this.statsPage.add(this.resourceSummaryVerticalBox);
 							}
-
+							
 							// Research Icon/Label
 							this.labels.resourcesummary.research = new qx.ui.basic.Atom("0", "webfrontend/ui/common/icn_res_research_mission.png");
 							this.resourceSummaryVerticalBox.add(this.labels.resourcesummary.research, {
@@ -1423,7 +1426,7 @@ window.TACS_version = GM_info.script.version;
 								column : 0,
 								colSpan : 3
 							});
-
+							
 							// showResourceLayoutWindow Checkbox
 							this.options.showResourceLayoutWindow = new qx.ui.form.CheckBox(lang("Show Resource Layout Window"));
 							this.options.showResourceLayoutWindow.saveLocation = "showResourceLayoutWindow";
@@ -1434,7 +1437,7 @@ window.TACS_version = GM_info.script.version;
 								column : 0,
 								colSpan : 3
 							});
-
+							
 							// showStatsDuringAttack Checkbox
 							this.options.showStatsDuringAttack = new qx.ui.form.CheckBox(lang("Show Stats During Attack"));
 							this.options.showStatsDuringAttack.saveLocation = "showStatsDuringAttack";
@@ -1650,7 +1653,7 @@ window.TACS_version = GM_info.script.version;
 									this.toolBar.setZIndex(1);
 								}
 							}, this);
-
+							
 							this._armyBarContainer.addListener("appear", function () {
 								//console.log("_armyBarContainer appeared");
 								this._armyBarContainer.setZIndex(3);
@@ -1716,10 +1719,10 @@ window.TACS_version = GM_info.script.version;
 						try {
 							////////////////// Interface Side ////////////////////
 							localStorage.ta_sim_side = JSON.stringify(this.options.rightSide.getValue());
-
+							
 							// qx.core.Init.getApplication().getPlayArea()
 							// might need to use this instead, mouseovers are not being registered during attacks
-
+							
 							var playArea = this._Application.getUIItem(ClientLib.Data.Missions.PATH.OVL_PLAYAREA);
 							var playAreaWidth = this._Application.getUIItem(ClientLib.Data.Missions.PATH.OVL_PLAYAREA).getLayoutParent().getLayoutParent().getBounds().width;
 							this.armybarClickCount = 0;
@@ -1856,8 +1859,8 @@ window.TACS_version = GM_info.script.version;
 							this.toolBarMouse.setBackgroundColor("#FF0000");
 							this.toolBarMouse.setOpacity(0);
 							this.toolBarMouse.setZIndex(10);
-
-
+							
+							
 							this.initToolBarListeners();
 							/*
 							// does the game init in combat mode?
@@ -2042,7 +2045,7 @@ window.TACS_version = GM_info.script.version;
 								appearance : "button-text-small",
 								toolTipText : "<strong>"+lang("Refresh Stats")+"</strong>"
 							});
-
+							
 							// The new stats window button
 							this.buttons.attack.toolbarShowStats = new qx.ui.form.Button("", statsIcon);
 							this.buttons.attack.toolbarShowStats.addListener("click", this.toggleTools, this);
@@ -2054,7 +2057,7 @@ window.TACS_version = GM_info.script.version;
 								appearance : "button-text-small",
 								toolTipText : "<strong>"+lang("Open Stats Window")+"</strong>"
 							});
-
+							
 							// Undo
 							this.buttons.attack.toolbarUndo = new qx.ui.form.Button("", undoIcon);
 							this.buttons.attack.toolbarUndo.addListener("click", function(){console.log("Undo");}, this);
@@ -2067,7 +2070,7 @@ window.TACS_version = GM_info.script.version;
 								enabled : false,
 								toolTipText : "<strong>"+lang("Undo")+"</strong>"
 							});
-
+							
 							// Redo (if possible)
 							this.buttons.attack.toolbarRedo = new qx.ui.form.Button("", redoIcon);
 							this.buttons.attack.toolbarRedo.addListener("click", function(){console.log("Redo");}, this);
@@ -2080,8 +2083,8 @@ window.TACS_version = GM_info.script.version;
 								enabled : false,
 								toolTipText : "<strong>"+lang("Redo")+"</strong>"
 							});
-
-
+							
+							
 
 							// Options Button
 							this.buttons.attack.options = new qx.ui.form.Button().set({
@@ -2146,7 +2149,7 @@ window.TACS_version = GM_info.script.version;
 								top : 10,
 								right : 275
 							});
-
+							
 
 							if (this.userInterface) {
 								this._armyBar.remove(this.userInterface);
@@ -2372,7 +2375,7 @@ window.TACS_version = GM_info.script.version;
 						}
 					},
 					refreshStatistics : function () {
-
+						
 						try {
 							var ownCity = this._MainData.get_Cities().get_CurrentOwnCity();
 							if (!this.getAllUnitsDeactivated() && ownCity.GetOffenseConditionInPercent() > 0) {
@@ -3039,7 +3042,7 @@ window.TACS_version = GM_info.script.version;
 							if (PerforceChangelist >= 448942) {
 								var countDownInterval = 300;
 							} else {
-								var countDownInterval = 1000;
+								var countDownInterval = 1000;	
 							}
 							if (this.count == 10) this.counter = setInterval(this.countDownToNextSimulation, countDownInterval);
 
@@ -3197,19 +3200,19 @@ window.TACS_version = GM_info.script.version;
 							bt : 0
 						};
 						*/
-
+						
 					},
 					wipeUndoStateAfter : function (timestamp) {
 						var i;
 						for (i = 0; i < this.undoCache.length; i++) {
 							if (this.undoCache[i].t > timestamp){
-
+								
 								break;
 							}
 						}
 						this.undoCache = this.undoCache.slice(0,i);
 					},
-
+					
 					//Layouts
 					updateLayoutsList : function () {
 						try {
@@ -3659,12 +3662,12 @@ window.TACS_version = GM_info.script.version;
 							_this.labels.repairinfos.infantry.setValue(phe.cnc.Util.getTimespanString(availableInfRT - _this.stats.repair.available));
 							_this.labels.repairinfos.vehicle.setValue(phe.cnc.Util.getTimespanString(availableVehRT - _this.stats.repair.available));
 							_this.labels.repairinfos.aircraft.setValue(phe.cnc.Util.getTimespanString(availableAirRT - _this.stats.repair.available));
-
+							
 							/*var unitGroupData = phe.cnc.gui.RepairUtil.getUnitGroupCityData(ownCity);
 							if (unitGroupData[ClientLib.Data.EUnitGroup.Infantry].lowestUnitDmgRatio == 1) console.log("No damage to Infantry");
 							if (unitGroupData[ClientLib.Data.EUnitGroup.Vehicle].lowestUnitDmgRatio == 1) console.log("No damage to Vehicles");
 							if (unitGroupData[ClientLib.Data.EUnitGroup.Aircraft].lowestUnitDmgRatio == 1) console.log("No damage to Aircraft");*/
-
+							
 						} catch (e) {
 							console.log(e);
 						}
@@ -3806,7 +3809,7 @@ window.TACS_version = GM_info.script.version;
 									qx.core.Init.getApplication().getArmyUnitTooltipOverlay().setVisibility_Original(a);
 								}
 							};
-
+						
 						} else {
 							TASuite_timeout++;
 							window.setTimeout(TASuite_checkIfLoaded, 1000);

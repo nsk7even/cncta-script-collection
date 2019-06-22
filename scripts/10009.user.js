@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name           Tiberium Alliances Formation Saver
 // @description    Allows you to save attack formations
-// @namespace      https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @include        https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace       https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include         https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @version        2.3
 // @author         Panavia, KRS_L, DebitoSphere
 // ==/UserScript==
 (function (){
   var tafs_main = function() {
     var windowSaver;
-
+      
     function initialize() {
       console.log("Formation Saver Loaded");
 
@@ -38,7 +38,7 @@
           containerMain: null,
           buttonSave: null,
 
-          init: function() {
+          init: function() {          
             var Y = 6;
             this.buttonResize = new webfrontend.ui.SoundButton(null, "FactionUI/icons/icon_tracker_minimise.png").set({width: 20, height: 20, appearance: "button-notif-cat", center: true, allowGrowX: false});
             this.buttonResize.addListener("click",function(e) {
@@ -57,7 +57,7 @@
 
             buttonSave = new qx.ui.form.Button("Save");
             buttonSave.set({width: 50, appearance: "button-text-small", toolTipText: "Save attack formation", allowGrowX:false});
-            buttonSave.addListener("click", this.save, this);
+            buttonSave.addListener("click", this.save, this); 
             this.containerContence.add(buttonSave);
 
             this.containerMain=new qx.ui.container.Composite(new qx.ui.layout.VBox().set({alignX:"right"})).set({maxHeight:webfrontend.gui.PlayArea.FormationSaver.SaverExpandedHeight,width:75,minHeight:32,allowShrinkY:true});
@@ -80,7 +80,7 @@
           update: function() {
             containerSaves.removeAll();
 
-            var playerCities = ClientLib.Data.MainData.GetInstance().get_Cities();
+            var playerCities = ClientLib.Data.MainData.GetInstance().get_Cities(); 
             var currentOwnCity = playerCities.get_CurrentOwnCity();
             var cityID = playerCities.get_CurrentCity().get_Id();
             var ownCityID = currentOwnCity.get_Id();
@@ -140,11 +140,11 @@
 
           save: function() {
             try {
-              var playerCities = ClientLib.Data.MainData.GetInstance().get_Cities();
+              var playerCities = ClientLib.Data.MainData.GetInstance().get_Cities(); 
               var currentOwnCity = playerCities.get_CurrentOwnCity();
               var cityID = playerCities.get_CurrentCity().get_Id();
               var ownCityID = currentOwnCity.get_Id();
-
+ 
               var newFormation = new Object();
               newFormation.t = new Date().getTime().toString();
               newFormation.n = "";
@@ -179,7 +179,7 @@
               }
               formations[cityID][ownCityID][0]++;
               newFormation.n = "Save " + formations[cityID][ownCityID][0];
-
+              
               formations[cityID][ownCityID].push(newFormation);
               this.saveFormations(formations);
 
@@ -200,7 +200,7 @@
               var playerCities = ClientLib.Data.MainData.GetInstance().get_Cities();
               var currentOwnCity = playerCities.get_CurrentOwnCity();
               var cityID = playerCities.get_CurrentCity().get_Id();
-
+              
               var formation = currentOwnCity.get_CityArmyFormationsManager().GetFormationByTargetBaseId(cityID);
               var armyUnits = formation.get_ArmyUnits();
               if(armyUnits == null) {
@@ -266,7 +266,7 @@
             var formations = localStorage.formations;
             return formations && JSON.parse(formations);
           },
-
+          
           formatSecondsAsTime: function(secs, format) {
             var hr = Math.floor(secs / 3600);
             var min = Math.floor((secs - (hr * 3600)) / 60);
@@ -281,32 +281,32 @@
             if(sec < 10) {
               sec = "0" + sec;
             }
-
+            
             return hr + ':' + min + ':' + sec;
           },
         }
       })
-
+      
       windowSaver = new webfrontend.gui.PlayArea.FormationSaver();
       windowSaver.hide();
       qx.core.Init.getApplication().getPlayArea().add(windowSaver, {top: 55, right: -2});
-
+      
       if(!ClientLib.Data.MainData.GetInstance().get_Cities().__tafs__set_CurrentOwnCityId) {
         ClientLib.Data.MainData.GetInstance().get_Cities().__tafs__set_CurrentOwnCityId = ClientLib.Data.MainData.GetInstance().get_Cities().set_CurrentOwnCityId;
       }
       ClientLib.Data.MainData.GetInstance().get_Cities().set_CurrentOwnCityId = function(a) {
-        this.__tafs__set_CurrentOwnCityId(a);
+        this.__tafs__set_CurrentOwnCityId(a); 
         updateView();
       }
-
+      
       if(!ClientLib.Data.MainData.GetInstance().get_Cities().__tafs__set_CurrentCityId) {
         ClientLib.Data.MainData.GetInstance().get_Cities().__tafs__set_CurrentCityId = ClientLib.Data.MainData.GetInstance().get_Cities().set_CurrentCityId;
       }
       ClientLib.Data.MainData.GetInstance().get_Cities().set_CurrentCityId = function(a) {
-        this.__tafs__set_CurrentCityId(a);
+        this.__tafs__set_CurrentCityId(a); 
         updateView();
       }
-
+      
       function updateView() {
         if (PerforceChangelist >= 376877) {
           switch(qx.core.Init.getApplication().getPlayArea().getViewMode()) {
@@ -317,7 +317,7 @@
               break;
             default:
               windowSaver.hide();
-          }
+          }          
         } else {
           switch(qx.core.Init.getApplication().getPlayArea().getViewMode()) {
             case webfrontend.gui.PlayArea.PlayArea.modes.EMode_CombatSetupDefense:
@@ -350,7 +350,7 @@
         else GM_log(e);
       }
     }
-
+    
     if (/commandandconquer\.com/i.test(document.domain)) {
       window.setTimeout(tafs_checkIfLoaded, 1000);
     }

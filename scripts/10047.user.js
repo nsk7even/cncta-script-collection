@@ -164,7 +164,7 @@ var injectFunction = function()
                         
                         var box = new qx.ui.layout.HBox();
                         var overlay = new qx.ui.container.Composite(box).set({
-						    decorator : new qx.ui.decoration.Single(1, "solid", "#000000").set({backgroundColor : "#" + red + green + "0"}),
+						    decorator : new qx.ui.decoration.Decorator(1, "solid", "#000000").set({backgroundColor : "#" + red + green + "0"}),
 							opacity : 0.8,
 							width: width - 2, 
                             height: height - 2

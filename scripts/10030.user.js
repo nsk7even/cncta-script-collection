@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        -:C&C TA Chat Colorize:-
 // @description Let's change the nickname color (chat only) in dependence of the role in the alliance.
-// @namespace   http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @include     https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace   https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @icon        http://i.imgur.com/0dweZMu.png
 // @version     0.1.6
 // @author      der_flake

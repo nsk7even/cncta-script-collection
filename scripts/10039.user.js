@@ -2,8 +2,8 @@
 // @name        CnC Tiberium Coord Box Shortcut
 // @namespace   noobs
 // @description Adds "navigate" button which opens dialog in which you can enter map coordinates and scroll your screen to that location
-// @include   https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @version     1.1
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @version     1.2
 // ==/UserScript==
 
 // Fixed to work for chrome
@@ -144,7 +144,7 @@
 			var dialog = document.createElement("div");
             dialog.id = 'ta_navigation_container';
 			dialog.style.position="absolute";
-			dialog.style.top="30px";
+			dialog.style.top="50px";
 			dialog.style.left="127px";
 			dialog.style.zIndex="100";
 			dialog.style.display="block";
@@ -187,7 +187,7 @@
 		function createPanel(){
 			var panel = document.createElement("div");
 			panel.style.position="absolute";
-			panel.style.top="0px";
+			panel.style.top="20px";
 			panel.style.left="127px";
 			//panel.style.height="20px";
 			panel.style.zIndex="100";

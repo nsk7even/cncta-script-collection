@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        Maelstrom ADDON Basescanner + cncoptplus growth rate
-// @namespace   http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace   https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @description Maelstrom ADDON Basescanner
-// @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @version     1.8.5+
-// @author      BlinDManX + chertosha
+// @version     1.9.0.B
+// @author      BlinDManX + chertosha + Netquik(fix17.4)
 // @grant       none
 // @copyright   2012+, Claus Neumann
 // @license     CC BY-NC-ND 3.0 - http://creativecommons.org/licenses/by-nc-nd/3.0/
@@ -12,7 +12,7 @@
 // ==/UserScript==
 (function () {
 	var MaelstromTools_Basescanner = function () {
-		window.__msbs_version = "1.8.5+";
+		window.__msbs_version = "1.9.0 Basic";
 		function createMaelstromTools_Basescanner() {
 
 			qx.Class.define("Addons.BaseScannerGUI", {
@@ -37,7 +37,7 @@
 						this.setDecorator(null);
 						this.setPadding(5);
 						this.setLayout(new qx.ui.layout.VBox(3));
-						this.stats.src = 'http://goo.gl/DrJ2x'; //1.5
+						
 
 						this.FI();
 						this.FH();
@@ -60,7 +60,7 @@
 				},
 				members : {
 					// pictures
-					stats : document.createElement('img'),
+					
 					T : null,
 					ZA : 0,
 					ZB : null,
@@ -403,7 +403,7 @@
 							}, this);
 							oOptions.add(this.ZG);
 
-							var border = new qx.ui.decoration.Single(2, "solid", "blue");
+							var border = new qx.ui.decoration.Decorator(2, "solid", "blue");
 							this.ZV = new qx.ui.container.Composite(new qx.ui.layout.Basic()).set({
 									decorator : border,
 									backgroundColor : "red",
@@ -449,6 +449,8 @@
 							this.ZJ.setWidth(150);
 							this.ZJ.setHeight(25);
 							this.ZJ.setMargin(5);
+							var item = new qx.ui.form.ListItem(this.T.get("All Layouts"), null, 0);
+							this.ZJ.add(item);
 							var item = new qx.ui.form.ListItem("7 " + this.T.get(MaelstromTools.Statics.Tiberium) + " 5 " + this.T.get(MaelstromTools.Statics.Crystal), null, 7);
 							this.ZJ.add(item);
 							item = new qx.ui.form.ListItem("6 " + this.T.get(MaelstromTools.Statics.Tiberium) + " 6 " + this.T.get(MaelstromTools.Statics.Crystal), null, 6);
@@ -2101,9 +2103,9 @@ fillin_v2: function (map,parms)
 								if (selectedtype != rowDataLine[10]) {
 									continue;
 								}
-							} else {
-								continue;
-							}
+							} //else {
+								//continue;
+							//}
 
 							posData = rowDataLine[3];
 							if (posData != null && posData.split(':').length == 2) {
@@ -2376,6 +2378,7 @@ fillin_v2: function (map,parms)
 			T.addtranslateobj( {main:"Power", de: "Strom", pt: "Potência", fr: "Energie"} );
 			T.addtranslateobj( {main:"Dollar", de: "Credits", pt: "Créditos", fr: "Crédit"} );
 			T.addtranslateobj( {main:"Research", de: "Forschung", pt: "Investigação", fr: "Recherche"} );
+			T.addtranslateobj( {main:"All Layouts", de: "All Layouts", pt: "All Layouts", fr: "All Layouts"} );
 			T.addtranslateobj( {main:"-----", de: "--", pt: "--", fr: "--"} );
 			
 
