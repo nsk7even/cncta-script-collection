@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name            WarChiefs - Tiberium Alliances Sector HUD
-// @description     Displays a tiny HUD with the Sector you are viewing. [+7even: fixed script error]
+// @description     Displays a tiny HUD with the Sector you are viewing.
 // @author          Eistee
-// @version         13.12.18+
-// @namespace       https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @include         https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @version         13.12.18.1
+// @namespace       https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include         https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @icon            http://eistee82.github.io/ta_simv2/icon.png
 // ==/UserScript==
 /**
@@ -75,14 +75,14 @@
 					},
 					get_Coords: function () {
 						var Region = ClientLib.Vis.VisMain.GetInstance().get_Region();
-							GridWidth = Region.get_GridWidth(),
-							GridHeight = Region.get_GridHeight(),
-							RegionPosX = Region.get_PosX(),
-							RegionPosY = Region.get_PosY(),
-							ViewWidth = Region.get_ViewWidth(),
-							ViewHeight = Region.get_ViewHeight(),
-							ZoomFactor = Region.get_ZoomFactor(),
-							ViewCoordX = Math.floor((RegionPosX + ViewWidth / 2 / ZoomFactor) / GridWidth - 0.5),
+							GridWidth = Region.get_GridWidth();
+							GridHeight = Region.get_GridHeight();
+							RegionPosX = Region.get_PosX();
+							RegionPosY = Region.get_PosY();
+							ViewWidth = Region.get_ViewWidth();
+							ViewHeight = Region.get_ViewHeight();
+							ZoomFactor = Region.get_ZoomFactor();
+							ViewCoordX = Math.floor((RegionPosX + ViewWidth / 2 / ZoomFactor) / GridWidth - 0.5);
 							ViewCoordY = Math.floor((RegionPosY + ViewHeight / 2 / ZoomFactor) / GridHeight - 0.5);
 						return {X: ViewCoordX, Y: ViewCoordY};
 					},

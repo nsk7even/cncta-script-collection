@@ -4,18 +4,18 @@
 // @description   CROSS SERVERS Loot & troops & bases & distance info. [+7even: fixed broken images]
 // @author        MrHIDEn based on Yaeger & Panavia code. Totaly recoded.
 // @grant         none
-// @include       http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @version       1.8.3+
+// @include       https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @version       1.8.3
 // ==/UserScript==
 
-
+ 
 
 (function () {
-  var MHLootMain = function () {
-    function MHToolsLootCreate() {
+  var MHLootMain = function () {    
+    function MHToolsLootCreate() {        
       //console.log('MHToolsLootCreate');
       // Classes
-      //=======================================================
+      //=======================================================      
       //Extending webfrontend.gui.options.OptionsPage with new ManagementOptionsPage
       function OptionsPage() {
         try {
@@ -26,17 +26,17 @@
               console.log('Create MHTools.OptionsPage at Loot+Info');
               this.base(arguments);
               this.setLabel('MHTools');
-
+              
               this.extendOptionsWindow();
-
+              
               //Add Content
-              var container = this.getContentContainer();
+              var container = this.getContentContainer(); 
               this.tabView = new qx.ui.tabview.TabView();
               container.add(this.tabView);//, {left:40, top:40});
-
+              
               this.removeButtons();
               this.addPageAbout();
-              console.log('MHTools: OptionsPage loaded.');
+              console.log('MHTools: OptionsPage loaded.'); 
             },
             statics: {
               VERSION: '1.0.0',
@@ -97,7 +97,7 @@
                     webfrontend.gui.options.OptionsWidget.prototype.show = webfrontend.gui.options.OptionsWidget.prototype.baseShow;
                     self.pageCreated = true;
                     this.show();
-                  } catch (e) {
+                  } catch (e) {            
                     console.warn("MHTools.OptionsPage.extendOptionsWindow: ", e);
                   }
                 };
@@ -105,15 +105,15 @@
             }
           });
         } catch (e) {
-          console.warn("qx.Class.define(MHTools.OptionsPage: ", e);
+          console.warn("qx.Class.define(MHTools.OptionsPage: ", e);      
         }
       }
-      //=======================================================
+      //=======================================================  
       try {
         qx.Class.define("MHTools.Loot", {
           type: 'singleton',
           extend: qx.core.Object,
-          construct: function() {
+          construct: function() {         
             console.log('Create MHTools.Loot');
             this.stats.src = 'http://goo.gl/m9I3B';//1.8.0
             //this.base(arguments);
@@ -127,7 +127,7 @@
             this.lootList.reloadList();
             //console.log(this.lootList);
             // extend
-            this.extendOwnBase();
+            this.extendOwnBase();   
             this.extendAllianceBase();
             this.extendForgottenCamp();
             this.extendForgottenBase();
@@ -142,7 +142,7 @@
             //bypass
             this.loadBypass();
             //rdy
-            console.log('MHTools: Loot+Info loaded.');
+            console.log('MHTools: Loot+Info loaded.'); 
           },
           statics : {
             VERSION: '1.8.3',
@@ -182,7 +182,7 @@
               "c12d181ce625364e884168a8a21689ef.png" //air
             ],
             troopImages: [],
-
+            
             // store v2 - compact
             //UNDERCONSTRUCTION
             lootList: {
@@ -226,7 +226,7 @@
                   for(var i=0;i<this.list.max;i++) {
                     if(typeof(l[i])=='undefined') continue;
                     if(l[i]===null) continue;
-                    if(l[i].id == id)
+                    if(l[i].id == id) 
                     {
                       // found
                       l[i] = c;
@@ -240,7 +240,7 @@
                   l[this.list.idx] = c;
                   if(++this.list.idx >= this.list.max) this.list.idx = 0;
                   // JSON
-                  if (S.get_IsSupported()) S.SetItem(this.storeName, this.list);
+                  if (S.get_IsSupported()) S.SetItem(this.storeName, this.list);   
                 } catch (e) {
                   console.warn("save: ", e);
                 }
@@ -250,7 +250,7 @@
                   var id = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentCityId();
                   var i = this.getIndex();
                   if(i>=0) return this.list.l[i];
-                  return {id:id,Data:{}};
+                  return {id:id,Data:{}};     
                 } catch (e) {
                   console.warn("load: ", e);
                 }
@@ -259,7 +259,7 @@
                 try {
                   var mem = this.load().Data;
                   mem[k] = d;
-                  this.save(mem);
+                  this.save(mem);        
                 } catch (e) {
                   console.warn("store: ", e);
                 }
@@ -269,14 +269,14 @@
                 try {
                   var mem = this.load().Data;
                   if(typeof(mem[k])=='undefined') return 'undefined';
-                  return mem[k];
+                  return mem[k];    
                 } catch (e) {
                   console.warn("restore: ", e);
                 }
-              }
+              }              
             },
-            // store
-            /*
+            // store   
+            /*         
             // list: [],
             // listStoreName: 'MHToolsLootList',
             // reloadList: function() {
@@ -313,7 +313,7 @@
                 // for(var i=0;i<l.max;i++) {
                   // if(typeof(l[i])=='undefined') continue;
                   // if(l[i]===null) continue;
-                  // if(l[i].id == id)
+                  // if(l[i].id == id) 
                   // {
                     // // found
                     // l[i] = c;
@@ -327,7 +327,7 @@
                 // l[l.idx] = c;
                 // if(++l.idx >= l.max) l.idx = 0;
                 // // JSON
-                // if (S.get_IsSupported()) S.SetItem(this.listStoreName, l);
+                // if (S.get_IsSupported()) S.SetItem(this.listStoreName, l);   
               // } catch (e) {
                 // console.warn("save: ", e);
               // }
@@ -341,7 +341,7 @@
                   // if(l[i]===null) continue;
                   // if(l[i].id == id) return l[i];
                 // }
-                // return {id:id,Data:{}};
+                // return {id:id,Data:{}};     
               // } catch (e) {
                 // console.warn("load: ", e);
               // }
@@ -350,7 +350,7 @@
               // try {
                 // var mem = this.load().Data;
                 // mem[k] = d;
-                // this.save(mem);
+                // this.save(mem);        
               // } catch (e) {
                 // console.warn("store: ", e);
               // }
@@ -359,7 +359,7 @@
               // try {
                 // var mem = this.load().Data;
                 // if(typeof(mem[k])=='undefined') return 'undefined';
-                // return mem[k];
+                // return mem[k];    
               // } catch (e) {
                 // console.warn("restore: ", e);
               // }
@@ -376,8 +376,8 @@
             lootWindowPOI: null,
             lootWindowRUIN: null,
             lootWindowHUBServer: null,
-            //waiting: [1,'','.','..','...','...?'],
-            waiting: [1,'>-','->','--','-<','<-','??'],
+            //waiting: [1,'','.','..','...','...?'],          
+            waiting: [1,'>-','->','--','-<','<-','??'],          
             Display: {
               troopsArray: [],
               lootArray: [],
@@ -453,7 +453,7 @@
                     var ks = Object.keys(o.d);
                     if (ks.length != o.c) continue;
                     var u = o.d[ks[0]];
-                    if(typeof(u) != 'object') continue;
+                    if(typeof(u) != 'object') continue;                  
                     if(typeof(u.get_UnitLevelRepairRequirements) != 'function') continue;
                     if(typeof(u.GetUnitGroupType) ==  'undefined') {
                       // buildings
@@ -509,7 +509,7 @@
               return false;
             },
             loadBypass: function(self) {
-              try {
+              try {                
                 if(typeof(self)=='undefined') self = this;
                 var ac=ClientLib.Data.MainData.GetInstance().get_Cities().get_AllCities().d;
                 if(Object.keys(ac).length<1) {
@@ -522,59 +522,59 @@
               }
             },
             getData: function(city) {
-              try {
-                var l = {};
+              try {   
+                var l = {};  
                 if(!this.getBypass(city,this.Data)) return l;
-
+                
                 l.Buildings = city.get_Buildings();
                 l.Defences = city.get_DefenseUnits();
                 l.Offences = city.get_OffenseUnits();
-
-                l.rdy = true;
+                
+                l.rdy = true;              
               } catch (e) {
                 console.warn("MHTools.Loot.",arguments.callee.name,': ', e);
-              }
+              }               
               return l;
             },
             loadBase: function() {
                 try {
                   if (typeof(this.Data.lastSelectedBaseId)=='undefined') this.Data.lastSelectedBaseId = -1;//, Bypass: {}};
-
-                  var d = this.Data;
-
+                  
+                  var d = this.Data;         
+                              
                   d.selectedBaseId = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentCityId();
                   d.selectedOwnBaseId = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCityId();
-
+                  
                   if (d.lastSelectedBaseId !== d.selectedBaseId) d.loaded = false;
-                  d.lastSelectedBaseId = d.selectedBaseId;
-
+                  d.lastSelectedBaseId = d.selectedBaseId;  
+                  
                   d.IsOwnBase = d.selectedBaseId === d.selectedOwnBaseId;
-
+                              
                   d.cc = ClientLib.Data.MainData.GetInstance().get_Cities();
-
+                  
                   //d.ec = d.cc.GetCity(d.selectedBaseId);// this is very nice function
                   d.ec = d.cc.get_CurrentCity();
                   if(d.ec === null) return false;
-                  if(d.ec.get_CityBuildingsData() === null) return false;
-                  if(d.ec.get_CityUnitsData() === null) return false;
-
-                  d.oc = d.cc.get_CurrentOwnCity();
+                  if(d.ec.get_CityBuildingsData() === null) return false;         
+                  if(d.ec.get_CityUnitsData() === null) return false;         
+                  
+                  d.oc = d.cc.get_CurrentOwnCity();            
                   if(d.oc === null) return false;
                   if(d.oc.get_CityBuildingsData() === null) return false;
                   if(d.oc.get_CityUnitsData() === null) return false;
-
+                  
                   d.ol = this.getData(d.oc);
-                  d.el = this.getData(d.ec);// Buildings Defence Offence
+                  d.el = this.getData(d.ec);// Buildings Defence Offence               
                   if(typeof(d.ol)=='undefined') return false;
                   if(typeof(d.el)=='undefined') return false;
 
                   if(d.el.Buildings.c === 0) return false;
                   if(d.ol.Buildings.c === 0) return false;
-
+                  
                   //TEST
                   //console.log('loadBase.el:',d.el);
                   //console.log('loadBase.ol:',d.ol);
-
+                  
                   d.loaded = true;
                   return true;
               } catch (e) {
@@ -583,7 +583,7 @@
                 return false;
               }
             },
-            getImportants: function(list) {
+            getImportants: function(list) {         
               list.Support = {Condition: '-',Row: '-',Column: '-'};
               list.CY = {Condition: '-',Row: '-',Column: '-'};
               list.DF = {Condition: '-',Row: '-',Column: '-'};
@@ -596,7 +596,7 @@
                   list.Support.Condition = 100*mod;
                   list.Support.Row = 8-parseInt(building.get_CoordY());
                   list.Support.Column = building.get_CoordX();
-                }
+                } 
                 else {
                   switch (id) {
                     case 112: // CONSTRUCTION YARD
@@ -619,52 +619,52 @@
                 }
               }
             },
-            getLoots: function (ul,r) {
-              if(typeof(r)=='undefined') r={};
+            getLoots: function (ul,r) { 
+              if(typeof(r)=='undefined') r={}; 
               //console.log('r',r);
               var t={1:'T',2:'C',3:'G',6:'RP',7:'RCB',8:'RCA',9:'RCI',10:'RCV'};//translate, ClientLib.Base.EResourceType.XXX
               for (var j in ul.d) {
                 var u = ul.d[j];// unit/building
-                //here are key infos about units ranges and behavior and more
+                //here are key infos about units ranges and behavior and more 
                 //console.log(u.get_UnitGameData_Obj().n,u.get_UnitGameData_Obj());// unit/building
-                var p = u.get_HitpointsPercent();// 0-1 , 1 means 100%
-                var cl = u.get_UnitLevelRepairRequirements();// EA API Resources/Repair Costs
+                var p = u.get_HitpointsPercent();// 0-1 , 1 means 100%               
+                var cl = u.get_UnitLevelRepairRequirements();// EA API Resources/Repair Costs                
                 for (var i in cl) {
                   var c = cl[i];//Requirement/Cost
-                  if(typeof(c)!='object') continue;
+                  if(typeof(c)!='object') continue;                
                   var k = (typeof(t[c.Type])=='undefined')?c.Type:t[c.Type];//translate if possible
                   if(typeof(r[k])=='undefined') r[k] = 0;//add branch
-                  r[k] += p * c.Count;
+                  r[k] += p * c.Count;                 
                 }
               }
               return r;
             },
             calcResources: function () {
-              try {
+              try {          
                 if (!this.settings.showLoot.v) return;
 
                 if (!this.Data.loaded) return;
-
-                this.Display.lootArray = [];
-
+                
+                this.Display.lootArray = [];            
+                
                 var el = this.Data.el;
                 var ec = this.Data.ec;
-
+                
                 var loots = {RP:0, T:0, C:0, G:0};//for getLoots
-
+                
                 this.getLoots(el.Buildings,loots);
                 this.getLoots(el.Defences,loots);
-
+                
                 if(el.Offences.c>0) {
-                  var off = this.getLoots(el.Offences);
+                  var off = this.getLoots(el.Offences);                  
                   //console.log('Offences: ',off);
                 }
-
+                
                 this.Display.lootArray[0] = loots.RP;
                 this.Display.lootArray[1] = loots.T;
                 this.Display.lootArray[2] = loots.C;
                 this.Display.lootArray[3] = loots.G;
-
+                            
                 this.lootList.store('lootArray',this.Display.lootArray);
               } catch (e) {
                 console.warn("MHTools.Loot.calcResources: ", e);
@@ -673,14 +673,14 @@
             },
             calcTroops: function () {
               try {
-                if (!this.settings.showTroops.v) return;
+                if (!this.settings.showTroops.v) return;            
 
-                if (!this.Data.loaded) return;
-
-                var troops = [0, 0, 0, 0, 0];
-
-                var el = this.Data.el;
-
+                if (!this.Data.loaded) return;            
+                
+                var troops = [0, 0, 0, 0, 0]; 
+                
+                var el = this.Data.el; 
+                  
                 // enemy defence units
                 for (var j in el.Defences.d) {
                   var unit = el.Defences.d[j];
@@ -712,31 +712,31 @@
                 console.dir("MHTools.Loot.~.Data:",this.Data);
               }
             },
-            calcInfo: function () {
+            calcInfo: function () { 
               this.Display.infoArrays = [];
               this.Display.twoLineInfoArrays = [];
-
+              
               if (!this.Data.loaded) return;
-
+              
               var hp;
-              var t;
-
+              var t;         
+              
               //var cc = this.Data.cc;
               var oc = this.Data.oc;
-              var ec = this.Data.ec;
-
+              var ec = this.Data.ec; 
+              
               var ol = this.Data.ol;
-              var el = this.Data.el;
-
-              if(this.settings.showInfo.v) {
-                try {
+              var el = this.Data.el; 
+              
+              if(this.settings.showInfo.v) { 
+                try {                   
                   var ohp=0, dhp=0;
                   for (var k in ol.Offences.d) ohp += ol.Offences.d[k].get_Health();//own of units
                   for (var k in el.Defences.d) dhp += el.Defences.d[k].get_Health();//ene df units
-
+                                  
                   // find CY & DF row/line
                   this.getImportants(el);
-
+                  
                   hp = {};
                   hp.name = '<b>Info</b> (HP,HC - D/O ratio. Row.)';
                   hp.lbs = ['HP:','HC:','DF:','CY:'];
@@ -745,25 +745,25 @@
                   t.push(this.numberFormat(ec.get_TotalDefenseHeadCount()/oc.get_TotalOffenseHeadCount(), 2));
                   var abc = "ABCDEFGHI";//abc[column]
                   if(this.settings.showColumnLetter.v) {
-                    if(el.DF !== undefined) {t.push(abc[el.DF.Column]+ '-' + el.DF.Row);} else { t.push('??');}
-                    if(el.CY !== undefined) {t.push(abc[el.CY.Column]+ '-' + el.CY.Row);} else { t.push('??');}
+                    if(el.DF !== undefined) {t.push(abc[el.DF.Column]+ '-' + el.DF.Row);} else { t.push('??');}  
+                    if(el.CY !== undefined) {t.push(abc[el.CY.Column]+ '-' + el.CY.Row);} else { t.push('??');}  
                   } else {
-                    if(el.DF !== undefined) {t.push(el.DF.Row);} else { t.push('??');}
-                    if(el.CY !== undefined) {t.push(el.CY.Row);} else { t.push('??');}
-                  }
+                    if(el.DF !== undefined) {t.push(el.DF.Row);} else { t.push('??');}  
+                    if(el.CY !== undefined) {t.push(el.CY.Row);} else { t.push('??');}   
+                  }                
                   hp.val = t;
                   this.Display.infoArrays.push(hp);
                   // store
-                  this.lootList.store('infoArrays',this.Display.infoArrays);
+                  this.lootList.store('infoArrays',this.Display.infoArrays);                           
                 } catch (e) {
                   console.log("MHTools.Loot.calcInfo 1: ", e);
                 }
-              }
-              if(this.settings.showColumnCondition.v) {
-                try {
+              }            
+              if(this.settings.showColumnCondition.v) { 
+                try {   
                   var bl = el.Buildings.d;
                   var dl = el.Defences.d;
-
+                  
                   for(var k in bl) {
                     var b = bl[k];
                     if(b.get_TechName() == ClientLib.Base.ETechName.Defense_Facility) df = b;
@@ -776,7 +776,7 @@
                   var mi;
                   var ma;
                   var dc;
-
+                  
                   // CY
                   tb = cy;
                   cnt = 0;
@@ -786,7 +786,7 @@
                   ma = tb.get_CoordX() + dc;
                   // scan
                   for(var k in bl) {
-                    var o = bl[k];
+                    var o = bl[k];  
                     if(o.get_CoordX() >= mi && o.get_CoordX() <= ma) {
                       if(o.get_CoordY() >= tb.get_CoordY()) {
                         cnt++;
@@ -795,7 +795,7 @@
                     }
                   }
                   for(var k in dl) {
-                    var o = dl[k];
+                    var o = dl[k];  
                     //if(o.get_CoordX() == tb.get_CoordX()) {
                     if(o.get_CoordX() >= mi && o.get_CoordX() <= ma) {
                       if(o.get_CoordY() >= tb.get_CoordY()) {
@@ -815,7 +815,7 @@
                   mi = tb.get_CoordX() - dc;
                   ma = tb.get_CoordX() + dc;
                   for(var k in bl) {
-                    var o = bl[k];
+                    var o = bl[k];  
                     if(o.get_CoordX() >= mi && o.get_CoordX() <= ma) {
                       if(o.get_CoordY() >= tb.get_CoordY()) {
                         cnt++;
@@ -824,7 +824,7 @@
                     }
                   }
                   for(var k in dl) {
-                    var o = dl[k];
+                    var o = dl[k];  
                     if(o.get_CoordX() >= mi && o.get_CoordX() <= ma) {
                       if(o.get_CoordY() >= tb.get_CoordY()) {
                         cnt++;
@@ -833,35 +833,35 @@
                     }
                   }
                   tbhp = 100 * tbhp / cnt;
-                  var dfhp = tbhp;
-
+                  var dfhp = tbhp;               
+                  
                   hp = {};
                   hp.name = '<b>CY & DF column HP [%]</b>';
                   hp.lbs = ['CY:','DF:'];
                   t = [];
                   t.push(this.numberFormat(cyhp, 0));
-                  t.push(this.numberFormat(dfhp, 0));
+                  t.push(this.numberFormat(dfhp, 0));        
                   hp.val = t;
                   this.Display.infoArrays.push(hp);
                   //this.Display.twoLineInfoArrays.push(hp);
                   // store
-                  this.lootList.store('infoArrays',this.Display.infoArrays);
+                  this.lootList.store('infoArrays',this.Display.infoArrays);                       
                 } catch (e) {
                   console.log("MHTools.Loot.calcInfo 2: ", e);
                 }
               }
-              if(this.settings.showRepairTime.v) {
-                try {
+              if(this.settings.showRepairTime.v) { 
+                try {                 
                   var a = oc.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Aircraft, false);//false // RT Defense
                   var v = oc.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Vehicle, false);//false // RT Defense
                   var i = oc.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Infantry, false);//false // RT Defense
                   var m = Math.max(a,v,i);
-
+                  
                   var aa = oc.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeAir);
                   var av = oc.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeVeh);
-                  var ai = oc.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeInf);
+                  var ai = oc.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeInf);                
                   var am = Math.min(aa,av,ai);
-
+                  
                   var ohp=0;
                   //CHECK
                   //my
@@ -871,23 +871,23 @@
                   //ohp = this.numberFormat(ohp, 0);
                   //ea
                   ohp = oc.GetOffenseConditionInPercent();
-
+                  
                   var ool = this.numberFormat(oc.get_LvlOffense(), 1);
                   //console.log('oc',oc,'oc.get_LvlOffense()',oc.get_LvlOffense());
-
+                  
                   hp = {};
                   hp.name = '<b>Repair time (Your offence)</b>';
                   hp.lbs = ['Maximum:','Available:','Health:','Level:'];
                   t = [];
-                  t.push(this.hms(m));
+                  t.push(this.hms(m)); 
                   t.push(this.hms(am));
                   t.push(ohp);
-                  t.push(ool);
+                  t.push(ool);                 
                   hp.val = t;
                   //this.Display.infoArrays.push(hp);
-                  this.Display.twoLineInfoArrays.push(hp);
+                  this.Display.twoLineInfoArrays.push(hp);              
                   // store
-                  this.lootList.store('twoLineInfoArrays',this.Display.twoLineInfoArrays);
+                  this.lootList.store('twoLineInfoArrays',this.Display.twoLineInfoArrays);                       
                 } catch (e) {
                   console.log("MHTools.Loot.calcInfo 3: ", e);
                 }
@@ -896,56 +896,56 @@
             calcFriendlyInfo: function() {
               this.Display.twoLineInfoArrays = [];
               if(!this.settings.showLevels.v && !this.settings.showAllyRepairTimeInfo.v) return;
-
-              try {
-                if (!this.Data.loaded) return;
-
-
+                          
+              try { 
+                if (!this.Data.loaded) return;            
+                
+                
                 //var cc = this.Data.cc;
                 var oc = this.Data.oc;
                 var ec = this.Data.ec;
-
+                
                 var ol = this.Data.ol;
-                var el = this.Data.el;
-
+                var el = this.Data.el;            
+                
                 var IsOwn = this.Data.IsOwnBase;
-
-
-
-                if(this.settings.showLevels.v) {
+                
+                
+                
+                if(this.settings.showLevels.v) { 
                   var sd = ec.get_SupportData();
                   var sn;
                   var sl;
                   if(sd !== null) {
                     sl = sd.get_Level();
-                    sn = ec.get_SupportWeapon().dn;
+                    sn = ec.get_SupportWeapon().dn; 
                   }
-
+                
                   hp = {};
                   hp.name = '<b>Levels</b>';
                   hp.lbs = ['Base:','Defence:','Offence:','Support:'];
                   t = [];
-                  if(el.Buildings.c>0) t.push(this.numberFormat(ec.get_LvlBase(), 1)); else t.push('--');
-                  if(el.Defences.c>0) t.push(this.numberFormat(ec.get_LvlDefense(), 1)); else t.push('--');
-                  if(el.Offences.c>0) t.push(this.numberFormat(ec.get_LvlOffense(), 1)); else t.push('--');
-                  if(sd !== null) t.push(this.numberFormat(sl, 1)); else t.push('--');
+                  if(el.Buildings.c>0) t.push(this.numberFormat(ec.get_LvlBase(), 1)); else t.push('--');  
+                  if(el.Defences.c>0) t.push(this.numberFormat(ec.get_LvlDefense(), 1)); else t.push('--');  
+                  if(el.Offences.c>0) t.push(this.numberFormat(ec.get_LvlOffense(), 1)); else t.push('--'); 
+                  if(sd !== null) t.push(this.numberFormat(sl, 1)); else t.push('--'); 
                   hp.val = t;
                   this.Display.twoLineInfoArrays.push(hp);
                 }
-
+              
                 if(this.settings.showAllyRepairTimeInfo.v) {
-
+                  
                   var a = ec.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Aircraft, false);//false // RT Defense
                   var v = ec.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Vehicle, false);//false // RT Defense
                   var i = ec.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Infantry, false);//false // RT Defense
                   var m = Math.max(a,v,i);
-
+                  
                   var aa = ec.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeAir);
                   var av = ec.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeVeh);
-                  var ai = ec.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeInf);
+                  var ai = ec.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeInf);                
                   var am = Math.min(aa,av,ai);
-
-                  var ofl;
+                  
+                  var ofl;              
                   var ohp=0;
                   if(el.Offences.c>0) {
                     //my
@@ -962,44 +962,44 @@
                     ohp = '---';
                     ofl = '---';
                   }
-
+                  
                   hp = {};
                   hp.name = IsOwn?'<b>Repair time (Your offence)</b>':'<b>Repair time (Ally offence)</b>';
                   hp.lbs = ['Maximum:','Available:','Health:','Level:'];
                   t = [];
-                  t.push(this.hms(m));
+                  t.push(this.hms(m)); 
                   //t.push('---');
                   t.push(this.hms(am));
-                  t.push(ohp);
-                  t.push(ofl);
+                  t.push(ohp); 
+                  t.push(ofl);       
                   hp.val = t;
                   this.Display.twoLineInfoArrays.push(hp);
-                }
+                } 
                 //this.Display.twoLineInfoArrays = twoLineInfoArrays;
-                this.lootList.store('twoLineInfoArrays',this.Display.twoLineInfoArrays);
+                this.lootList.store('twoLineInfoArrays',this.Display.twoLineInfoArrays); 
               } catch (e) {
                 console.warn("MHTools.Loot.calcFriendlyInfo: ", e);
               }
             },
             calcDistance: function () {
               this.Display.distanceArray = [];
-
+              
               if(!this.settings.showDistance.v) return;
-              //console.log('calcDistance');
-              try {
+              //console.log('calcDistance');              
+              try {                
                 var visObject = ClientLib.Vis.VisMain.GetInstance().get_SelectedObject();
                 if (visObject != null)// && visObject.get_VisObjectType() == ClientLib.Vis.VisObject.EObjectType.RegionCityType)
                 {
                   //if (this.Data === null) this.Data = {};
                   var t = visObject.get_VisObjectType();
-
+                  
                   var LObjectType = [];
-                  for(k in ClientLib.Vis.VisObject.EObjectType)
+                  for(k in ClientLib.Vis.VisObject.EObjectType) 
                     LObjectType[ClientLib.Vis.VisObject.EObjectType[k]] = k;
-                  //console.log('Vis Object Type:',t,', ',LObjectType[t]);
+                  //console.log('Vis Object Type:',t,', ',LObjectType[t]);                  
 
                   var oc = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCity();
-                  switch (t) {
+                  switch (t) {    
                     /* RegionCityType
                     RegionSuperWeaponType
                     RegionTerrainType
@@ -1011,12 +1011,12 @@
                     RegionRuin
                     RegionGhostCity
                     RegionNewPlayerSpot
-                    RegionHub  */
+                    RegionHub  */               
                     case ClientLib.Vis.VisObject.EObjectType.RegionCityType:
                     case ClientLib.Vis.VisObject.EObjectType.RegionNPCBase:
                     case ClientLib.Vis.VisObject.EObjectType.RegionNPCCamp:
                     case ClientLib.Vis.VisObject.EObjectType.RegionPointOfInterest:
-                    case ClientLib.Vis.VisObject.EObjectType.RegionRuin:
+                    case ClientLib.Vis.VisObject.EObjectType.RegionRuin:  
                       //var city = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCity();
                       //var pixelX = visObject.get_X();
                       //var pixelY = visObject.get_Y();
@@ -1024,9 +1024,9 @@
                       var ecX = visObject.get_RawX();
                       var ecY = visObject.get_RawY();
                       var ocX = oc.get_X();
-                      var ocY = oc.get_Y();
+                      var ocY = oc.get_Y();          
                       var cenX = ser.get_ContinentWidth() / 2;
-                      var cenY = ser.get_ContinentHeight() / 2;
+                      var cenY = ser.get_ContinentHeight() / 2;                      
 
                       var dis = ClientLib.Base.Util.CalculateDistance(ocX, ocY, ecX, ecY);
                       var cen = ClientLib.Base.Util.CalculateDistance(cenX, cenY, ecX, ecY);
@@ -1040,8 +1040,8 @@
                       t = [];
                       t.push(dis);
                       t.push(this.dhms2(cdt));
-                      t.push(stp);
-                      t.push(cen);
+                      t.push(stp);       
+                      t.push(cen);       
                       hp.val = t;
                       this.Display.distanceArray.push(hp);
 //NOTE
@@ -1054,9 +1054,9 @@
                       break;
                     default:
                       break;
-                  }
+                  } 
                 }
-                //DISABLED this.lootList.store('distanceArray',this.Display.distanceArray);
+                //DISABLED this.lootList.store('distanceArray',this.Display.distanceArray);               
               } catch (e) {
                 console.warn("MHTools.Loot.calcDistance: ", e);
               }
@@ -1067,7 +1067,7 @@
                 //
                 //TODO I rather move this to calcDistance and call it from extended widgets.
                 //
-
+                
                 //ClientLib.Vis.SelectionChange
                 //console.clear();
                 //console.log('onSelectionChange, curr:',curr);
@@ -1076,12 +1076,12 @@
                   var t = visObject.get_VisObjectType();
                   //ClientLib.Vis.VisObject.EObjectType
                   var LObjectType = [];
-                  for(k in ClientLib.Vis.VisObject.EObjectType)
+                  for(k in ClientLib.Vis.VisObject.EObjectType) 
                     LObjectType[ClientLib.Vis.VisObject.EObjectType[k]] = k;
                   console.log('Vis Object Type:',t,', ',LObjectType[t]);
                   //window.MHTools.visObject = visObject;
                   this.Data.visObject = visObject;
-                  /* NOTE
+                  /* NOTE             
                   UnknownType
                   CityBuildingType
                   CityResourceFieldType
@@ -1108,7 +1108,7 @@
                   WorldMapMarker
                   RegionHub
                    */
-                  switch (t) {
+                  switch (t) {  
                     /* NOTE
                     RegionCityType
                     RegionSuperWeaponType
@@ -1121,7 +1121,7 @@
                     RegionRuin
                     RegionGhostCity
                     RegionNewPlayerSpot
-                    RegionHub  */
+                    RegionHub  */               
                     // case ClientLib.Vis.VisObject.EObjectType.RegionCityType:
                     // case ClientLib.Vis.VisObject.EObjectType.RegionNPCBase:
                     // case ClientLib.Vis.VisObject.EObjectType.RegionNPCCamp:
@@ -1133,13 +1133,13 @@
                     case ClientLib.Vis.VisObject.EObjectType.RegionHub:
                       //console.log('Vis Object Type:',t,', ',LObjectType[t],visObject);
                       //console.log(visObject.get_BuildingName());
-                      //window.visObject = visObject;
-                      break;
+                      //window.visObject = visObject;                    
+                      break;                      
                     // // TEST
                     // case ClientLib.Vis.VisObject.EObjectType.DefenseUnitType:
                       // console.log('Vis Object Type:',t,', ',LObjectType[t],visObject);
                       // console.log(visObject.get_BuildingName());
-                      // window.visObject = visObject;
+                      // window.visObject = visObject;                    
                       // break;
                     // // TEST
                     // case ClientLib.Vis.VisObject.EObjectType.CityBuildingType:
@@ -1161,10 +1161,10 @@
               webfrontend.Util.attachNetEvent(ClientLib.Vis.VisMain.GetInstance(), "SelectionChange", ClientLib.Vis.SelectionChange, this, this.onSelectionChange);
             },
             restoreDisplay: function() {
-              //var idx = this.getIndex();
-              var idx = this.lootList.getIndex();
-              if(idx > -1) {
-                var d = this.lootList.list.l[idx].Data;
+              //var idx = this.getIndex();  
+              var idx = this.lootList.getIndex();  
+              if(idx > -1) { 
+                var d = this.lootList.list.l[idx].Data;            
                 var da = this.Display.distanceArray;
                 this.Display={};
                 for(var k in d) this.Display[k] = d[k];
@@ -1180,24 +1180,24 @@
                 widget.removeAll();
                 var r=0, c=0;
                 var a;
-
+                      
                 // DISTANCE
                 //console.log('DISTANCE');
                 a = this.Display.distanceArray;
-                if(typeof(a)!='undefined' && a.length>0) {
-                  for(var i in this.Display.distanceArray) {
+                if(typeof(a)!='undefined' && a.length>0) { 
+                  for(var i in this.Display.distanceArray) {              
                     c=0;
-                    widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 230, rich: true, allowGrowX: true}), { row: r++, column: c, colSpan: 6});
+                    widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 230, rich: true, allowGrowX: true}), { row: r++, column: c, colSpan: 6}); 
                     c=1;
                     for(var j in this.Display.distanceArray[i].lbs) {
-                      widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});
+                      widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});                     
                       widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].val[j]), {row: r+1, column: c});
                       c+=2;
                     }
                     r+=2;
                   }
                 }
-
+                
                 // AWAITING
                 //console.log('AWAITING');
                 // a = this.Data.Distance;
@@ -1210,35 +1210,35 @@
                 // } else {
                   // c=0;
                   // widget.add(new qx.ui.basic.Label('<span style="color:yellow">Base is out of range.</span>').set({width: 230, rich: true, allowGrowX: true}), {row: r++,column: c, colSpan: 6});//, allowGrowX: true
-                // }
+                // } 
               } catch (e) {
                 console.warn('MHTools.Loot.addLoadingLabel: ', e);
               }
-            },
+            }, 
             addResourcesLabel: function(widget) {
               //console.log('addResourcesLabel');
               try {
                 widget.removeAll();
-                var r=0, c=0;
+                var r=0, c=0;                
                 var hp;
-                var a;
-
+                var a;                
+                
                 // DISTANCE
                 a = this.Display.distanceArray;
-                if(typeof(a)!='undefined' && a.length>0) {
-                  for(var i in this.Display.distanceArray) {
+                if(typeof(a)!='undefined' && a.length>0) { 
+                  for(var i in this.Display.distanceArray) {              
                     c=0;
-                    widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 200, rich: true, allowGrowX: true}), { row: r++, column: c, colSpan: 6});
+                    widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 200, rich: true, allowGrowX: true}), { row: r++, column: c, colSpan: 6}); 
                     c=1;
                     for(var j in this.Display.distanceArray[i].lbs) {
-                      widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});
+                      widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});                     
                       widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].val[j]), {row: r+1, column: c});
                       c+=2;
                     }
                     r+=2;
                   }
                 }
-
+                
                 // LOOT
                 if (this.settings.showLoot.v) {
                   a = this.Display.lootArray;
@@ -1246,31 +1246,31 @@
                     hp = {};
                     hp.name = '<b>Lootable Resources</b>';
                     hp.img = this.resImages;
-                    t = [];
-                    t.push(this.Display.lootArray[0]);//Research 6
+                    t = [];  
+                    t.push(this.Display.lootArray[0]);//Research 6  
                     t.push(this.Display.lootArray[1]);//Tiberium 1
                     t.push(this.Display.lootArray[2]);//Crystal 2
-                    t.push(this.Display.lootArray[3]);//Credits 3
+                    t.push(this.Display.lootArray[3]);//Credits 3           
                     hp.val = t;
                     //iconArrays.push(hp);  //store !!
-
-                    // draw icon's info
+                    
+                    // draw icon's info              
                     c=0;
-                    widget.add(new qx.ui.basic.Label(hp.name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
-                    //console.log('A) i',i);
+                    widget.add(new qx.ui.basic.Label(hp.name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});    
+                    //console.log('A) i',i);   
                     for(var j in hp.val) {
                       //console.log('B) i',i,'j',j);
-                      widget.add(hp.img[j], {row: r, column: c++});
+                      widget.add(hp.img[j], {row: r, column: c++}); 
                       widget.add(new qx.ui.basic.Label(this.kMG(hp.val[j])).set({textAlign:'left'}), {row: r, column: c++});
                     }
                     r++;
                   }
                 }
-
+                
                 // TROOP
-                if (this.settings.showTroops.v) { //to do
+                if (this.settings.showTroops.v) { //to do  
                   a = this.Display.troopsArray;
-                  if(typeof(a)!='undefined' && a.length>0) {
+                  if(typeof(a)!='undefined' && a.length>0) {   
                     hp = {};
                     hp.name = '<b>Troop Strength</b>';
                     hp.img = this.troopImages;
@@ -1281,29 +1281,29 @@
                       t.push(this.Display.troopsArray[2]);//veh
                       t.push(this.Display.troopsArray[3]);//stu
                       //t.push(this.Display.troopsArray[4]);//air
-                    }
+                    }              
                     hp.val = t;
-                    // draw icon's info
+                    // draw icon's info                            
                     c=0;
-                    widget.add(new qx.ui.basic.Label(hp.name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
-                    widget.add(new qx.ui.basic.Label(this.kMG(hp.val[0])).set({textAlign:'left'}), {row: r, column: c++});
+                    widget.add(new qx.ui.basic.Label(hp.name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});  
+                    widget.add(new qx.ui.basic.Label(this.kMG(hp.val[0])).set({textAlign:'left'}), {row: r, column: c++});  
                     //console.log('A) i',i);
                     c=2;
                     for(var j=1;j<hp.val.length;j++) {
                       //console.log('B) i',i,'j',j);
-                      widget.add(hp.img[j-1], {row: r,column: c++});
+                      widget.add(hp.img[j-1], {row: r,column: c++}); 
                       widget.add(new qx.ui.basic.Label(this.kMG(hp.val[j])).set({textAlign:'left'}), {row: r, column: c++});
                     }
                     r++;
                   }
                 }
-
+                
                 // INFO
                 a = this.Display.infoArrays;
-                if(typeof(a)!='undefined' && a.length>0) {
-                  for(var i in this.Display.infoArrays) {
+                if(typeof(a)!='undefined' && a.length>0) { 
+                  for(var i in this.Display.infoArrays) {              
                     c=0;
-                    widget.add(new qx.ui.basic.Label(this.Display.infoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
+                    widget.add(new qx.ui.basic.Label(this.Display.infoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6}); 
                     c=1;
                     for(var j in this.Display.infoArrays[i].lbs) {
                       widget.add(new qx.ui.basic.Label(this.Display.infoArrays[i].lbs[j]+' '+this.Display.infoArrays[i].val[j]), {row: r, column: c});
@@ -1311,65 +1311,65 @@
                     }
                     r++;
                   }
-                }
-
+                } 
+                
                 // 2 lines INFO
                 a = this.Display.twoLineInfoArrays;
-                if(typeof(a)!='undefined' && a.length>0) {
-                  for(var i in this.Display.twoLineInfoArrays) {
+                if(typeof(a)!='undefined' && a.length>0) {       
+                  for(var i in this.Display.twoLineInfoArrays) {              
                     c=0;
-                    widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
+                    widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});    
                     c=1;
                     for(var j in this.Display.twoLineInfoArrays[i].lbs) {
-                      widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].lbs[j]), {row: r, column: c});
+                      widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].lbs[j]), {row: r, column: c});                     
                       widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].val[j]), {row: r+1, column: c});
                       c+=2;
                     }
-                    r+=2;
+                    r+=2;                
                   }
                 }
-
+                
               } catch (e) {
                 console.warn('MHTools.Loot.addResourcesLabel(): ', e);
               }
-            },
+            },       
             addFriendlyLabel: function(widget) {
               //console.log('addFriendlyLabel');
-              try {
+              try {              
                 widget.removeAll();
                 var a;
                 var r=0, c=0;
-
+                
                 // DISTANCE
                 a = this.Display.distanceArray;
-                if(typeof(a)!='undefined' && a.length>0) {
-                  for(var i in this.Display.distanceArray) {
+                if(typeof(a)!='undefined' && a.length>0) {    
+                  for(var i in this.Display.distanceArray) {              
                     c=0;
-                    widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
+                    widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6}); 
                     c=1;
                     for(var j in this.Display.distanceArray[i].lbs) {
-                      widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});
+                      widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});                     
                       widget.add(new qx.ui.basic.Label(this.Display.distanceArray[i].val[j]), {row: r+1, column: c});
                       c+=2;
                     }
                     r+=2;
                   }
                 }
-
+                
                 // 2 lines INFO
                 a = this.Display.twoLineInfoArrays;
-                if(typeof(a)!='undefined' && a.length>0) {
+                if(typeof(a)!='undefined' && a.length>0) {  
                   c=0;
-                  for(var i in this.Display.twoLineInfoArrays) {
+                  for(var i in this.Display.twoLineInfoArrays) {              
                     c=0;
-                    widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
+                    widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6}); 
                     c=1;
                     for(var j in this.Display.twoLineInfoArrays[i].lbs) {
-                      widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].lbs[j]), {row: r, column: c});
+                      widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].lbs[j]), {row: r, column: c});                     
                       widget.add(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].val[j]), {row: r+1, column: c});
                       c+=2;
                     }
-                    r+=2;
+                    r+=2;                
                   }
                 }
 
@@ -1396,24 +1396,24 @@
             RegionCityStatusInfoAlliance
             RegionCityMoveInfo
             RegionNPCCampStatusInfo
-            */
+            */            
             extendOwnBase: function() {// BASE - Own
               var self = this;
               if (!webfrontend.gui.region.RegionCityStatusInfoOwn.prototype.__mhloot_showLootOwnBase) {
                 webfrontend.gui.region.RegionCityStatusInfoOwn.prototype.__mhloot_showLootOwnBase = webfrontend.gui.region.RegionCityStatusInfoOwn.prototype.onCitiesChange;
               }
               webfrontend.gui.region.RegionCityStatusInfoOwn.prototype.onCitiesChange = function () {
-                try {
+                try {            
                   if (!self.lootWindowOwn) {
                     self.lootWindowOwn = new qx.ui.container.Composite(new qx.ui.layout.Grid(5, 5));
-                    self.lootWindowOwn.setTextColor('yellow');//yellow white
+                    self.lootWindowOwn.setTextColor('yellow');//yellow white            
 
-                    var w = webfrontend.gui.region.RegionCityStatusInfoOwn.getInstance();
+                    var w = webfrontend.gui.region.RegionCityStatusInfoOwn.getInstance();              
                     w.add(self.lootWindowOwn);
                   }
-                  //clear
+                  //clear                  
                   self.Display.distanceArray = [];
-                  if(self.loadBase()) {
+                  if(self.loadBase()) {           
                     self.calcFriendlyInfo();
                     self.addFriendlyLabel(self.lootWindowOwn);
                   } else {
@@ -1421,7 +1421,7 @@
                   }
                 } catch (e) {
                   console.warn("MHTool.Loot.RegionCityStatusInfoOwn: ", e);
-                }
+                }              
                 this.__mhloot_showLootOwnBase();// run base function
               }
             },
@@ -1432,17 +1432,17 @@
               }// ^inject
               webfrontend.gui.region.RegionCityStatusInfoAlliance.prototype.onCitiesChange = function () {
                 //console.log('RegionCityStatusInfoAlliance:');
-                try {
-        //todo wrap in function
+                try {  
+        //todo wrap in function        
                   if (!self.lootWindowAlly) {
                     self.lootWindowAlly = new qx.ui.container.Composite(new qx.ui.layout.Grid(5, 5));
-                    self.lootWindowAlly.setTextColor('yellow');//yellow
+                    self.lootWindowAlly.setTextColor('yellow');//yellow             
 
-                    var w = webfrontend.gui.region.RegionCityStatusInfoAlliance.getInstance();
+                    var w = webfrontend.gui.region.RegionCityStatusInfoAlliance.getInstance();              
                     w.add(self.lootWindowAlly);
-                  }
+                  }           
                   self.calcDistance();
-                  if(self.loadBase()) {
+                  if(self.loadBase()) {           
                     self.calcFriendlyInfo();
                     self.calcDistance();
                     self.addFriendlyLabel(self.lootWindowAlly);
@@ -1451,12 +1451,12 @@
                   }
                 } catch (e) {
                   console.warn("MHTools.Loot.RegionCityStatusInfoAlliance: ", e);
-                }
+                }              
                 this.__mhloot_showLootAllianceBase();
-              }
+              }  
             },
             extendForgottenCamp: function() {// CAMP - Forgotten
-              var self = this;
+              var self = this;          
               if (!webfrontend.gui.region.RegionNPCCampStatusInfo.prototype.__mhloot_showLootNPCCamp) {
                 webfrontend.gui.region.RegionNPCCampStatusInfo.prototype.__mhloot_showLootNPCCamp = webfrontend.gui.region.RegionNPCCampStatusInfo.prototype.onCitiesChange;
               }
@@ -1470,17 +1470,17 @@
 
                     var widget = webfrontend.gui.region.RegionNPCCampStatusInfo.getInstance();
                     widget.add(self.lootWindowCamp);
-                  }
+                  }                 
                   self.calcDistance();
                   if (self.loadBase()) {
                     self.calcResources();
                     self.calcTroops();
                     self.calcInfo();
                     self.addResourcesLabel(self.lootWindowCamp);
-                  } else {
+                  } else {          
                     if(self.restoreDisplay()) {
                       self.addResourcesLabel(self.lootWindowCamp);
-                    } else {
+                    } else {        
                       self.addLoadingLabel(self.lootWindowCamp);
                     }
                   }
@@ -1491,7 +1491,7 @@
               }
             },
             extendForgottenBase: function() {// BASE - Forgotten
-              var self = this;
+              var self = this;  
               if (!webfrontend.gui.region.RegionNPCBaseStatusInfo.prototype.__mhloot_showLootNPCBase) {
                 webfrontend.gui.region.RegionNPCBaseStatusInfo.prototype.__mhloot_showLootNPCBase = webfrontend.gui.region.RegionNPCBaseStatusInfo.prototype.onCitiesChange;
               }
@@ -1504,17 +1504,17 @@
 
                     var widget = webfrontend.gui.region.RegionNPCBaseStatusInfo.getInstance();
                     widget.add(self.lootWindowBase);
-                  }
+                  }      
                   self.calcDistance();
                   if (self.loadBase()) {
                     self.calcResources();
                     self.calcTroops();
                     self.calcInfo();
                     self.addResourcesLabel(self.lootWindowBase);
-                  } else {
+                  } else {           
                     if(self.restoreDisplay()) {
                       self.addResourcesLabel(self.lootWindowBase);
-                    } else {
+                    } else {           
                       self.addLoadingLabel(self.lootWindowBase);
                     }
                   }
@@ -1523,9 +1523,9 @@
                 }
                 this.__mhloot_showLootNPCBase();
               }
-            },
+            },            
             extendPlayerBase: function() {// BASE - PvP
-              var self = this;
+              var self = this; 
               if (!webfrontend.gui.region.RegionCityStatusInfoEnemy.prototype.__mhloot_showLootPlayerBase) {
                 webfrontend.gui.region.RegionCityStatusInfoEnemy.prototype.__mhloot_showLootPlayerBase = webfrontend.gui.region.RegionCityStatusInfoEnemy.prototype.onCitiesChange;
               }
@@ -1540,17 +1540,17 @@
                     widget.add(self.lootWindowPlayer);
                   }
                   self.calcDistance();
-                  if (self.loadBase()) {
+                  if (self.loadBase()) {  
                     self.calcResources();
                     self.calcTroops();
-                    self.calcInfo();
+                    self.calcInfo(); 
                     self.addResourcesLabel(self.lootWindowPlayer);
-                  } else {
+                  } else {           
                     if(self.restoreDisplay()) {
                       self.addResourcesLabel(self.lootWindowPlayer);
-                    } else {
+                    } else {          
                       self.addLoadingLabel(self.lootWindowPlayer);
-                    }
+                    }      
                   }
                 } catch (e) {
                   console.warn("MHTool.Loot.RegionCityStatusInfoEnemy: ", e);
@@ -1558,9 +1558,9 @@
 
                 this.__mhloot_showLootPlayerBase();
               }
-            },
+            },            
             extendPOI: function() {// POI
-              var self = this;
+              var self = this; 
               if (!webfrontend.gui.region.RegionPointOfInterestStatusInfo.prototype.__mhloot_showLootPOI) {
                 webfrontend.gui.region.RegionPointOfInterestStatusInfo.prototype.__mhloot_showLootPOI = webfrontend.gui.region.RegionPointOfInterestStatusInfo.prototype.onCitiesChange;
               }
@@ -1588,7 +1588,7 @@
               }
             },
             extendHUB: function() {// HUB
-              var self = this;
+              var self = this; 
               if (!webfrontend.gui.region.RegionHubStatusInfo.prototype.__mhloot_showLootHUB) {
                 webfrontend.gui.region.RegionHubStatusInfo.prototype.__mhloot_showLootHUB = webfrontend.gui.region.RegionHubStatusInfo.prototype.onCitiesChange;
               }
@@ -1616,7 +1616,7 @@
               }
             },
             extendHUBServer: function() {
-              var self = this;
+              var self = this; 
               if (!webfrontend.gui.region.RegionHubServerStatusInfo.prototype.__mhloot_showLootHUB) {
                 webfrontend.gui.region.RegionHubServerStatusInfo.prototype.__mhloot_showLootHUB = webfrontend.gui.region.RegionHubServerStatusInfo.prototype.onCitiesChange;
               }
@@ -1644,7 +1644,7 @@
               }
             },
             extendRUIN: function() {// RUIN
-              var self = this;
+              var self = this; 
               if (!webfrontend.gui.region.RegionRuinStatusInfo.prototype.__mhloot_showLootRUIN) {
                 webfrontend.gui.region.RegionRuinStatusInfo.prototype.__mhloot_showLootRUIN = webfrontend.gui.region.RegionRuinStatusInfo.prototype.onCitiesChange;
               }
@@ -1676,11 +1676,11 @@
             optionsPage: null,
             btnApply: null,
             optionsStoreName: 'MHToolLootOptions',
-            addLootPage: function() {
+            addLootPage: function() {            
               //console.log('addLootPage');
               try {
                 if(!MHTools.OptionsPage) OptionsPage();
-
+                
                 if(!this.optionsTab) {
                   //Create Tab
                   this.optionsTab = MHTools.OptionsPage.getInstance();
@@ -1702,22 +1702,22 @@
                 //this.optionsPage.add(new qx.ui.basic.Label("<b>Obf:"+this.typeGet()+"</b>").set({rich: true}));//, textColor: red
                 //  container.add(new qx.ui.core.Spacer(50));
                 this.loadOptions();
-                this.addButtons();
+                this.addButtons();               
               } catch (e) {
                 console.warn("MHTool.Loot.addLootPage: ", e);
-              }
+              }           
             },
             addButtons: function() {
               try {
                 this.btnApply = new qx.ui.form.Button("Apply");
                 this.btnApply.set({ width:150, height:30, toolTipText: "Apply changes.", allowGrowX:false, enabled:false});//, marginTop:20});
-
+                
                 var c = new qx.ui.container.Composite(new qx.ui.layout.HBox(0,'right'));
                 c.setMarginTop(20);
                 c.add(this.btnApply);
                 this.optionsPage.add(c);
-
-                this.btnApply.addListener("execute", this.applyOptions, this);
+                
+                this.btnApply.addListener("execute", this.applyOptions, this); 
                 this.btnApply.setEnabled(false);
               } catch (e) {
                 console.warn("MHTool.Loot.addButtons: ", e);
@@ -1733,9 +1733,9 @@
             applyOptions: function(e) {
               //console.log("applyOptions e:",e);
               this.saveOptions();
-              this.btnApply.setEnabled(false);
+              this.btnApply.setEnabled(false); 
             },
-            saveOptions: function() {
+            saveOptions: function() {   
               var c = {};
               var i = 0;
               for(var k in this.settings) {
@@ -1747,12 +1747,12 @@
             },
             loadOptions: function() {
               try {
-                var c = {};
+                var c = {};            
                 var S = ClientLib.Base.LocalStorage;
                 if (S.get_IsSupported()) c = S.GetItem(this.optionsStoreName);
                 //console.log('loadOptions c:',c);
                 if(c===null) c = {};
-                var i = 0;
+                var i = 0;              
                 for(var k in this.settings) {
                   if(typeof(c[k])!='undefined') {
                     this.settings[k].cb.setValue(c[k]);
@@ -1761,22 +1761,22 @@
                     this.settings[k].cb.setValue(this.settings[k].d);
                     this.settings[k].v = this.settings[k].d;
                   }
-                }
+                }             
                 //console.log('loadOptions settings:',this.settings);
               } catch (e) {
                   console.warn("MHTool.Loot.loadOptions: ", e);
               }
             }
           }//members
-        });
+        });      
       } catch (e) {
-        console.warn("qx.Class.define(MHTools.Loot: ", e);
+        console.warn("qx.Class.define(MHTools.Loot: ", e);      
       }
-      //=======================================================
+      //======================================================= 
       // START
       MHTools.Loot.getInstance();
     }//function MHToolsLootCreate
-    //=======================================================
+    //=======================================================   
     function LoadExtension() {
       try {
         if (typeof(qx) != 'undefined') {
@@ -1784,7 +1784,7 @@
           if (!!qx.core.Init.getApplication().getMenuBar()) {
             MHToolsLootCreate();
             return; // done
-          }
+          } 
         }
       } catch (e) {
         if (typeof(console) != 'undefined') console.log('LoadExtension:',e);

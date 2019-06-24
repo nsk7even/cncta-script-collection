@@ -3,8 +3,8 @@
 // @description     Upgrade your Base,Defense Army to a specific Level.
 // @author          Eistee
 // @version         2017.06.06
-// @namespace       https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @include         https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace       https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include         https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @icon            http://eistee82.github.io/ta_simv2/icon.png
 // ==/UserScript==
 /**
