@@ -27,7 +27,7 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "gui",
 	unique: 2,
 	version : "  1.0.1",
-	enabled : false		
+	enabled : false
 },{
 	id : 10073,
 	greasyfork: 30251,
@@ -35,14 +35,14 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "gui",
 	unique: 2,
 	version : "  2.00",
-	enabled : false		
+	enabled : false
 }, {
 	id : 10048,
 	greasyfork: 13925,
 	name : "New Custom Flunik Tools (SaberTooths-Fix-for-Awesome)",
 	cat : "tool",
 	version : "  1.3.3.1",
-	enabled : false		
+	enabled : false
 }, {
 	id : 10015,
 	greasyfork: 11647,
@@ -121,7 +121,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "C&C: Tiberium Alliances - xTr1m's Base Overlay- Display Ratio 4:3",
 	cat : "gui",
 	version : "  1.13",
-	enabled : false		
+	enabled : false
 }, {
 	id : 10034,
 	greasyfork: 715,
@@ -165,7 +165,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "MaelstromTools Dev (Modv1.6 for MCV)",
 	cat : "tool",
 	hot: true,
-	version : "  0.1.4.7",
+	version : "  0.1.4.7+",
 	enabled : true
 }, {
 	id : 10008,
@@ -183,7 +183,7 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "tool",
 	unique: 1,
 	version : "  1.9.0.B",
-	enabled : false	
+	enabled : false
 },{
 	id : 10071,
 	greasyfork: 19672,
@@ -191,7 +191,7 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "tool",
 	unique: 1,
 	version : "  1.9.0.I",
-	enabled : false	
+	enabled : false
 }, {
 	id : 10021,
 	greasyfork: 10436,
@@ -212,26 +212,26 @@ var DEFAULT_SCRIPTS = [ {
 	name : "PluginsLib - mhLoot - Tiberium Alliances",
 	cat : "infotool",
 	version : "  2.06",
-	enabled : false	
+	enabled : false
 }, {
 	id : 10010,
 	greasyfork: 1860,
 	name : "PluginsLib - mhNavigator - Tiberium Alliances",
 	cat : "gui",
 	hot: true,
-	version : "  1.36+",
+	version : "  1.35",
 	enabled : true
 }, {
 	id : 10051,
-	greasyfork: 15741,
+	greasyfork: 24754,
 	name : "Tiberium Alliances Report Summary",
 	cat: "gui",
-	version : "  14.06.16",
-	enabled : true
+	version : "  17.06.06",
+	enabled : false
 }, {
 	id : 10043,
 	greasyfork: 17032,
-	name : "Shockr - Tiberium Alliances Tools - BaseScanner MailVersion- reMod 1.2",
+	name : "Shockr - Tiberium Alliances Tools - BaseScanner MailVersion- reMod 1.3",
 	cat : "tool",
 	hot: true,
 	version : "  2.7.2.29+",
@@ -250,7 +250,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "The Green Cross - Tiberium Alliances Combat Simulator",
 	cat : "simulator",
 	version : "  3.2.2",
-	enabled : false	
+	enabled : false
 }, {
 	id : 10022,
 	greasyfork: 11916,
@@ -260,19 +260,11 @@ var DEFAULT_SCRIPTS = [ {
 	enabled : false
 }, {
 	id : 10028,
-	greasyfork: 1859,
-	name : "C&C Tiberium Alliances Landingpage Autologin",
-	cat : "login",
-	hot: false,
-	version : "  1.0.1DL",
-	enabled : false
-}, {
-	id : 10070,
 	greasyfork: 13711,
-	name : "Tiberium Alliances Battle Simulator - V3",
+	name : "Tiberium Alliances Battle Simulator - V2",
 	cat : "simulator",
 	hot: true,
-	version : "  17.06.07",
+	version : "  18.07.12",
 	enabled : true
 }, {
 	id : 10000,
@@ -291,10 +283,11 @@ var DEFAULT_SCRIPTS = [ {
 	enabled : true
 }, {
 	id : 10033,
-	greasyfork: 1828,
+	greasyfork: 30450,
 	name : "Tiberium Alliances Info Sticker",
-	version : "  1.11.10+",
+	version : "  1.11.10.2++",
 	hot: true,
+	unique: 3,
 	cat : "infotool",
 	enabled : false
 }, {
@@ -303,7 +296,7 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "infotool",
 	version : "  1.11.10.1",
 	unique: 3,
-	enabled : false	
+	enabled : false
 }, {
 	id : 10002,
 	greasyfork: 1936,
@@ -340,8 +333,8 @@ var DEFAULT_SCRIPTS = [ {
 	name : "Tiberium Alliances ReplayShare",
 	cat : "tool",
 	hot: true,
-	version : "  0.4.3",
-	enabled : true
+	version : "  0.4.1",
+	enabled : false
 }, {
 	id : 10026,
 	greasyfork: 18245,
@@ -374,9 +367,9 @@ var DEFAULT_SCRIPTS = [ {
 	hot: true
 }, {
 	id : 10003,
-	greasyfork: 1900,
+	greasyfork: 29201,
 	name : "Tiberium Alliances Tunnel Info",
-	version : "  2.3",
+	version : "  2.2.1.2",
 	hot: true,
 	cat : "infotool",
 	enabled : true
@@ -441,7 +434,7 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "tweak",
 	hot: true,
 	version : "  0.2",
-	enabled : true	
+	enabled : true
 }, {
 	id : 10062,
 	name : "MENU FIX Chrome 55",
@@ -449,20 +442,20 @@ var DEFAULT_SCRIPTS = [ {
 	info: "http://forum.alliances.commandandconquer.com/showthread.php?tid=49151&pid=234961#pid234961",
 	hot: true,
 	version : "  1.1",
-	enabled : true	
+	enabled : true
 },{
 	id : 10064,
 	name : "CnC TA: Crucial Script CNC-Map.com link",
 	cat : "gui",
 	lib : "parse",
 	version : "  1.0.10",
-	enabled : false	
+	enabled : false
 },{
 	id : 10065,
 	name : "AllianceMemberOnline",
 	cat : "infotool",
 	version : "  0.1.3.0",
-	enabled : false	
+	enabled : false
 },{
 	id : 10066,
 	name : "Tiberium Alliances Auto Repair",
@@ -476,7 +469,7 @@ var DEFAULT_SCRIPTS = [ {
 	info: "https://openuserjs.org/scripts/tb23911/Tiberium_Alliances_Upgrade_Top",
 	cat : "tool",
 	version : "  0.9.0",
-	enabled : false	
+	enabled : false
 },{
 	id : 10068,
 	name : "Tiberium Alliances Zoom",
@@ -484,7 +477,7 @@ var DEFAULT_SCRIPTS = [ {
 	hot: true,
 	cat : "gui",
 	version : "  1.0.1",
-	enabled : false	
+	enabled : false
 },
 {
 	id : 10072,
@@ -551,31 +544,31 @@ var DEFAULT_SCRIPTS = [ {
 
 var updateopen = false;
 
-	
+
 	function openupdate()  {
 		if (updateopen === true){
        chrome.tabs.create({
        url: chrome.runtime.getURL('updated.html')
     });
-       updateopen = false;  
+       updateopen = false;
 	   }
        }
-	
-	
-	
+
+
+
 
 if (chrome && chrome.runtime && chrome.runtime.onInstalled) {
 	chrome.runtime.onInstalled.addListener(function(){
-	updateopen = true; 
-	openupdate();	  
-       
+	updateopen = true;
+	openupdate();
+
 });
-	
+
 } else {
-	
+
 	updateopen = true;
 }
-	
+
 var CURRENT_VERSION = chrome.runtime.getManifest().version;
 var PREVIOUS_VERSION = localStorage.getItem('CNCTA_VERSION');
 if (CURRENT_VERSION !== PREVIOUS_VERSION) {
@@ -585,7 +578,7 @@ if (CURRENT_VERSION !== PREVIOUS_VERSION) {
 	localStorage.setItem('CNCTA_VERSION', CURRENT_VERSION);
 	localStorage.setItem('CNCTA_SCRIPTS', JSON.stringify(DEFAULT_SCRIPTS));
 
-	
+
 }
 	var enabled = JSON.parse(localStorage.getItem('CNCTA_ENABLED'));
 	if (enabled === null || typeof enabled !== 'object') {
@@ -593,11 +586,11 @@ if (CURRENT_VERSION !== PREVIOUS_VERSION) {
 		var tmp = {};
 
 	for (var i in DEFAULT_SCRIPTS) {
-		var script = DEFAULT_SCRIPTS[i];		
+		var script = DEFAULT_SCRIPTS[i];
 		tmp[script.id] = enabled[script.id] || script.enabled;
 	}
 	localStorage.setItem('CNCTA_ENABLED', JSON.stringify(tmp));
-	} 
+	}
 
 
 function processRequest(request, sender, sendResponse) {
