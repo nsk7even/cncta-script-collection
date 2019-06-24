@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name        MaelstromTools Dev (Modv1.5 for MCV)
+// @name        MaelstromTools Dev (Modv1.6 for MCV)
 // @namespace   MaelstromTools
 // @description Just a set of statistics & summaries about repair time and base resources. Mainly for internal use, but you are free to test and comment it. [+7even: fixed mcv popup jumping out of visibility][+7even: changed default of SHOWCOSTSFORNEXTMCV to false, in favor of Next MCV Info HUD]
-// @version     0.1.4.6++
+// @version     0.1.4.7+
 // @author      Maelstrom, HuffyLuf, KRS_L,Krisan,DLwarez, NetquiK (mod for MCV)
-// @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include         https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
 //var offense_units = own_city.get_CityArmyFormationsManager().GetFormationByTargetBaseId(current_city.get_Id()).get_ArmyUnits().l;
 //System.Int64 GetForumIdByType (ClientLib.Data.Forum.EForumType eForumType)
@@ -247,7 +247,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                     this.mainMenuWindow.setAutoHide(false);
                     this.mainMenuWindow.setBackgroundColor("transparent");
                     //this.mainMenuWindow.setShadow(null);
-                    this.mainMenuWindow.setDecorator(new qx.ui.decoration.Background());
+                    this.mainMenuWindow.setDecorator(new qx.ui.decoration.Decorator());
                   }
                 }
 
@@ -269,7 +269,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                 desktopPositionModifier++;
                 var openMainMenuButton = this.createDesktopButton(Lang.gt("Main menu"), "ProductionMenu", false, this.desktopPosition(desktopPositionModifier));
                 openMainMenuButton.addListener("click", function (e) {
-                  this.mainMenuWindow.placeToMouse(e);
+                  this.mainMenuWindow.placeToPointer(e);
                   this.mainMenuWindow.show();
                 }, this);
 
@@ -976,23 +976,32 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                     marginBottom : 0,
                     rich:true
                   });
-
-                  this.mcvplace = new qx.ui.basic.Label().set({
-                    width: 100,
-                    font: font4,
-                    textColor: 'yellow',
-                    textAlign: 'center',
-                    rich:true,
-                    marginBottom : 0
-                  });
-
-                  this.mcvPopup.add(this.mcvTimerLabel);
-                  this.mcvPopup.add(this.mcvCreditProcentageLabel);
-                  this.mcvPopup.add(this.mcvResearchTimerLabel);
-                  this.mcvPopup.setToolTipText('Minimize to Toggle View');
-
-                  var serverBar = qx.core.Init.getApplication().getServerBar().getBounds();
-
+                    this.mcvResearchTimerLabel = new qx.ui.basic.Label().set({
+                     font: font3,
+                     textColor: 'yellow',
+                     width: 195,
+					 allowGrowX: true,
+                     textAlign: 'center',
+                     marginBottom : 2,
+					
+				
+					 rich:true
+                   });
+				   this.mcvplace = new qx.ui.basic.Label().set({					 
+                     width: 100,
+					 font: font4,
+                     textColor: 'yellow',
+					  textAlign: 'center',
+					  rich:true,
+					  marginBottom : 0
+                    
+                   });
+                     this.mcvPopup.add(this.mcvTimerLabel);
+                     this.mcvPopup.add(this.mcvCreditProcentageLabel);
+                     this.mcvPopup.add(this.mcvResearchTimerLabel);
+					 this.mcvPopup.setToolTipText('Minimize to Toggle View');
+					 
+                     var serverBar = qx.core.Init.getApplication().getServerBar().getBounds();
                   var pos = MaelstromTools.LocalStorage.get("mcvPopup", {
                     //x : serverBar.width + 0,
                     x : 0,
@@ -1120,14 +1129,14 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                   this.Settings["useDedicatedMainMenu"] = (MaelstromTools.LocalStorage.get("useDedicatedMainMenu", 1) == 1);
                 }*/
                 this.Settings[MaelstromTools.Preferences.USEDEDICATEDMAINMENU] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.USEDEDICATEDMAINMENU, 1) == 1);
-                this.Settings[MaelstromTools.Preferences.AUTOCOLLECTPACKAGES] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOCOLLECTPACKAGES, 0) == 1);
+                this.Settings[MaelstromTools.Preferences.AUTOCOLLECTPACKAGES] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOCOLLECTPACKAGES, 1) == 1);
                 this.Settings[MaelstromTools.Preferences.AUTOREPAIRUNITS] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOREPAIRUNITS, 0) == 1);
-                this.Settings[MaelstromTools.Preferences.AUTOREPAIRBUILDINGS] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOREPAIRBUILDINGS, 0) == 1);
+                this.Settings[MaelstromTools.Preferences.AUTOREPAIRBUILDINGS] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOREPAIRBUILDINGS, 1) == 1);
                 this.Settings[MaelstromTools.Preferences.AUTOHIDEMISSIONTRACKER] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOHIDEMISSIONTRACKER, 0) == 1);
-                this.Settings[MaelstromTools.Preferences.AUTOCOLLECTTIMER] = MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOCOLLECTTIMER, 60);
+                this.Settings[MaelstromTools.Preferences.AUTOCOLLECTTIMER] = MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.AUTOCOLLECTTIMER, 5);
                 this.Settings[MaelstromTools.Preferences.SHOWLOOT] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.SHOWLOOT, 1) == 1);
                 this.Settings[MaelstromTools.Preferences.SHOWCOSTSFORNEXTMCV] = (MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.SHOWCOSTSFORNEXTMCV, 0) == 1);
-                this.Settings[MaelstromTools.Preferences.CHATHISTORYLENGTH] = MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.CHATHISTORYLENGTH, 64);
+                this.Settings[MaelstromTools.Preferences.CHATHISTORYLENGTH] = MaelstromTools.LocalStorage.get(MaelstromTools.Preferences.CHATHISTORYLENGTH, 512);
 
                 if (!CCTAWrapperIsInstalled()) {
                   this.Settings[MaelstromTools.Preferences.AUTOREPAIRUNITS] = false;
@@ -1401,7 +1410,7 @@ var cd=cr.GetResearchItemFomMdbId(cj);
                   }
                   var ncity = MT_Cache.Cities[cname].Object;
                   if (typeof (this.Cache[cname]) !== 'object') this.Cache[cname] = {};
-                  if (typeof (this.Cache[cname][MaelstromTools.Statics.Tiberium]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Tiberium] = {}; // all have to be checked,
+                  if (typeof (this.Cache[cname][MaelstromTools.Statics.Tiberium]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Tiberium] = {}; // all have to be checked, 
                   if (typeof (this.Cache[cname][MaelstromTools.Statics.Crystal]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Crystal] = {}; // this.Cache[cname] can be created inside different namespaces
                   if (typeof (this.Cache[cname][MaelstromTools.Statics.Power]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Power] = {}; // like the RepairTime etc... without those objs
                   if (typeof (this.Cache[cname][MaelstromTools.Statics.Dollar]) !== 'object') this.Cache[cname][MaelstromTools.Statics.Dollar] = {};

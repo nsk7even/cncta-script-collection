@@ -161,11 +161,11 @@ var DEFAULT_SCRIPTS = [ {
 	enabled : false
 }, {
 	id : 10006,
-	greasyfork: 16746,
-	name : "MaelstromTools Dev (Modv1.5 for MCV)",
+	greasyfork: 13713,
+	name : "MaelstromTools Dev (Modv1.6 for MCV)",
 	cat : "tool",
 	hot: true,
-	version : "  0.1.4.6++",
+	version : "  0.1.4.7",
 	enabled : true
 }, {
 	id : 10008,
