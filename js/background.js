@@ -192,6 +192,11 @@ var DEFAULT_SCRIPTS = [ {
 	unique: 1,
 	version : "  1.9.0.I",
 	enabled : false
+},{
+	id : 10056,
+	name : "Next MCV Info HUD",
+	cat : "infotool",
+	version : "  1.0 beta"
 }, {
 	id : 10021,
 	greasyfork: 10436,
@@ -294,7 +299,7 @@ var DEFAULT_SCRIPTS = [ {
 	id : 10063,
 	name : "Tiberium Alliances Info Sticker (SUPERCompact)",
 	cat : "infotool",
-	version : "  1.11.10.1",
+	version : "  1.11.10.1+",
 	unique: 3,
 	enabled : false
 }, {
