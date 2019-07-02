@@ -1,13 +1,16 @@
 // ==UserScript==
-// @name       C&C Tiberium Alliances Info Sticker (SUPERCompact)
+// @name       Tiberium Alliances Info Sticker (SUPERCompact)
 // @namespace  TAInfoSticker
 // @version    1.11.10+
 // @description  Based on Maelstrom Dev Tools. Repair Time label, Resource labels, fixed SUPER compact + MCV. [+7even: fixed script errors]
-// @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @author unicode *edited by Allwar* *edited by Netquik*
+// @version    1.11.10.1
+// @description  Based on Maelstrom Dev Tools. Modified MCV timer, repair time label, resource labels.
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @author unicode  *edited by dbendure* *edited by Netquik*
 // ==/UserScript==
 (function () {
-  var InfoSticker_main = function () {
+    var InfoSticker_main = function () {
     try {
       function createInfoSticker() {
         console.log('InfoSticker loaded');
