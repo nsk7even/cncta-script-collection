@@ -3,8 +3,8 @@
 // @description     Get back the disable unit button to old position.
 // @author          VisiG
 // @version         0.4
-// @namespace       https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @include         https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace   	https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include     	https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
 
 (function () {

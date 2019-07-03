@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name            Shockr - Tiberium Alliances Tools - reMod 1.2
+// @name            Shockr - Tiberium Alliances Tools - reMod 1.3
 // @author          EHz
 // @description     Tools to work with Tiberium alliances - mod by EHz - remod by Netquik [+7even: removed error]
-// @include         http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @version         2.7.2.29+
+// @include         http*://*.alliances.commandandconquer.com/*/index.aspx*
 // ==/UserScript==
 (function() {
     /* globals qx, ClientLib */
@@ -80,7 +80,7 @@
                     return true;
                 }
             },
-
+            
             scan: function() {
                 //console.log('DEBUG: ' + 'function scan');
                 if (BaseScanner._patched === false) {
@@ -90,7 +90,7 @@
                     return;
                 }
                 BaseScanner._bases = [];
-
+                
                 BaseScanner._msg = [];
                 BaseScanner._scanning = true;
                 BaseScanner.index = -1;
@@ -108,7 +108,7 @@
                     BaseScanner.getNearByBases(selectedBase);
                 }
                 BaseScanner.scanNextBase();
-
+                
             },
             // selectionChange: function(from, to){
             //     if (to === null){
@@ -122,14 +122,14 @@
                 //var maxAttack = ClientLib.Data.MainData.GetInstance().get_Server().get_MaxAttackDistance() - 1;
                 var maxAttack = ClientLib.Data.MainData.GetInstance().get_Server().get_MaxAttackDistance();
                 var world = ClientLib.Data.MainData.GetInstance().get_World();
-
+                
                 var ownBase = {
                     name: base.get_Name(),
                     x: x,
                     y: y,
                     toScanCount: 0
                 };
-
+                
                 var toScanCount = 0;
                 for (var scanY = y - 10; scanY <= y + 10; scanY++) {
                     for (var scanX = x - 10; scanX <= x + 10; scanX++) {
@@ -201,13 +201,13 @@
                 if (base.name !== undefined) {
                     // own base
                     //console.log('DEBUG: ' + '\tbase.id undefined -> ' + base);
-
+					
 					//Edit by Netquik. Don't add Base info if no result.
 					if (BaseScanner._msg[BaseScanner._msg.length - 1] !== " " && BaseScanner._msg.length > 0){
 					var lastsep = BaseScanner._msg.lastIndexOf(" ");
 					var numlays = lastsep !== -1 ? BaseScanner._msg.length -1 - lastsep :  BaseScanner._msg.length;
-
-
+					
+					
                     BaseScanner._msg.push('_______________________________________');
                     BaseScanner._msg.push('found '+numlays+' on '+base.toScanCount+' around [b]'+base.name+'[/b] [coords]' + base.x + ':' + base.y + '[/coords]');
                     BaseScanner._msg.push('[s]_______________________________________[/s]');
@@ -243,7 +243,7 @@
                         BaseScanner.getBaseLayout(base);
                     }, 200);
                 }
-
+                
                 // TODO: get type instead of name
                 var baseName = scanBase.get_Name();
                 var isNPC = scanBase.IsNPC();
@@ -280,7 +280,7 @@
                     delete b.failCount;
                     delete b.obj;
                 });
-
+                
                 // send result
                 try {
                     var instance = ClientLib.Data.MainData.GetInstance();
@@ -311,7 +311,7 @@
                 console.log('[' + ('   ' + BaseScanner.index).slice(-3) + '/' + BaseScanner._toScan.length + ']\t[coords]' + base.x + ':' + base.y + '[/coords] ' + base.layout + ' (' + base.failCount + ')');
             },
             getLayout: function(base, tmp) {
-
+                
                 //console.log('DEBUG: ' + 'function getLayout');
                 var layout = [];
                 var tib4 = 0;
@@ -329,6 +329,8 @@
                 var mix8 = 0;
                 var pow8 = 0;
                 var powL = {};
+				var totT = 0; // count total tib
+				var totC = 0; // count total cry
                 try {
                     for (var y = 0; y < 8; y++) {
                         for (var x = 0; x < 9; x++) {
@@ -392,45 +394,47 @@
                                     break;
                                 case 1:
                                     layout.push('c');
+									totC++;
                                     break;
                                 case 2:
                                     layout.push('t');
+									totT++;
                                     break;
                             }
                         }
                     }
-
+					
 					//   Removed See Below.
                   //  if (tib4 > 2 || tib5 > 0 || tib6 > 0 || tib7 > 0 ||  mix5 > 0 || mix6 > 0 || mix7 > 0 || mix8 > 0) {
-
-					//   Edit by Netquik. Try a better function for scan result.
-					/*if (
-				(tib5 > 0 || tib6 > 0 || tib7 > 0) ||
-				(tib4 > 0 && (cry5 > 0 || cry6 > 0 || cry7 > 0 ) ) ||
-				(tib4 > 1 && ((cry4 > 0 || cry5 > 0 || cry6 > 0  || cry7 > 0 ) || (mix5 > 0 || mix6 > 0 || mix7 > 0 || mix8 > 0)) ) ||
-				(pow8 > 0 && tib4 > 1 ) ||
-				(pow8 > 1 && ((tib4 > 0) || ((cry4 > 0 || cry5 > 0 || cry6 > 0  ||cry7 > 0 ) && (mix5 > 0 || mix6 > 0 || mix7 > 0 || mix8 > 0)) ) )
+					
+					//   Edit by Netquik. Try a better function for scan result.		
+					/*if (					
+				(tib5 > 0 || tib6 > 0 || tib7 > 0) || 
+				(tib4 > 0 && (cry5 > 0 || cry6 > 0 || cry7 > 0 ) ) || 
+				(tib4 > 1 && ((cry4 > 0 || cry5 > 0 || cry6 > 0  || cry7 > 0 ) || (mix5 > 0 || mix6 > 0 || mix7 > 0 || mix8 > 0)) ) || 
+				(pow8 > 0 && tib4 > 1 ) || 
+				(pow8 > 1 && ((tib4 > 0) || ((cry4 > 0 || cry5 > 0 || cry6 > 0  ||cry7 > 0 ) && (mix5 > 0 || mix6 > 0 || mix7 > 0 || mix8 > 0)) ) )				
 				    ) {*/
-
-
-
-
-
+				
+				
+				
+						
+				//   NEW FILTERING by Netquik
 				var tibup  = (tib5 + tib6 + tib7) > 0 ;
 				var cryup  = (cry5 + cry6 + cry7) > 0 ;
 				var crydw  = (cry4 + cryup) > 0 ;
 				var mixup = (mix5 + mix6 + mix7 + mix8) > 0 ;
-				if (
-				(tibup || (tib4 > 0 && cryup) || (tib4 > 1 && (crydw || mixup ) ) || (pow8 > 0 && tib4 > 1 ) || (pow8 > 1 && tib4 > 0  && crydw ) )
-
-
+				if (					
+				(tibup || (tib4 > 0 && cryup) || (tib4 > 1 && (crydw || mixup ) ) || (pow8 > 0 && tib4 > 1 ) || (pow8 > 1 && tib4 > 0  && crydw ) )	
+				
+							
 				    ) {
-
-
-
-
+				
+				
+						
+						
                         var out;
-                        out = '[coords]' + tmp.x + ':' + tmp.y + '[/coords]';
+                        out = '[coords]' + tmp.x + ':' + tmp.y + '[/coords] [' + BaseScanner.formatRes(totT) + 'Tib||' + BaseScanner.formatRes(totC) + 'Cry] -> ';
                         out = out + ' tib(4-7): ' + BaseScanner.formatRes(tib4) + '|' + BaseScanner.formatRes(tib5) + '|' + BaseScanner.formatRes(tib6) + '|' + BaseScanner.formatRes(tib7);
                         out = out + ' cry(4-7): ' + BaseScanner.formatRes(cry4) + '|' + BaseScanner.formatRes(cry5) + '|' + BaseScanner.formatRes(cry6) + '|' + BaseScanner.formatRes(cry7);
                         out = out + ' mix(4-8): ' + BaseScanner.formatRes(mix4) + '|' + BaseScanner.formatRes(mix5) + '|' + BaseScanner.formatRes(mix6) + '|' + BaseScanner.formatRes(mix7) + '|' + BaseScanner.formatRes(mix8);
@@ -455,7 +459,7 @@
                     return layout.join('');
                 }
             },
-
+            
             formatRes: function(value) {
                 if (value > 0) {
                     return ('[b]' + value + '[/b]');
@@ -479,7 +483,7 @@
                 }
                 return null;
             }
-
+            
         };
 
         var PatchClientLib = {
@@ -743,7 +747,7 @@
                             console.log('button made');
                             // this.__baseComposite.add(this.__baseCountButton);
                         }
-
+                            
                             if (BaseCounter.lastBase !== BaseCounter.selectedBase){
                                 var count = BaseCounter.count(false);
                                 console.log(count);
@@ -753,7 +757,7 @@
                                 this.__baseCountButton.setLabel('Bases: ' + count.total);
                                 BaseCounter.lastBase = BaseCounter.selectedBase;
                             }
-
+                            
                         // console.log(children);
                         this.__baseCounterButton_showMenu(selectedVisObject);
                         switch (selectedVisObject.get_VisObjectType()) {

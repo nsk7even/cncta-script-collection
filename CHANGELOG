@@ -1,7 +1,15 @@
+2019-07-02 - Version: 1.2
+-------------------------
+
+- forked CnCTA SoO SCRIPT PACK CRX 1.3.2 from https://www.crx4chrome.com/crx/87686/
+  and merged own changes
+
+
 2019-05-19 - Version: 1.1.1
 ---------------------------
 
-- updated script MaelstromTools Dev (Modv1.5 for MCV) to disable MCV popup by default (in favor of Next MCV Info HUD)
+- updated script MaelstromTools Dev (Modv1.5 for MCV) to disable MCV popup by default
+  (in favor of Next MCV Info HUD)
 - updated script Next MCV Info HUD 1.0 to beta
 
 

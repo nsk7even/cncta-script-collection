@@ -5,7 +5,7 @@
 // @license        GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
 // @author         tb23911
 // @description    Upgrades highest building of selected building types.
-// @include        http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include        http*://*.alliances.commandandconquer.com/*/index.aspx*
 // @updateURL      https://openuserjs.org/meta/tb23911/Tiberium_Alliances_UpgradeTop.meta.js
 // ==/UserScript==
 
@@ -276,11 +276,11 @@
 								column : 6
 							});
 							UTbutton.addListener("click", function (e) {
-								UTpopup.placeToMouse(e);
+								UTpopup.placeToPointer(e);
 								UTpopup.show();
 							}, this);
 							UTbutton1.addListener("click", function (e) {
-								UTpopup1.placeToMouse(e);
+								UTpopup1.placeToPointer(e);
 								UTpopup1.show();
 							}, this);
 

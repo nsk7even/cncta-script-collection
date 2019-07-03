@@ -3,8 +3,8 @@
 // @description     Combat Simulator used to plan and strategize attack before going into battle.
 // @author          Eistee
 // @version         13.09.26
-// @namespace       https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @include         https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace       https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include         https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @icon            http://eistee82.github.io/ta_simv2/icon.png
 // ==/UserScript==
 /**

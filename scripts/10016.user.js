@@ -3,7 +3,7 @@
 // @namespace   CountBasesButton
 // @description Display the number of forgotten bases in range of selected world object and paste it to chat message
 // @description im not the author of the code - this script is based on Paste Coords Button and Shockr's BaseScanner sripts
-// @include https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include https://*.alliances.commandandconquer.com/*/index.aspx*
 // @version     1.1.0
 // @download https://greasyfork.org/scripts/3343-c-c-ta-count-forgotten-bases-in-range/code/CC:TA%20Count%20Forgotten%20Bases%20in%20Range.user.js
 // @author      

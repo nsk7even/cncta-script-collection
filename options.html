@@ -3,11 +3,12 @@
 	<meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
 	<title>7evens C&C TA Script Collection</title>
     <link href="CSS/lc_switch.css" rel="stylesheet" />
-    <link href="CSS/jquery-ui.min.css" rel="stylesheet" />
+    <link href="CSS/jquery-ui.css" rel="stylesheet" />
 <style>
 body {
 	font: normal 80.5% "Trebuchet MS", Verdana, Helvetica, Arial,sans-serif !important;
-
+	background-color: #abe8d4;
+	background: url("https://eaassets-a.akamaihd.net/cncalliancesweb/static/4.9.1/theme/cca-home-redux-theme/images/bg/bg.jpg") center top #161616 no-repeat scroll;
 }
 a {
 	text-decoration: none;
@@ -25,8 +26,10 @@ input, label {
 	height: 48px;
 	line-height: 48px;
 	background: url(icon.png) left no-repeat;
-	padding-left: 60px;
+	padding-left: 100px;
 	width: 567px;
+	background-color: #b2efd5;
+    border: 2px solid;
 }
 #content {
 	color: white;
@@ -37,8 +40,9 @@ input, label {
 	-webkit-border-radius: 5px;
 	padding: 15px;
 	border: 1px solid #333;
-	background-image: -webkit-linear-gradient(135deg, rgb(23, 109, 108) 30%, rgba(0,0,0,1) 98%);
+	background-image: -webkit-linear-gradient(135deg, rgba(23, 109, 108, 0.76) 30%, rgba(0,0,0,1) 98%);
 	text-align: left;
+	display: none;
 }
 #description {
     color: #ff2323;
@@ -62,7 +66,7 @@ margin-top: 10px;
 float: right;
 }
 #message {
-	color: red;
+	color: #a92323;
 	opacity: 0;
 	font-weight: bold;
 	font-size: 18px;
@@ -70,6 +74,14 @@ float: right;
 	margin-top: 15px;
 	margin-bottom: 15px;
 	text-transform:uppercase;
+	position: fixed;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+background-color: #b2efd5;
+    padding: 30;
+    border: 3px solid #041515;
+	z-index:-1;
 }
 .cat {
 	margin-top: 5px;
@@ -123,11 +135,19 @@ fieldset {
 
 .ui-widget {
     font-size: 2em;
+
+
+}
+
+.disabled {
+	color: red;
+	font-weight:bold;
+	vertical-align: middle;
 }
 </style>
-<script src="libs/jquery-3.1.1.min.js"></script>
+<script src="libs/jquery-3.3.1.js"></script>
 <script src="libs/lc_switch.js" type="text/javascript"></script>
-<script src="libs/jquery-ui.min.js" type="text/javascript"></script>
+<script src="libs/jquery-ui.js" type="text/javascript"></script>
 
 <script src="js/options.js"></script>
 </head>
@@ -161,7 +181,7 @@ fieldset {
 <fieldset>
 	<legend>Info</legend>
 	<p>Author: <a href="http://www.nskcomputing.de">nskcomputing.de</a></p>
-	<p><b>Note:</b> This is a fork of <a href="https://addons.opera.com/de/extensions/details/cncta-soo-script-pack/">CnCTA SoO (SinsofOmission) SCRIPT PACK 1.1.2</a></p>
+	<p><b>Note:</b> This is a fork of <a href="https://addons.opera.com/de/extensions/details/cncta-soo-script-pack/">CnCTA SoO (SinsofOmission) SCRIPT PACK 1.3.2</a></p>
 <style>
     a:link    {color:white; background-color:transparent; text-decoration:none}
     a:visited {color:white; background-color:transparent; text-decoration:none}
@@ -174,6 +194,6 @@ fieldset {
 <button id="close">Close</button>
 <button id="save">Save</button>
 </div>
-<div id="message"> Options saved and then reload the game to continue!</div>
+<div id="message"> Options saved. Reload the game to continue!</div>
 </body>
 </html>

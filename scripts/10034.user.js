@@ -4,7 +4,7 @@
 // @description   CROSS SERVERS Loot & troops & bases & distance info. [+7even: fixed broken images]
 // @author        MrHIDEn based on Yaeger & Panavia code. Totaly recoded.
 // @grant         none
-// @include       http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include       https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @version       1.8.3+
 // ==/UserScript==
 

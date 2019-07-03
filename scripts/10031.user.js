@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        -:TA Alert Status:-
 // @description Alert if someone attacks your bases.
-// @namespace   http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @include     https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace   https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @icon        http://c2n.me/ivdCY1.png
 // @version     1.0.1
 // @author      der_flake

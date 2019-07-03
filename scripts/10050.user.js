@@ -4,7 +4,7 @@
 // @version       2.06+
 // @author        MrHIDEn (in game: PEEU) based on Yaeger & Panavia code.
 // @namespace     PluginsLib.mhLoot
-// @include       http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @grant         none
 // @downloadURL   https://userscripts.org/scripts/source/160800.user.js
 // @updateURL     https://userscripts.org/scripts/source/160800.meta.js
@@ -14,21 +14,21 @@
 */
 (function () {
 var injectBody = function ()
-{
+{      
   //TODO for debug purpose only. remove if you do not need.
   var ccl=console.log;var cci=console.info;var ccw=console.warn;var ccd=console.dir;var ccc=console.clear;var cce=console.error;
   var disable=0;if(disable){var f=function(){};ccl=f;cci=f;ccw=f;ccd=f;ccc=f;cce=f;}
 
   var pluginName = "mhLoot";
   var created = false;
-  function CreateClasses() {
+  function CreateClasses() {        
     //console.log('CreateClasses');
     // Classes
-    //=======================================================
+    //=======================================================      
     //Extending webfrontend.gui.options.OptionsPage with new ManagementOptionsPage
     function OptionsPage() {
       try //PluginsLib.mhOptionsPage
-      {
+      {  
 				qx.Class.define("PluginsLib.mhOptionsPage",
         {
           type: 'singleton',
@@ -37,17 +37,17 @@ var injectBody = function ()
             console.log('Create PluginsLib.mhOptionsPage at Loot+Info');
             this.base(arguments);
             this.setLabel('MHTools');
-
+            
             this.extendOptionsWindow();
-
+            
             //Add Content
-            var container = this.getContentContainer();
+            var container = this.getContentContainer(); 
             this.tabView = new qx.ui.tabview.TabView();
             container.add(this.tabView);//, {left:40, top:40});
-
+            
             this.removeButtons();
             this.addPageAbout();
-            console.log('MHTools: OptionsPage loaded.');
+            console.log('MHTools: OptionsPage loaded.'); 
           },
           statics: {
             VERSION: '1.0.0',
@@ -108,7 +108,7 @@ var injectBody = function ()
                   webfrontend.gui.options.OptionsWidget.prototype.show = webfrontend.gui.options.OptionsWidget.prototype.baseShow;
                   self.pageCreated = true;
                   this.show();
-                } catch (e) {
+                } catch (e) {            
                   console.warn("PluginsLib.mhOptionsPage.extendOptionsWindow: ", e);
                 }
               };
@@ -116,11 +116,11 @@ var injectBody = function ()
           }
         });
       } catch (e) {
-        console.warn("qx.Class.define(PluginsLib.mhOptionsPage: ", e);
+        console.warn("qx.Class.define(PluginsLib.mhOptionsPage: ", e);      
       }
     }
-    //=======================================================
-    try // "PluginsLib.mhLoot"
+    //=======================================================  
+    try // "PluginsLib.mhLoot"   
 		{
 			qx.Class.define("PluginsLib." + pluginName,
       {
@@ -139,7 +139,7 @@ var injectBody = function ()
           ONOPTIONS: null,
           SIZE: 0
         },
-        construct: function() {
+        construct: function() {         
           //console.log('Create PluginsLib.mhLoot');
           this.stats.src = 'http://goo.gl/IDap9';//2.0.x
           var version = PluginsLib.mhLoot.VERSION.toString();
@@ -156,10 +156,10 @@ var injectBody = function ()
             var a = [];
             for(var k in o) a[o[k]] = k;
             return a;
-          }
+          }             
           this.LObjectType = Types(ClientLib.Vis.VisObject.EObjectType);
           this.LViewMode = Types(ClientLib.Vis.Mode);
-
+          
           // window
           this.Self = this;
           var backColor = '#eef';
@@ -173,7 +173,7 @@ var injectBody = function ()
             showClose:true,
             contentPadding: 6,
             allowClose:true,
-            resizable:false,
+            resizable:false,                  
             toolTipText: "MrHIDEn tool - Loot "+version
           });
           //http://demo.qooxdoo.org/2.0.2/apiviewer/#qx.ui.mobile.core.Widget~dblclick!event
@@ -190,18 +190,18 @@ var injectBody = function ()
           this.win.addListener("mouseover",function(e) {
             //TODO stop timer. message STOPED
             //this.extTimer.stop();
-            //this.win.close();
+            //this.win.close(); 
           },this);
           this.win.addListener("click",function(e) {
               //webfrontend.gui.UtilView.centerCoordinatesOnRegionViewWindow(this.Data.Selected.X,this.Data.Selected.Y);
           },this);
           this.win.addListener("dblclick",function(e) {
             this.extTimer.stop();
-            this.win.close();
+            this.win.close(); 
           },this);
           this.win.addListener("close",function(e) {
             this.extTimer.stop();
-            //this.win.close();
+            //this.win.close(); 
           },this);
           this.win.addListener("minimize",function(e) {
             if(this.extMinimized) {
@@ -209,7 +209,7 @@ var injectBody = function ()
               this.extPrint();
             }
             else {
-              this.extMinimized = true;
+              this.extMinimized = true;                
               this.win.removeAll();
             }
             this.win.restore();//trick
@@ -223,25 +223,25 @@ var injectBody = function ()
           this.win.moveTo(pos.left, pos.top);
           var winLayout = new qx.ui.layout.Grid(5,5);
           this.win.setLayout(winLayout);
-          this.win.setTextColor('yellow');
-
+          this.win.setTextColor('yellow');   
+          
           //this.extTimer = new qx.event.Timer.once(this.extOnTimer,this,500);
           this.extTimer = new qx.event.Timer(1000);
           this.extTimer.addListener("interval",this.extOnTimer,this);
-
+          
           this.extendSelectionChange();
           this.extendViewModeChange();
           //options
           this.addLootPage();
           //bypass
           this.loadBypass();
-
-
+          
+          
           //REGISTER PLUGIN
           //this.constructor.ONPLUGIN = function(){this.constructor.getInstance().open();};
           //this.constructor.ONOPTIONS = function(){this.constructor.getInstance().open();};//test
           PluginsLib.Menu.getInstance().RegisterPlugin(this);
-
+          
           //READY
           console.info("Plugin '"+pluginName+"' LOADED");
         },
@@ -262,7 +262,7 @@ var injectBody = function ()
               var S = ClientLib.Base.LocalStorage;
               if (S.get_IsSupported()) S.SetItem(this.classname+'.'+key, val);
             }
-          },
+          },           
           win: null,
           //winStoreName: this.classname+'.winpos',
           extItems: [],
@@ -271,7 +271,7 @@ var injectBody = function ()
           extAdd: function(l,p) {
             this.extItems.push(l,p);
           },
-          extPrint: function(type) {
+          extPrint: function(type) {            
             this.win.removeAll();
             if(!this.extMinimized) {
               for(var i=0;i<this.extItems.length;i+=2) {
@@ -340,7 +340,7 @@ var injectBody = function ()
                 //if(fprint) console.dir(this.list.d);
                 // JSON - disabled
                 //var S = ClientLib.Base.LocalStorage;
-                //if (S.get_IsSupported()) S.SetItem(this.storeName, this.list);
+                //if (S.get_IsSupported()) S.SetItem(this.storeName, this.list);  
               } catch (e) {
                 console.warn("lootList.save: ", e);
               }
@@ -351,7 +351,7 @@ var injectBody = function ()
                 if(xy<0) return {id:id,Data:{}};
                 var id = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentCityId();
                 if(this.exist(xy)) return this.list.d[xy];
-                return {id:id,Data:{}};
+                return {id:id,Data:{}};     
               } catch (e) {
                 console.warn("lootList.load: ", e);
               }
@@ -361,7 +361,7 @@ var injectBody = function ()
               try {
                 var mem = this.load(xy).Data;
                 mem[k] = d;
-                this.save(xy,mem);
+                this.save(xy,mem);        
               } catch (e) {
                 console.warn("lootList.store: ", e);
               }
@@ -371,12 +371,12 @@ var injectBody = function ()
               try {
                 var mem = this.load(xy).Data;
                 if(typeof(mem[k])=='undefined') return 'undefined';
-                return mem[k];
+                return mem[k];    
               } catch (e) {
                 console.warn("lootList.restore: ", e);
               }
-            }
-          },
+            }              
+          },            
           // bases
           Data: {
             lastSelectedBaseId: -1,
@@ -390,8 +390,8 @@ var injectBody = function ()
           lootWindowAlly: null,
           lootWindowPOI: null,
           lootWindowRUIN: null,
-          lootWindowHUBServer: null,
-          waiting: [1,'0','_','1','_','2','_','3','_','4','_','5','_','6','_','7','_','8','_','9','_'],
+          lootWindowHUBServer: null,          
+          waiting: [1,'0','_','1','_','2','_','3','_','4','_','5','_','6','_','7','_','8','_','9','_'],          
           Display: {
             troopsArray: [],
             lootArray: [],
@@ -470,7 +470,7 @@ var injectBody = function ()
                   var ks = Object.keys(o.d);
                   if (ks.length != o.c) continue;
                   var u = o.d[ks[0]];
-                  if(typeof(u) != 'object') continue;
+                  if(typeof(u) != 'object') continue;                  
                   if(typeof(u.get_UnitLevelRepairRequirements) != 'function') continue;
                   if(typeof(u.GetUnitGroupType) ==  'undefined') {
                     // buildings
@@ -518,7 +518,7 @@ var injectBody = function ()
             return false;
           },
           loadBypass: function(self) {
-            try {
+            try {                
               if(typeof(self)=='undefined') self = this;
               var ac=ClientLib.Data.MainData.GetInstance().get_Cities().get_AllCities().d;
               if(Object.keys(ac).length<1) {
@@ -531,57 +531,57 @@ var injectBody = function ()
             }
           },
           getData: function(city) {
-            try {
-              var l = {};
+            try {   
+              var l = {};  
               if(!this.getBypass(city,this.Data)) return l;
-
+              
               l.Buildings = city.get_Buildings();
               l.Defences = city.get_DefenseUnits();
               l.Offences = city.get_OffenseUnits();
-
-              l.rdy = true;
+              
+              l.rdy = true;              
             } catch (e) {
               console.warn("PluginsLib.mhLoot.",arguments.callee.name,': ', e);
-            }
+            }               
             return l;
           },
-          loadBase: function() {
+          loadBase: function() { 
             try {
               //if (typeof(this.Data.lastSelectedBaseId)=='undefined') this.Data.lastSelectedBaseId = -1;//, Bypass: {}};
-
-              var d = this.Data;
-              //console.info("loot.loadBase.lastID:",d.lastSelectedBaseId);
-
+              
+              var d = this.Data;    
+              //console.info("loot.loadBase.lastID:",d.lastSelectedBaseId);      
+                          
               d.selectedBaseId = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentCityId();
               d.selectedOwnBaseId = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCityId();
-
+              
               if (d.lastSelectedBaseId !== d.selectedBaseId) d.loaded = false;
-
+              
               d.IsOwnBase = d.selectedBaseId === d.selectedOwnBaseId;
-
+                          
               d.cc = ClientLib.Data.MainData.GetInstance().get_Cities();
-
+              
               //d.ec = d.cc.GetCity(d.selectedBaseId);// this is very nice function
               d.ec = d.cc.get_CurrentCity();
               if(d.ec === null) return false;
-              if(d.ec.get_CityBuildingsData() === null) return false;
-              if(d.ec.get_CityUnitsData() === null) return false;
-
-              d.oc = d.cc.get_CurrentOwnCity();
+              if(d.ec.get_CityBuildingsData() === null) return false;         
+              if(d.ec.get_CityUnitsData() === null) return false;         
+              
+              d.oc = d.cc.get_CurrentOwnCity();            
               if(d.oc === null) return false;
               if(d.oc.get_CityBuildingsData() === null) return false;
               if(d.oc.get_CityUnitsData() === null) return false;
-
+              
               d.ol = this.getData(d.oc);
-              d.el = this.getData(d.ec);// Buildings Defence Offence
+              d.el = this.getData(d.ec);// Buildings Defence Offence               
               if(typeof(d.ol)=='undefined') return false;
               if(typeof(d.el)=='undefined') return false;
 
               if(d.el.Buildings.c === 0) return false;
-              if(d.ol.Buildings.c === 0) return false;
-
-              //console.info("loot.loadBase.ID:",d.selectedBaseId);
-              d.lastSelectedBaseId = d.selectedBaseId;
+              if(d.ol.Buildings.c === 0) return false;                 
+               
+              //console.info("loot.loadBase.ID:",d.selectedBaseId); 
+              d.lastSelectedBaseId = d.selectedBaseId; 
               d.loaded = true;
               return true;
             } catch (e) {
@@ -590,7 +590,7 @@ var injectBody = function ()
               return false;
             }
           },
-          getImportants: function(list) {
+          getImportants: function(list) {         
             list.Support = {Condition: '-',Row: '-',Column: '-'};
             list.CY = {Condition: '-',Row: '-',Column: '-'};
             list.DF = {Condition: '-',Row: '-',Column: '-'};
@@ -603,7 +603,7 @@ var injectBody = function ()
                 list.Support.Condition = 100*mod;
                 list.Support.Row = 8-parseInt(building.get_CoordY());
                 list.Support.Column = building.get_CoordX();
-              }
+              } 
               else {
                 switch (id) {
                   case 112: // CONSTRUCTION YARD
@@ -626,22 +626,22 @@ var injectBody = function ()
               }
             }
           },
-          getLoots: function (ul,r) {
-            if(typeof(r)=='undefined') r={};
+          getLoots: function (ul,r) { 
+            if(typeof(r)=='undefined') r={}; 
             //console.log('r',r);
             var t={1:'T',2:'C',3:'G',6:'RP',7:'RCB',8:'RCA',9:'RCI',10:'RCV'};//translate, ClientLib.Base.EResourceType.XXX
             for (var j in ul.d) {
               var u = ul.d[j];// unit/building
-              //here are key infos about units ranges and behavior and more
+              //here are key infos about units ranges and behavior and more 
               //console.log(u.get_UnitGameData_Obj().n,u.get_UnitGameData_Obj());// unit/building
-              var p = u.get_HitpointsPercent();// 0-1 , 1 means 100%
-              var cl = u.get_UnitLevelRepairRequirements();// EA API Resources/Repair Costs
+              var p = u.get_HitpointsPercent();// 0-1 , 1 means 100%               
+              var cl = u.get_UnitLevelRepairRequirements();// EA API Resources/Repair Costs                
               for (var i in cl) {
                 var c = cl[i];//Requirement/Cost
-                if(typeof(c)!='object') continue;
+                if(typeof(c)!='object') continue;                
                 var k = (typeof(t[c.Type])=='undefined')?c.Type:t[c.Type];//translate if possible
                 if(typeof(r[k])=='undefined') r[k] = 0;//add branch
-                r[k] += p * c.Count;
+                r[k] += p * c.Count;                 
               }
             }
             return r;
@@ -650,47 +650,47 @@ var injectBody = function ()
           getLoots2: function (r) {
             r = r || {};
             var t={1:'T',2:'C',3:'G',6:'RP',7:'RCB',8:'RCA',9:'RCI',10:'RCV'};
-            var l=ClientLib.API.Battleground.GetInstance().GetLootFromCurrentCity();
+            var l=ClientLib.API.Battleground.GetInstance().GetLootFromCurrentCity();     
             for (var i in l) {
               var c = l[i];//Requirement/Cost
-              if(typeof(c)!='object') continue;
+              if(typeof(c)!='object') continue;                
               var k = (typeof(t[c.Type])=='undefined')?c.Type:t[c.Type];//translate if possible
               if(typeof(r[k])=='undefined') r[k] = 0;//add branch
-              r[k] += c.Count;
+              r[k] += c.Count;                 
             }
             return r;
           },
           calcResources: function (xy) {
-            //console.info("loot.calcResources");
-            try {
+            //console.info("loot.calcResources"); 
+            try {          
               if (!this.settings.showLoot.v) return;
 
               if (!this.Data.loaded) return;
-
-              this.Display.lootArray = [];
-
+              
+              this.Display.lootArray = [];            
+              
               var el = this.Data.el;
               var ec = this.Data.ec;
-
+              
               // NEW
               // ClientLib.API.Battleground.GetInstance().GetLootFromCurrentCity()
-              var loots2 = this.getLoots2();
-
-              var loots = {RP:0, T:0, C:0, G:0};//for getLoots
-
+              var loots2 = this.getLoots2();              
+              
+              var loots = {RP:0, T:0, C:0, G:0};//for getLoots                
+              
               this.getLoots(el.Buildings,loots);
               this.getLoots(el.Defences,loots);
-
+              
               if(el.Offences.c>0) {
-                var off = this.getLoots(el.Offences);
+                var off = this.getLoots(el.Offences);                  
                 //console.log('Offences: ',off);
               }
-
+              
               this.Display.lootArray[0] = loots.RP;
               this.Display.lootArray[1] = loots.T;
               this.Display.lootArray[2] = loots.C;
               this.Display.lootArray[3] = loots.G;
-
+                          
               this.lootList.store(xy,'lootArray',this.Display.lootArray);
             } catch (e) {
               console.warn("PluginsLib.mhLoot.calcResources: ", e);
@@ -698,16 +698,16 @@ var injectBody = function ()
             }
           },
           calcTroops: function (xy) {
-            //console.info("loot.calcTroops");
+            //console.info("loot.calcTroops"); 
             try {
-              if (!this.settings.showTroops.v) return;
+              if (!this.settings.showTroops.v) return;            
 
-              if (!this.Data.loaded) return;
-
-              var troops = [0, 0, 0, 0, 0];
-
-              var el = this.Data.el;
-
+              if (!this.Data.loaded) return;            
+              
+              var troops = [0, 0, 0, 0, 0]; 
+              
+              var el = this.Data.el; 
+                
               // enemy defence units
               for (var j in el.Defences.d) {
                 var unit = el.Defences.d[j];
@@ -739,32 +739,32 @@ var injectBody = function ()
               console.dir("PluginsLib.mhLoot.~.Data:",this.Data);
             }
           },
-          calcInfo: function (xy) {
-            //console.info("loot.calcInfo");
+          calcInfo: function (xy) { 
+            //console.info("loot.calcInfo"); 
             this.Display.infoArrays = [];
             this.Display.twoLineInfoArrays = [];
-
+            
             if (!this.Data.loaded) return;
-
+            
             var hp;
-            var t;
-
+            var t;         
+            
             //var cc = this.Data.cc;
             var oc = this.Data.oc;
-            var ec = this.Data.ec;
-
+            var ec = this.Data.ec; 
+            
             var ol = this.Data.ol;
-            var el = this.Data.el;
-
-            if(this.settings.showInfo.v) {
-              try {
+            var el = this.Data.el; 
+            
+            if(this.settings.showInfo.v) { 
+              try {                   
                 var ohp=0, dhp=0;
                 for (var k in ol.Offences.d) ohp += ol.Offences.d[k].get_Health();//own of units
                 for (var k in el.Defences.d) dhp += el.Defences.d[k].get_Health();//ene df units
-
+                                
                 // find CY & DF row/line
                 this.getImportants(el);
-
+                
                 hp = {};
                 hp.name = '<b>Info</b> (HP,HC - D/O ratio. Row.)';
                 hp.lbs = ['HP:','HC:','DF:','CY:'];
@@ -773,25 +773,25 @@ var injectBody = function ()
                 t.push(this.numberFormat(ec.get_TotalDefenseHeadCount()/oc.get_TotalOffenseHeadCount(), 2));
                 var abc = "ABCDEFGHI";//abc[column]
                 if(this.settings.showColumnLetter.v) {
-                  if(el.DF !== undefined) {t.push(abc[el.DF.Column]+ '-' + el.DF.Row);} else { t.push('??');}
-                  if(el.CY !== undefined) {t.push(abc[el.CY.Column]+ '-' + el.CY.Row);} else { t.push('??');}
+                  if(el.DF !== undefined) {t.push(abc[el.DF.Column]+ '-' + el.DF.Row);} else { t.push('??');}  
+                  if(el.CY !== undefined) {t.push(abc[el.CY.Column]+ '-' + el.CY.Row);} else { t.push('??');}  
                 } else {
-                  if(el.DF !== undefined) {t.push(el.DF.Row);} else { t.push('??');}
-                  if(el.CY !== undefined) {t.push(el.CY.Row);} else { t.push('??');}
-                }
+                  if(el.DF !== undefined) {t.push(el.DF.Row);} else { t.push('??');}  
+                  if(el.CY !== undefined) {t.push(el.CY.Row);} else { t.push('??');}   
+                }                
                 hp.val = t;
                 this.Display.infoArrays.push(hp);
                 // store
-                this.lootList.store(xy,'infoArrays',this.Display.infoArrays);
+                this.lootList.store(xy,'infoArrays',this.Display.infoArrays);                           
               } catch (e) {
                 console.log("PluginsLib.mhLoot.calcInfo 1: ", e);
               }
-            }
-            if(this.settings.showColumnCondition.v) {
-              try {
+            }            
+            if(this.settings.showColumnCondition.v) { 
+              try {   
                 var bl = el.Buildings.d;
                 var dl = el.Defences.d;
-
+                
                 for(var k in bl) {
                   var b = bl[k];
                   if(b.get_TechName() == ClientLib.Base.ETechName.Defense_Facility) df = b;
@@ -804,7 +804,7 @@ var injectBody = function ()
                 var mi;
                 var ma;
                 var dc;
-
+                
                 // CY
                 tb = cy;
                 cnt = 0;
@@ -814,7 +814,7 @@ var injectBody = function ()
                 ma = tb.get_CoordX() + dc;
                 // scan
                 for(var k in bl) {
-                  var o = bl[k];
+                  var o = bl[k];  
                   if(o.get_CoordX() >= mi && o.get_CoordX() <= ma) {
                     if(o.get_CoordY() >= tb.get_CoordY()) {
                       cnt++;
@@ -823,7 +823,7 @@ var injectBody = function ()
                   }
                 }
                 for(var k in dl) {
-                  var o = dl[k];
+                  var o = dl[k];  
                   //if(o.get_CoordX() == tb.get_CoordX()) {
                   if(o.get_CoordX() >= mi && o.get_CoordX() <= ma) {
                     if(o.get_CoordY() >= tb.get_CoordY()) {
@@ -843,7 +843,7 @@ var injectBody = function ()
                 mi = tb.get_CoordX() - dc;
                 ma = tb.get_CoordX() + dc;
                 for(var k in bl) {
-                  var o = bl[k];
+                  var o = bl[k];  
                   if(o.get_CoordX() >= mi && o.get_CoordX() <= ma) {
                     if(o.get_CoordY() >= tb.get_CoordY()) {
                       cnt++;
@@ -852,7 +852,7 @@ var injectBody = function ()
                   }
                 }
                 for(var k in dl) {
-                  var o = dl[k];
+                  var o = dl[k];  
                   if(o.get_CoordX() >= mi && o.get_CoordX() <= ma) {
                     if(o.get_CoordY() >= tb.get_CoordY()) {
                       cnt++;
@@ -861,113 +861,113 @@ var injectBody = function ()
                   }
                 }
                 tbhp = 100 * tbhp / cnt;
-                var dfhp = tbhp;
-
+                var dfhp = tbhp;               
+                
                 hp = {};
                 hp.name = '<b>CY & DF column HP [%]</b>';
                 hp.lbs = ['CY:','DF:'];
                 t = [];
                 t.push(this.numberFormat(cyhp, 0));
-                t.push(this.numberFormat(dfhp, 0));
+                t.push(this.numberFormat(dfhp, 0));        
                 hp.val = t;
                 this.Display.infoArrays.push(hp);
                 //this.Display.twoLineInfoArrays.push(hp);
                 // store
-                this.lootList.store(xy,'infoArrays',this.Display.infoArrays);
+                this.lootList.store(xy,'infoArrays',this.Display.infoArrays);                       
               } catch (e) {
                 console.log("PluginsLib.mhLoot.calcInfo 2: ", e);
               }
             }
-            if(this.settings.showRepairTime.v) {
-              try {
+            if(this.settings.showRepairTime.v) { 
+              try {                 
                 var a = oc.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Aircraft, false);//false // RT Defense
                 var v = oc.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Vehicle, false);//false // RT Defense
                 var i = oc.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Infantry, false);//false // RT Defense
                 var m = Math.max(a,v,i);
-
+                
                 var aa = oc.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeAir);
                 var av = oc.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeVeh);
-                var ai = oc.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeInf);
+                var ai = oc.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeInf);                
                 var am = Math.min(aa,av,ai);
-
+                
                 var ohp=0;
                 ohp = oc.GetOffenseConditionInPercent();
-
+                
                 var ool = this.numberFormat(oc.get_LvlOffense(), 1);
-
+                
                 hp = {};
                 hp.name = '<b>Repair time (Your offence)</b>';
                 hp.lbs = ['Maximum:','Available:','Health:','Level:'];
                 t = [];
-                t.push(this.hms(m));
+                t.push(this.hms(m)); 
                 t.push(this.hms(am));
                 t.push(ohp);
-                t.push(ool);
+                t.push(ool);                 
                 hp.val = t;
                 //this.Display.infoArrays.push(hp);
-                this.Display.twoLineInfoArrays.push(hp);
+                this.Display.twoLineInfoArrays.push(hp);              
                 // store
-                this.lootList.store(xy,'twoLineInfoArrays',this.Display.twoLineInfoArrays);
+                this.lootList.store(xy,'twoLineInfoArrays',this.Display.twoLineInfoArrays);                       
               } catch (e) {
                 console.log("PluginsLib.mhLoot.calcInfo 3: ", e);
               }
             }
           },
           calcFriendlyInfo: function(xy) {
-            //console.info("loot.calcFriendlyInfo");
+            //console.info("loot.calcFriendlyInfo"); 
             this.Display.twoLineInfoArrays = [];
             if(!this.settings.showLevels.v && !this.settings.showAllyRepairTimeInfo.v) return;
-
-            try {
-              if (!this.Data.loaded) return;
-
+                        
+            try { 
+              if (!this.Data.loaded) return;            
+              
               var hp;
               var t;
-
+              
               //var cc = this.Data.cc;
               var oc = this.Data.oc;
               var ec = this.Data.ec;
-
+              
               var ol = this.Data.ol;
-              var el = this.Data.el;
-
-              var IsOwn = this.Data.IsOwnBase;
-
-
-              if(this.settings.showLevels.v) {
+              var el = this.Data.el;            
+              
+              var IsOwn = this.Data.IsOwnBase;                
+              
+              
+              if(this.settings.showLevels.v) { 
                 var sd = ec.get_SupportData();
                 var sn;
                 var sl;
                 if(sd !== null) {
                   sl = sd.get_Level();
-                  sn = ec.get_SupportWeapon().dn;
+                  sn = ec.get_SupportWeapon().dn; 
                 }
-
+              
                 hp = {};
                 hp.name = '<b>Levels</b>';
                 hp.lbs = ['Base:','Defence:','Offence:','Support:'];
                 t = [];
-                if(el.Buildings.c>0) t.push(this.numberFormat(ec.get_LvlBase(), 1)); else t.push('--');
-                if(el.Defences.c>0) t.push(this.numberFormat(ec.get_LvlDefense(), 1)); else t.push('--');
-                if(el.Offences.c>0) t.push(this.numberFormat(ec.get_LvlOffense(), 1)); else t.push('--');
-                if(sd !== null) t.push(this.numberFormat(sl, 1)); else t.push('--');
+                if(el.Buildings.c>0) t.push(this.numberFormat(ec.get_LvlBase(), 1)); else t.push('--');  
+                if(el.Defences.c>0) t.push(this.numberFormat(ec.get_LvlDefense(), 1)); else t.push('--');  
+                if(el.Offences.c>0) t.push(this.numberFormat(ec.get_LvlOffense(), 1)); else t.push('--'); 
+                if(sd !== null) t.push(this.numberFormat(sl, 1)); else t.push('--'); 
                 hp.val = t;
                 this.Display.twoLineInfoArrays.push(hp);
               }
-
+            
               if(this.settings.showAllyRepairTimeInfo.v) {
-
+                
                 var a = ec.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Aircraft, false);//false // RT Defense
                 var v = ec.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Vehicle, false);//false // RT Defense
                 var i = ec.get_CityUnitsData().GetRepairTimeFromEUnitGroup(ClientLib.Data.EUnitGroup.Infantry, false);//false // RT Defense
                 var m = Math.max(a,v,i);
-
+                
                 var aa = ec.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeAir);
                 var av = ec.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeVeh);
-                var ai = ec.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeInf);
+                var ai = ec.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeInf);                
                 var am = Math.min(aa,av,ai);
-
-                var ofl;
+                
+                var ofl;              
                 var ohp=0;
                 if(el.Offences.c>0) {
                   //my
@@ -984,26 +984,26 @@ var injectBody = function ()
                   ohp = '---';
                   ofl = '---';
                 }
-
+                
                 hp = {};
                 hp.name = IsOwn?'<b>Repair time (Your offence)</b>':'<b>Repair time (Ally offence)</b>';
                 hp.lbs = ['Maximum:','Available:','Health:','Level:'];
                 t = [];
-                t.push(this.hms(m));
+                t.push(this.hms(m)); 
                 //t.push('---');
                 t.push(this.hms(am));
-                t.push(ohp);
-                t.push(ofl);
+                t.push(ohp); 
+                t.push(ofl);       
                 hp.val = t;
                 this.Display.twoLineInfoArrays.push(hp);
-              }
+              } 
               //this.Display.twoLineInfoArrays = twoLineInfoArrays;
-              this.lootList.store(xy,'twoLineInfoArrays',this.Display.twoLineInfoArrays);
+              this.lootList.store(xy,'twoLineInfoArrays',this.Display.twoLineInfoArrays); 
             } catch (e) {
               console.warn("PluginsLib.mhLoot.calcFriendlyInfo: ", e);
             }
           },
-
+          
 //NOTE
 //ClientLib.Vis.VisMain.GetInstance().GetObjectFromPosition
 //ClientLib.Data.WorldSector.WorldObject GetObjectFromPosition (System.Int32 x ,System.Int32 y)
@@ -1012,38 +1012,38 @@ var injectBody = function ()
 //ClientLib.Vis.VisObject GetObjectFromPosition (System.Single x ,System.Single y)
 //ClientLib.Data.Hub GetObjectFromPosition (System.Int32 x ,System.Int32 y)
           calcDistance: function () {
-            //console.info("loot.calcDistance");
+            //console.info("loot.calcDistance"); 
             this.Display.distanceArray = [];
-
+            
             var hp;
-
+            
             if(!this.settings.showDistance.v) return;
-            //console.log('calcDistance');
-            try {
+            //console.log('calcDistance');              
+            try {                
               var visObject = ClientLib.Vis.VisMain.GetInstance().get_SelectedObject();
               if (visObject!==null) {
                 var oc = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCity();
                 var t = visObject.get_VisObjectType();
-                switch (t) {
+                switch (t) {                   
                   case ClientLib.Vis.VisObject.EObjectType.RegionCityType:
                   case ClientLib.Vis.VisObject.EObjectType.RegionNPCBase:
                   case ClientLib.Vis.VisObject.EObjectType.RegionNPCCamp:
                   case ClientLib.Vis.VisObject.EObjectType.RegionPointOfInterest:
-                  case ClientLib.Vis.VisObject.EObjectType.RegionRuin:
+                  case ClientLib.Vis.VisObject.EObjectType.RegionRuin: 
                   case ClientLib.Vis.VisObject.EObjectType.RegionHubControl:
                   case ClientLib.Vis.VisObject.EObjectType.RegionHubCenter:
                     var ser = ClientLib.Data.MainData.GetInstance().get_Server();
                     var selX = visObject.get_RawX();
                     var selY = visObject.get_RawY();
                     var ocX = oc.get_X();
-                    var ocY = oc.get_Y();
+                    var ocY = oc.get_Y();          
                     var cenX = ser.get_ContinentWidth() / 2;
-                    var cenY = ser.get_ContinentHeight() / 2;
+                    var cenY = ser.get_ContinentHeight() / 2;                        
                     //target is locked by button
                     // if(typeof(this.Data.Lock)=='undefined') {
                       // this.Data.Lock={X:ocX,Y:ocY};//{X:0,Y:0};
                     // }
-                    //var locX = this.Data.Lock.X;
+                    //var locX = this.Data.Lock.X;                    
                     //var locY = this.Data.Lock.Y;
                     if(typeof(this.Data.Selected)=='undefined') {
                       this.Data.Selected={};
@@ -1055,40 +1055,40 @@ var injectBody = function ()
                     var cdt = oc.GetCityMoveCooldownTime(selX,selY);//cool down time
                     var stp = dis / 20;//steps
                     this.Data.Distance = dis;
-                    //this.Data.MeasureDistance = loc;
+                    //this.Data.MeasureDistance = loc;                      
                     var hp = {};
                     hp.name = '<b>Movement</b>';
                     hp.lbs = ['Distance:','EMT:','Steps:','To center:'];
                     var t = [];
                     t.push(dis);
                     t.push(this.dhms2(cdt));
-                    t.push(stp);
-                    t.push(cen);
+                    t.push(stp);       
+                    t.push(cen);       
                     hp.val = t;
                     this.Display.distanceArray.push(hp);
                     break;
                   default:
                     break;
-                }//switch (t)
-              }//if (visObject
-              //DISABLED this.lootList.store(xy,'distanceArray',this.Display.distanceArray);
+                }//switch (t) 
+              }//if (visObject               
+              //DISABLED this.lootList.store(xy,'distanceArray',this.Display.distanceArray);               
             } catch (e) {
               console.warn("PluginsLib.mhLoot.calcDistance: ", e);
             }
           },
-
+          
           onSelectionChange: function(oldObject,newObject) {
-            try {
+            try { 
              if(qx.core.Init.getApplication().getChat().getFocused() || (qx.core.Init.getApplication().getPlayArea().getViewMode()!=ClientLib.Data.PlayerAreaViewMode.pavmNone)) {
                   //TODO something is wrong
                   //this.extTimer.stop();
                   //this.win.close();
                   //return;
-              }
+              }            
               this.extItems = [];
               this.win.removeAll();
-              this.win.close();
-
+              this.win.close(); 
+              
               if(oldObject=="Timer") {
                 //console.log("@Timer");
               }
@@ -1108,7 +1108,7 @@ var injectBody = function ()
                 //console.log('onSelectionChange.Object: ','null');
                 this.Data.lastSelectedBaseId = -3;
               }
-
+              
               if (visObject!==null) {
                 var t = visObject.get_VisObjectType();
                 //console.log('Vis Object Type:',t,', ',this.LObjectType[t]);
@@ -1121,7 +1121,7 @@ var injectBody = function ()
                 if(typeof(visObject.get_RawX)!='undefined') {
                   var xy = 10000 * visObject.get_RawX() + visObject.get_RawY();
                 }
-                switch (t) {
+                switch (t) {                    
                   // Own bases, ally base
                   case ClientLib.Vis.VisObject.EObjectType.RegionCityType:
                     //this.extTimer.setEnabled(true);
@@ -1129,24 +1129,24 @@ var injectBody = function ()
                     var oc = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCity();
                     var aid = oc.get_AllianceId();
                     var sid = visObject.get_AllianceId();
-
-                    this.calcDistance();
+                    
+                    this.calcDistance();                      
                     if(aid == sid) {
                       // Own, Ally
-                      //clear
+                      //clear                  
                       //self.Display.distanceArray = [];
                       if (this.loadBase() && oldObject=="Timer") {
                         this.extTimer.stop();
                         this.calcFriendlyInfo(xy);
                         this.addFriendlyLabel();
                       } else {
-                        //this.addLoadingLabel();
+                        //this.addLoadingLabel();         
                         if(this.restoreDisplay(xy)) {
                           this.addResourcesLabel("r");
-                        } else {
+                        } else {        
                           this.addLoadingLabel();
-                        }
-                      }
+                        }                          
+                      }                      
                     }
                     else {
                       // Enemy
@@ -1156,12 +1156,12 @@ var injectBody = function ()
                         this.calcTroops(xy);
                         this.calcInfo(xy);
                         this.addResourcesLabel();
-                      } else {
+                      } else {           
                         if(this.restoreDisplay(xy)) {
                           this.addResourcesLabel("r");
-                        } else {
+                        } else {          
                           this.addLoadingLabel();
-                        }
+                        }      
                       }
                     }
                     break;
@@ -1170,15 +1170,15 @@ var injectBody = function ()
                   case ClientLib.Vis.VisObject.EObjectType.RegionNPCBase:
                     this.calcDistance();
                     if (this.loadBase() && oldObject=="Timer") {
-                      this.extTimer.stop();
+                      this.extTimer.stop();                       
                       this.calcResources(xy);
                       this.calcTroops(xy);
                       this.calcInfo(xy);
                       this.addResourcesLabel();
-                    } else {
+                    } else {          
                       if(this.restoreDisplay(xy)) {
                         this.addResourcesLabel("r");
-                      } else {
+                      } else {        
                         this.addLoadingLabel();
                       }
                     }
@@ -1200,11 +1200,11 @@ var injectBody = function ()
                     this.extTimer.stop();
                     this.win.close();
                     break;
-                }
+                }                  
                 // console.log('focusable: false');
                 // this.win.set({focusable: false});
               }
-              else {
+              else {                
                 this.extTimer.stop();
                 this.win.close();
               }
@@ -1244,13 +1244,13 @@ var injectBody = function ()
           extendViewModeChange: function() {
             //disabled
             //phe.cnc.Util.attachNetEvent(ClientLib.Vis.VisMain.GetInstance(), "ViewModeChange", ClientLib.Vis.ViewModeChange, this , this.onViewChanged);
-
+            
           },
           restoreDisplay: function(xy) {
-            //console.info("loot.restoreDisplay");
+            //console.info("loot.restoreDisplay");              
             var id = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentCityId();
             if(this.lootList.exist(xy)) {
-              var d = this.lootList.list.d[xy].Data;
+              var d = this.lootList.list.d[xy].Data;            
               var da = this.Display.distanceArray;
               this.Display = {};
               for(var k in d) this.Display[k] = d[k];
@@ -1267,60 +1267,60 @@ var injectBody = function ()
               //widget.removeAll();
               var r=0, c=0;
               var a;
-
+                    
               // DISTANCE
               //console.log('DISTANCE');
               a = this.Display.distanceArray;
-              if(typeof(a)!='undefined' && a.length>0) {
-                for(var i in this.Display.distanceArray) {
+              if(typeof(a)!='undefined' && a.length>0) { 
+                for(var i in this.Display.distanceArray) {              
                   c=0;
-                  this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 230, rich: true, allowGrowX: true}), { row: r++, column: c, colSpan: 6});
+                  this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 230, rich: true, allowGrowX: true}), { row: r++, column: c, colSpan: 6}); 
                   c=1;
                   for(var j in this.Display.distanceArray[i].lbs) {
-                    this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});
+                    this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});                     
                     this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].val[j]), {row: r+1, column: c});
                     c+=2;
                   }
                   r+=2;
                 }
               }
-
+              
               // AWAITING
               //console.log('AWAITING');
               c=0;
               var w = this.waiting[this.waiting[0]];
               if(++this.waiting[0] >= this.waiting.length) this.waiting[0]=1;
               this.extAdd(new qx.ui.basic.Label("<b style='color:white;font-size:10pt'>SCANNING... " + w + "</b>").set({rich: true}), {row: r++,column: c, colSpan: 6});//, allowGrowX: true, colSpan: 6
-
+              
               this.extPrint();
             } catch (e) {
               console.warn('PluginsLib.mhLoot.addLoadingLabel: ', e);
             }
-          },
+          }, 
           addResourcesLabel: function(type) {
             //console.log('addResourcesLabel');
             try {
               this.extItems = [];
-              var r=0, c=0;
+              var r=0, c=0;                
               var hp;
               var a;
-
+              
               // DISTANCE
               a = this.Display.distanceArray;
-              if(typeof(a)!='undefined' && a.length>0) {
-                for(var i in this.Display.distanceArray) {
+              if(typeof(a)!='undefined' && a.length>0) { 
+                for(var i in this.Display.distanceArray) {              
                   c=0;
-                  this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 200, rich: true, allowGrowX: true}), { row: r++, column: c, colSpan: 6});
+                  this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 200, rich: true, allowGrowX: true}), { row: r++, column: c, colSpan: 6}); 
                   c=1;
                   for(var j in this.Display.distanceArray[i].lbs) {
-                    this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});
+                    this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});                     
                     this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].val[j]), {row: r+1, column: c});
                     c+=2;
                   }
                   r+=2;
                 }
               }
-
+              
               // LOOT
               if (this.settings.showLoot.v) {
                 a = this.Display.lootArray;
@@ -1328,29 +1328,29 @@ var injectBody = function ()
                   hp = {};
                   hp.name = '<b>Lootable Resources</b>';
                   hp.img = this.resImages;
-                  t = [];
-                  t.push(this.Display.lootArray[0]);//Research 6
+                  t = [];  
+                  t.push(this.Display.lootArray[0]);//Research 6  
                   t.push(this.Display.lootArray[1]);//Tiberium 1
                   t.push(this.Display.lootArray[2]);//Crystal 2
-                  t.push(this.Display.lootArray[3]);//Credits 3
+                  t.push(this.Display.lootArray[3]);//Credits 3           
                   hp.val = t;
                   //iconArrays.push(hp);  //store !!
-
-                  // draw icon's info
+                  
+                  // draw icon's info              
                   c=0;
-                  this.extAdd(new qx.ui.basic.Label(hp.name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
+                  this.extAdd(new qx.ui.basic.Label(hp.name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});    
                   for(var j in hp.val) {
-                    this.extAdd(hp.img[j], {row: r, column: c++});
+                    this.extAdd(hp.img[j], {row: r, column: c++}); 
                     this.extAdd(new qx.ui.basic.Label(this.kMG(hp.val[j])).set({textAlign:'left'}), {row: r, column: c++});
                   }
                   r++;
                 }
               }
-
+              
               // TROOP
-              if (this.settings.showTroops.v) { //to do
+              if (this.settings.showTroops.v) { //to do  
                 a = this.Display.troopsArray;
-                if(typeof(a)!='undefined' && a.length>0) {
+                if(typeof(a)!='undefined' && a.length>0) {   
                   hp = {};
                   hp.name = '<b>Troop Strength</b>';
                   hp.img = this.troopImages;
@@ -1361,27 +1361,27 @@ var injectBody = function ()
                     t.push(this.Display.troopsArray[2]);//veh
                     t.push(this.Display.troopsArray[3]);//stu
                     //t.push(this.Display.troopsArray[4]);//air
-                  }
+                  }              
                   hp.val = t;
-                  // draw icon's info
+                  // draw icon's info                            
                   c=0;
-                  this.extAdd(new qx.ui.basic.Label(hp.name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
-                  this.extAdd(new qx.ui.basic.Label(this.kMG(hp.val[0])).set({textAlign:'left'}), {row: r, column: c++});
+                  this.extAdd(new qx.ui.basic.Label(hp.name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});  
+                  this.extAdd(new qx.ui.basic.Label(this.kMG(hp.val[0])).set({textAlign:'left'}), {row: r, column: c++});  
                   c=2;
                   for(var j=1;j<hp.val.length;j++) {
-                    this.extAdd(hp.img[j-1], {row: r,column: c++});
+                    this.extAdd(hp.img[j-1], {row: r,column: c++}); 
                     this.extAdd(new qx.ui.basic.Label(this.kMG(hp.val[j])).set({textAlign:'left'}), {row: r, column: c++});
                   }
                   r++;
                 }
               }
-
+              
               // INFO
               a = this.Display.infoArrays;
-              if(typeof(a)!='undefined' && a.length>0) {
-                for(var i in this.Display.infoArrays) {
+              if(typeof(a)!='undefined' && a.length>0) { 
+                for(var i in this.Display.infoArrays) {              
                   c=0;
-                  this.extAdd(new qx.ui.basic.Label(this.Display.infoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
+                  this.extAdd(new qx.ui.basic.Label(this.Display.infoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6}); 
                   c=1;
                   for(var j in this.Display.infoArrays[i].lbs) {
                     this.extAdd(new qx.ui.basic.Label(this.Display.infoArrays[i].lbs[j]+' '+this.Display.infoArrays[i].val[j]), {row: r, column: c});
@@ -1389,77 +1389,77 @@ var injectBody = function ()
                   }
                   r++;
                 }
-              }
-
+              } 
+              
               // 2 lines INFO
               a = this.Display.twoLineInfoArrays;
-              if(typeof(a)!='undefined' && a.length>0) {
-                for(var i in this.Display.twoLineInfoArrays) {
+              if(typeof(a)!='undefined' && a.length>0) {       
+                for(var i in this.Display.twoLineInfoArrays) {              
                   c=0;
-                  this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
+                  this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});    
                   c=1;
                   for(var j in this.Display.twoLineInfoArrays[i].lbs) {
-                    this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].lbs[j]), {row: r, column: c});
+                    this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].lbs[j]), {row: r, column: c});                     
                     this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].val[j]), {row: r+1, column: c});
                     c+=2;
                   }
-                  r+=2;
+                  r+=2;                
                 }
               }
-
+              
               // WARNING
               c=0;
               if(type == "r") {
                 this.extAdd(new qx.ui.basic.Label("<b style='color:white;font-size:10pt'>[*STORED DATA. WAIT...]</b>").set({width: 200, rich: true, allowGrowX: true}), { row: r++, column: c, colSpan: 6});
               }
-
+              
               this.extPrint();
-
+              
             } catch (e) {
               console.warn('PluginsLib.mhLoot.addResourcesLabel(): ', e);
             }
-          },
+          },       
           addFriendlyLabel: function(widget) {
             //console.log('addFriendlyLabel');
-            try {
+            try {              
               this.extItems = [];
               var a;
               var r=0, c=0;
-
+              
               // DISTANCE
               a = this.Display.distanceArray;
-              if(typeof(a)!='undefined' && a.length>0) {
-                for(var i in this.Display.distanceArray) {
+              if(typeof(a)!='undefined' && a.length>0) {    
+                for(var i in this.Display.distanceArray) {              
                   c=0;
-                  this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
+                  this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6}); 
                   c=1;
                   for(var j in this.Display.distanceArray[i].lbs) {
-                    this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});
+                    this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].lbs[j]), {row: r, column: c});                     
                     this.extAdd(new qx.ui.basic.Label(this.Display.distanceArray[i].val[j]), {row: r+1, column: c});
                     c+=2;
                   }
                   r+=2;
                 }
               }
-
-
+              
+              
               // 2 lines INFO
               a = this.Display.twoLineInfoArrays;
-              if(typeof(a)!='undefined' && a.length>0) {
+              if(typeof(a)!='undefined' && a.length>0) {  
                 c=0;
-                for(var i in this.Display.twoLineInfoArrays) {
+                for(var i in this.Display.twoLineInfoArrays) {              
                   c=0;
-                  this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6});
+                  this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].name).set({width: 200, rich: true}), { row: r++, column: c, colSpan: 6}); 
                   c=1;
                   for(var j in this.Display.twoLineInfoArrays[i].lbs) {
-                    this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].lbs[j]), {row: r, column: c});
+                    this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].lbs[j]), {row: r, column: c});                     
                     this.extAdd(new qx.ui.basic.Label(this.Display.twoLineInfoArrays[i].val[j]), {row: r+1, column: c});
                     c+=2;
                   }
-                  r+=2;
+                  r+=2;                
                 }
               }
-
+              
               this.extPrint();
 
             } catch (e) {
@@ -1471,11 +1471,11 @@ var injectBody = function ()
           optionsPage: null,
           btnApply: null,
           optionsStoreName: 'MHToolLootOptions',
-          addLootPage: function() {
+          addLootPage: function() {            
             //console.log('addLootPage');
             try {
               if(!PluginsLib.mhOptionsPage) OptionsPage();
-
+              
               if(!this.optionsTab) {
                 //Create Tab
                 this.optionsTab = PluginsLib.mhOptionsPage.getInstance();
@@ -1497,22 +1497,22 @@ var injectBody = function ()
               //this.optionsPage.add(new qx.ui.basic.Label("<b>Obf:"+this.typeGet()+"</b>").set({rich: true}));//, textColor: red
               //  container.add(new qx.ui.core.Spacer(50));
               this.loadOptions();
-              this.addButtons();
+              this.addButtons();               
             } catch (e) {
               console.warn("MHTool.mhLoot.addLootPage: ", e);
-            }
+            }           
           },
           addButtons: function() {
             try {
               this.btnApply = new qx.ui.form.Button("Apply");
               this.btnApply.set({ width:150, height:30, toolTipText: "Apply changes.", allowGrowX:false, enabled:false});//, marginTop:20});
-
+              
               var c = new qx.ui.container.Composite(new qx.ui.layout.HBox(0,'right'));
               c.setMarginTop(20);
               c.add(this.btnApply);
               this.optionsPage.add(c);
-
-              this.btnApply.addListener("execute", this.applyOptions, this);
+              
+              this.btnApply.addListener("execute", this.applyOptions, this); 
               this.btnApply.setEnabled(false);
             } catch (e) {
               console.warn("MHTool.mhLoot.addButtons: ", e);
@@ -1528,9 +1528,9 @@ var injectBody = function ()
           applyOptions: function(e) {
             //console.log("applyOptions e:",e);
             this.saveOptions();
-            this.btnApply.setEnabled(false);
+            this.btnApply.setEnabled(false); 
           },
-          saveOptions: function() {
+          saveOptions: function() {   
             var c = {};
             var i = 0;
             for(var k in this.settings) {
@@ -1542,12 +1542,12 @@ var injectBody = function ()
           },
           loadOptions: function() {
             try {
-              var c = {};
+              var c = {};            
               var S = ClientLib.Base.LocalStorage;
               if (S.get_IsSupported()) c = S.GetItem(this.optionsStoreName);
               //console.log('loadOptions c:',c);
               if(c===null) c = {};
-              var i = 0;
+              var i = 0;              
               for(var k in this.settings) {
                 if(typeof(c[k])!='undefined') {
                   this.settings[k].cb.setValue(c[k]);
@@ -1556,24 +1556,24 @@ var injectBody = function ()
                   this.settings[k].cb.setValue(this.settings[k].d);
                   this.settings[k].v = this.settings[k].d;
                 }
-              }
+              }             
               //console.log('loadOptions settings:',this.settings);
             } catch (e) {
                 console.warn("MHTool.mhLoot.loadOptions: ", e);
             }
           }
         }//members
-      });//Class
+      });//Class     
     } catch (e) {
-      console.warn("qx.Class.define(PluginsLib.mhLoot: ", e);
+      console.warn("qx.Class.define(PluginsLib.mhLoot: ", e);      
     }
-    //=======================================================
+    //======================================================= 
     // START
     // PluginsLib.mhLoot.getInstance();
-
+    
     created = true;
   }//CreateClasses
-  //=======================================================
+  //=======================================================   
   // function LoadExtension() {
     // try {
       // if (typeof(qx) != 'undefined') {
@@ -1581,7 +1581,7 @@ var injectBody = function ()
         // if (!!qx.core.Init.getApplication().getMenuBar()) {
           // CreateClasses();
           // return; // done
-        // }
+        // } 
       // }
     // } catch (e) {
       // if (typeof(console) != 'undefined') console.log('LoadExtension:',e);
@@ -1601,7 +1601,7 @@ var injectBody = function ()
         if (app.initDone===true)
         {
           if(!created) CreateClasses();
-
+          
           var plugin = PluginsLib[pluginName];
           var ready = true;
           if(plugin.REQUIRES.length > 0) {

@@ -3,8 +3,13 @@
 // @description Tunnel info
 // @namespace TATI
 // @include http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
-// @version 2.3
+// @version 2.2.1.2
+// @downloadURL    https://raw.githubusercontent.com/leo7044/CnC_TA/master/TunnelInfo.user.js
+// @updateURL      https://raw.githubusercontent.com/leo7044/CnC_TA/master/TunnelInfo.user.js
+// @include        http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include        http*://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @author KRS_L
+// @contributor    leo7044 (https://github.com/leo7044)
 // ==/UserScript==
 (function () {
 	var TATI_main = function () {
@@ -153,31 +158,33 @@
 						try {
 							this.requiredOffenseLevel = 0;
 							var region = this._VisMain.get_Region();
-							var scanDistance = 7;
+							var scanDistance = 5;
 							for (var x = startX - (scanDistance); x < (startX + scanDistance); x++) {
 								for (var y = startY - scanDistance; y < (startY + scanDistance); y++) {
-									var visObject = region.GetObjectFromPosition(x * region.get_GridWidth(), y * region.get_GridHeight());
-									if (visObject != null) {
-										if (visObject.get_VisObjectType() == ClientLib.Vis.VisObject.EObjectType.RegionPointOfInterest) {
-											var poiType = visObject.get_Type();
-											if (poiType == 0) {
-												var tunnelX = visObject.get_RawX();
-												var tunnelY = visObject.get_RawY();
-												var tunnelLevel = visObject.get_Level();
-												var distanceToTunnel = ClientLib.Base.Util.CalculateDistance(startX, startY, tunnelX, tunnelY);
-												if (distanceToTunnel <= this.tunnelInfluenceRange) {
-													if (this.currentCityOffenseLevel < tunnelLevel - 6) { // Blocking Tunnel
-														this.regionCityMoveInfoAddonExists = true;
-														if (this.requiredOffenseLevel < tunnelLevel - 6)
-															this.requiredOffenseLevel = tunnelLevel - 6;
-														this.addTunnelMarker(tunnelX, tunnelY, "#ff3600");
-													} else { // Activating Tunnel
-														this.addTunnelMarker(tunnelX, tunnelY, "#06ff00");
-													}
-												}
-											}
-										}
-									}
+                                    if (Math.sqrt(Math.pow((x - startX), 2) + Math.pow((y - startY), 2)) < 4.5) {
+                                        var visObject = region.GetObjectFromPosition(x * region.get_GridWidth(), y * region.get_GridHeight());
+                                        if (visObject != null) {
+                                            if (visObject.get_VisObjectType() == ClientLib.Vis.VisObject.EObjectType.RegionPointOfInterest) {
+                                                var poiType = visObject.get_Type();
+                                                if (poiType == 0) {
+                                                    var tunnelX = visObject.get_RawX();
+                                                    var tunnelY = visObject.get_RawY();
+                                                    var tunnelLevel = visObject.get_Level();
+                                                    var distanceToTunnel = ClientLib.Base.Util.CalculateDistance(startX, startY, tunnelX, tunnelY);
+                                                    if (distanceToTunnel <= this.tunnelInfluenceRange) {
+                                                        if (this.currentCityOffenseLevel < tunnelLevel - 6) { // Blocking Tunnel
+                                                            this.regionCityMoveInfoAddonExists = true;
+                                                            if (this.requiredOffenseLevel < tunnelLevel - 6)
+                                                                this.requiredOffenseLevel = tunnelLevel - 6;
+                                                            this.addTunnelMarker(tunnelX, tunnelY, "#ff3600");
+                                                        } else { // Activating Tunnel
+                                                            this.addTunnelMarker(tunnelX, tunnelY, "#06ff00");
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
 								}
 							}
 							if (this.regionCityMoveInfoAddonExists == true) {

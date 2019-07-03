@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			CnC Tiberium Alliances Autopilot - German [de-DE] 
 // @namespace		FlunikTools
-// @include			http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include         https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @description		Autoupgrade deiner Basen, script based on FlunikTools
 // @version			1.1
 // @grant			none
@@ -536,7 +536,7 @@
 							button.addListener("click", function(e)
 								{
 									var _this = window.FlunikTools.Main.getInstance();
-									popup.placeToMouse(e);
+									popup.placeToPointer(e);
 									//popup.show();
 									_this.autoUpgradePopupOeffnen();
 								}, this);

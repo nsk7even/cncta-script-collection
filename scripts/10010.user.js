@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name          PluginsLib - mhNavigator - Tiberium Alliances
-// @namespace     http*://*.alliances.commandandconquer.com/*/index.aspx*
+// @namespace     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @include       https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @description   Creates compass poiting to the currently selected base (compass points from itself). [+7even: modified init to start minimized]
 // @version       1.36+
 // @author        MrHIDEn (in game PEEU) based on Caine code. Extended
-// @include       http*://*.alliances.commandandconquer.com/*/index.aspx*
 // @grant         none
 // ==/UserScript==
 (function () {

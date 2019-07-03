@@ -4,7 +4,7 @@
 // @description Upgrades Offense or Defense or Buildings but not RT CY CC DEFFac or DefHQ.
 // @version     SaberTooths-Fix-for-Awesome 1.4.3 
 // @author      dbendure
-// @include https://*.alliances.commandandconquer.com/*/index.aspx*
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 //@grant none
 // ==/UserScript==
 

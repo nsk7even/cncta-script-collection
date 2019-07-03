@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name       Tiberium Alliances Info Sticker
 // @namespace  TAInfoSticker
-// @version    1.11.10+
+// @version    1.11.10.2++
+// @include     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @description  Based on Maelstrom Dev Tools. Modified MCV timer, repair time label, resource labels, fixed compactNumbers function. [+7even: fixed script errors]
-// @include     http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
 // @author unicode *edited by dbendure*
 // ==/UserScript==
 (function () {
@@ -12,8 +12,8 @@
       function createInfoSticker() {
         console.log('InfoSticker loaded');
         // define Base
-        qx.Class.define('InfoSticker.Base', {
-          type: 'singleton',
+                qx.Class.define("InfoSticker.Base", {
+                    type: "singleton",
           extend: qx.core.Object,
           members: {
             /* Desktop */
@@ -25,25 +25,27 @@
             creditIcon: null,
             repairIcon: null,
             hasStorage: false,
+
             initialize: function () {
               try {
                 this.hasStorage = 'localStorage' in window && window['localStorage'] !== null;
-              } catch (se) {
-              }
+                            } catch (se) {}
               try {
                 var fileManager = ClientLib.File.FileManager.GetInstance();
-                this.tibIcon = fileManager.GetPhysicalPath('ui/common/icn_res_tiberium.png');//
-                this.cryIcon = fileManager.GetPhysicalPath('ui/common/icn_res_chrystal.png');
-                this.powIcon = fileManager.GetPhysicalPath('ui/common/icn_res_power.png');
-                this.creditIcon = fileManager.GetPhysicalPath('ui/common/icn_res_dollar.png');
-                this.repairIcon = fileManager.GetPhysicalPath('ui/icons/icn_repair_off_points.png');
+                                this.tibIcon = fileManager.GetPhysicalPath("ui/common/icn_res_tiberium.png");
+                                this.cryIcon = fileManager.GetPhysicalPath("ui/common/icn_res_chrystal.png");
+                                this.powIcon = fileManager.GetPhysicalPath("ui/common/icn_res_power.png");
+                                this.creditIcon = fileManager.GetPhysicalPath("ui/common/icn_res_dollar.png");
+                                this.repairIcon = fileManager.GetPhysicalPath("ui/icons/icn_repair_off_points.png");
+
                 if (typeof phe.cnc.Util.attachNetEvent == 'undefined')
                 this.attachEvent = webfrontend.gui.Util.attachNetEvent;
                  else
                 this.attachEvent = phe.cnc.Util.attachNetEvent;
+
                 this.runMainTimer();
               } catch (e) {
-                console.log('InfoSticker.initialize: ', e.toString());
+                                console.log("InfoSticker.initialize: ", e.toString());
               }
             },
             runMainTimer: function () {
@@ -54,7 +56,7 @@
                   self.runMainTimer();
                 }, this.dataTimerInterval);
               } catch (e) {
-                console.log('InfoSticker.runMainTimer: ', e.toString());
+                                console.log("InfoSticker.runMainTimer: ", e.toString());
               }
             },
             runPositionTimer: function () {
@@ -65,7 +67,7 @@
                   self.runPositionTimer();
                 }, this.positionInterval);
               } catch (e) {
-                console.log('InfoSticker.runPositionTimer: ', e.toString());
+                                console.log("InfoSticker.runPositionTimer: ", e.toString());
               }
             },
             infoSticker: null,
@@ -73,8 +75,10 @@
             mcvTimerLabel: null,
             mcvInfoLabel: null,
             mcvPane: null,
+
             repairPopup: null,
             repairTimerLabel: null,
+
             resourcePane: null,
             resourceHidden: false,
             resourceTitleLabel: null,
@@ -82,29 +86,41 @@
             resourceLabel1: null,
             resourceLabel2: null,
             resourceLabel3: null,
+
             resourceLabel1per: null,
             resourceLabel2per: null,
             resourceLabel3per: null,
+
             productionTitleLabel: null,
             productionLabelPower: null,
             productionLabelCredit: null,
+
             repairInfoLabel: null,
+
             lastButton: null,
+
             top_image: null,
             bot_image: null,
-            toFlipH: [
-            ],
+
+                        toFlipH: [],
+
             pinButton: null,
             pinned: false,
+
             pinTop: 130,
             pinButtonDecoration: null,
             pinPane: null,
+
             pinIconFix: false,
+
             lockButton: null,
             locked: false,
+
             lockButtonDecoration: null,
             lockPane: null,
+
             lockIconFix: false,
+
             mcvHide: false,
             repairHide: false,
             resourceHide: false,
@@ -113,26 +129,31 @@
             costHide: false,
             DEFcostHide: false,
             stickerBackground: null,
+
             mcvPane: null,
+
             pinLockPos: 0,
-            attachEvent: function () {
+
+                        attachEvent: function() {},
+
+                        isNull: function(e) {
+                            return typeof e == "undefined" || e == null;
             },
-            isNull: function (e) {
-              return typeof e == 'undefined' || e == null;
-            },
-            getApp: function () {
+
+                        getApp: function() {
               return qx.core.Init.getApplication();
             },
-            getBaseListBar: function () {
+
+                        getBaseListBar: function() {
               var app = this.getApp();
               var b;
-              if (!this.isNull(app)) {
+                            if(!this.isNull(app)) {
                 b = app.getBaseNavigationBar();
-                if (!this.isNull(b)) {
-                  if (b.getChildren().length > 0) {
-                    b = b.getChildren() [0];
-                    if (b.getChildren().length > 0) {
-                      b = b.getChildren() [0];
+                                if(!this.isNull(b)) {
+                                    if(b.getChildren().length > 0) {
+                                        b = b.getChildren()[0];
+                                        if(b.getChildren().length > 0) {
+                                            b = b.getChildren()[0];
                       return b;
                     }
                   }
@@ -140,58 +161,61 @@
               }
               return null;
             },
+
             repositionSticker: function () {
               try {
                 var i;
+
                 if (this.infoSticker && !this.mcvInfoLabel.isDisposed() && !this.mcvPopup.isDisposed()) {
                   var dele;
+
                   try {
                     if (this.top_image != null) {
                       dele = this.top_image.getContentElement().getDomElement();
                       if (dele != null) {
-                        dele.style['-moz-transform'] = 'scaleY(-1)';
-                        dele.style['-o-transform'] = 'scaleY(-1)';
-                        dele.style['-webkit-transform'] = 'scaleY(-1)';
-                        dele.style.transform = 'scaleY(-1)';
-                        dele.style.filter = 'FlipV';
-                        dele.style['-ms-filter'] = 'FlipV';
+                                                dele.style["-moz-transform"] = "scaleY(-1)";
+                                                dele.style["-o-transform"] = "scaleY(-1)";
+                                                dele.style["-webkit-transform"] = "scaleY(-1)";
+                                                dele.style.transform = "scaleY(-1)";
+                                                dele.style.filter = "FlipV";
+                                                dele.style["-ms-filter"] = "FlipV";
                         this.top_image = null;
                       }
                     }
-                    /*for (i = this.toFlipH.length - 1; i >= 0; i--) {
+                                        for (i = this.toFlipH.length - 1; i >= 0; i--) {
                       var e = this.toFlipH[i];
-                      if (e.isDisposed()) this.toFlipH.splice(i, 1);
-                       else {
+                                            if(e.isDisposed()) this.toFlipH.splice(i, 1);
+                                            /*else {
                         dele = e.getDecoratorElement().getDomElement();
 
                         if (dele != null) {
-                          dele.style['-moz-transform'] = 'scaleX(-1)';
-                          dele.style['-o-transform'] = 'scaleX(-1)';
-                          dele.style['-webkit-transform'] = 'scaleX(-1)';
-                          dele.style.transform = 'scaleX(-1)';
-                          dele.style.filter = 'FlipH';
-                          dele.style['-ms-filter'] = 'FlipH';
+                                                    dele.style["-moz-transform"] = "scaleX(-1)";
+                                                    dele.style["-o-transform"] = "scaleX(-1)";
+                                                    dele.style["-webkit-transform"] = "scaleX(-1)";
+                                                    dele.style.transform = "scaleX(-1)";
+                                                    dele.style.filter = "FlipH";
+                                                    dele.style["-ms-filter"] = "FlipH";
                           this.toFlipH.splice(i, 1);
-                        }
                       }
                     }*/
+                                        }
                   } catch (e2) {
-                    console.log('Error flipping images.', e2.toString());
+                                        console.log("Error flipping images.", e2.toString());
                   }
                   var baseListBar = this.getBaseListBar();
-                  if (baseListBar != null) {
+                                    if(baseListBar!=null) {
                     var baseCont = baseListBar.getChildren();
                     for (i = 0; i < baseCont.length; i++) {
                       var baseButton = baseCont[i];
-                      if (typeof baseButton.getBaseId === 'function') {
-                        if (baseButton.getBaseId() == ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCity().get_Id()
-                        && baseButton.getBounds() != null && baseButton.getBounds().top != null) {
+                                            if(typeof baseButton.getBaseId === 'function') {
+                                                if(baseButton.getBaseId() == ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCity().get_Id()
+                                                   && baseButton.getBounds() != null && baseButton.getBounds().top!=null) {
                           //var baseButtonDecorator = baseButton.getDecorator();
                           //if (baseButton!=this.mcvPopup && baseButtonDecorator != null && typeof baseButtonDecorator === "string" && baseButton.getBounds() != null && baseButton.getBounds().top!=null) {
                           //if (baseButtonDecorator.indexOf("focused") >= 0 || baseButtonDecorator.indexOf("pressed") >= 0) {
-                          if (this.locked) {
-                            if (!this.pinned) {
-                              if (baseListBar.indexOf(this.mcvPopup) >= 0) {
+                                                    if(this.locked) {
+                                                        if(!this.pinned) {
+                                                            if(baseListBar.indexOf(this.mcvPopup)>=0) {
                                 baseListBar.remove(this.mcvPopup);
                               }
                               this.pinLockPos = baseListBar.indexOf(baseButton) + 1;
@@ -208,13 +232,14 @@
                               var infoTop;
                               try {
                                 var stickerHeight = this.infoSticker.getContentElement().getDomElement().style.height;
-                                stickerHeight = stickerHeight.substring(0, stickerHeight.indexOf('px'));
+                                                                stickerHeight = stickerHeight.substring(0, stickerHeight.indexOf("px"));
                                 infoTop = Math.min(130 + top, Math.max(660, window.innerHeight) - parseInt(stickerHeight, 10) - 130);
                               } catch (heighterror) {
                                 infoTop = 130 + top;
                               }
-                              if (this.infoSticker.getContentElement().getDomElement() != null)
+                                                            if(this.infoSticker.getContentElement().getDomElement()!=null)
                               this.infoSticker.setDomTop(infoTop);
+
                               this.pinTop = infoTop;
                             }
                           }
@@ -223,9 +248,10 @@
                       }
                     }
                   }
+
                 }
               } catch (ex) {
-                console.log('InfoSticker.repositionSticker: ', ex.toString());
+                                console.log("InfoSticker.repositionSticker: ", ex.toString());
               }
             },
             toLock: function (e) {
@@ -236,14 +262,14 @@
                   this.stickerBackground.add(this.mcvPopup);
                 }
                 else this.infoSticker.hide();
-                this.lockButton.setIcon(this.locked ? 'FactionUI/icons/icn_thread_locked_active.png' : 'FactionUI/icons/icn_thread_locked_inactive.png');
+                                this.lockButton.setIcon(this.locked ? "FactionUI/icons/icn_thread_locked_active.png" : "FactionUI/icons/icn_thread_locked_inactive.png");
                 this.updateLockButtonDecoration();
                 if (this.hasStorage) {
                   if (this.locked) {
-                    localStorage['infoSticker-locked'] = 'true';
-                    if (this.pinned) localStorage['infoSticker-pinLock'] = this.pinLockPos.toString();
+                                        localStorage["infoSticker-locked"] = "true";
+                                        if(this.pinned) localStorage["infoSticker-pinLock"] = this.pinLockPos.toString();
                   } else {
-                    localStorage['infoSticker-locked'] = 'false';
+                                        localStorage["infoSticker-locked"] = "false";
                   }
                 }
                 if (this.locked && this.pinned) {
@@ -254,14 +280,14 @@
                   this.menuDownButton.setEnabled(false);
                 }
                 this.repositionSticker();
-              } catch (e) {
-                console.log('InfoSticker.toLock: ', e.toString());
+                            } catch(e) {
+                                console.log("InfoSticker.toLock: ", e.toString());
               }
             },
             updateLockButtonDecoration: function () {
-              var light = '#CDD9DF';
-              var mid = '#9CA4A8';
-              var dark = '#8C9499';
+                            var light = "#CDD9DF";
+                            var mid = "#9CA4A8";
+                            var dark = "#8C9499";
               this.lockPane.setDecorator(null);
               this.lockButtonDecoration = new qx.ui.decoration.Decorator();
               this.lockButtonDecoration.setBackgroundColor(this.locked ? dark : light);
@@ -270,17 +296,17 @@
             toPin: function (e) {
               try {
                 this.pinned = !this.pinned;
-                this.pinButton.setIcon(this.pinned ? 'FactionUI/icons/icn_thread_pin_active.png' : 'FactionUI/icons/icn_thread_pin_inactive.png');
+                                this.pinButton.setIcon(this.pinned ? "FactionUI/icons/icn_thread_pin_active.png" : "FactionUI/icons/icn_thread_pin_inactive.png");
                 this.updatePinButtonDecoration();
                 if (this.hasStorage) {
                   if (this.pinned) {
-                    localStorage['infoSticker-pinned'] = 'true';
-                    localStorage['infoSticker-top'] = this.pinTop.toString();
-                    if (this.locked) {
-                      localStorage['infoSticker-pinLock'] = this.pinLockPos.toString();
+                                        localStorage["infoSticker-pinned"] = "true";
+                                        localStorage["infoSticker-top"] = this.pinTop.toString();
+                                        if(this.locked) {
+                                            localStorage["infoSticker-pinLock"] = this.pinLockPos.toString();
                     }
                   } else {
-                    localStorage['infoSticker-pinned'] = 'false';
+                                        localStorage["infoSticker-pinned"] = "false";
                   }
                 }
                 if (this.locked && this.pinned) {
@@ -290,14 +316,14 @@
                   this.menuUpButton.setEnabled(false);
                   this.menuDownButton.setEnabled(false);
                 }
-              } catch (e) {
-                console.log('InfoSticker.toPin: ', e.toString());
+                            } catch(e) {
+                                console.log("InfoSticker.toPin: ", e.toString());
               }
             },
             updatePinButtonDecoration: function () {
-              var light = '#CDD9DF';
-              var mid = '#9CA4A8';
-              var dark = '#8C9499';
+                            var light = "#CDD9DF";
+                            var mid = "#9CA4A8";
+                            var dark = "#8C9499";
               this.pinPane.setDecorator(null);
               this.pinButtonDecoration = new qx.ui.decoration.Decorator().set({
                 //innerOpacity: 0.5
@@ -313,32 +339,28 @@
                 if (this.resourcePane.isVisible()) {
                   //this.resourcePane.hide();
                   this.resourcePane.exclude();
-                  this.resourceHideButton.setLabel('+');
+                                    this.resourceHideButton.setLabel("+");
                 } else {
                   this.resourcePane.show();
-                  this.resourceHideButton.setLabel('-');
+                                    this.resourceHideButton.setLabel("-");
                 }
-              } catch (e) {
-                console.log('InfoSticker.hideResource: ', e.toString());
+                            } catch(e) {
+                                console.log("InfoSticker.hideResource: ", e.toString());
               }
             },
             lastPane: null,
             createSection: function (parent, titleLabel, visible, visibilityStorageName) {
               try {
                 var pane = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({
-                  padding: [
-                    5,
-                    0,
-                    5,
-                    5
-                  ],
+                                    padding: [5, 0, 5, 5],
                   width: 124,
                   decorator: new qx.ui.decoration.Decorator().set({
-                    backgroundImage: 'decoration/pane_messaging_item/messaging_items_pane.png',
-                    backgroundRepeat: 'scale',
+                                        backgroundImage: "decoration/pane_messaging_item/messaging_items_pane.png",
+                                        backgroundRepeat: "scale",
                   }),
-                  alignX: 'right'
+                                    alignX: "right"
                 });
+
                 var labelStyle = {
                   font: qx.bom.Font.fromString('bold').set({
                     size: 12
@@ -346,11 +368,13 @@
                   textColor: '#595969'
                 };
                 titleLabel.set(labelStyle);
+
                 var hidePane = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({
                   width: 124,
-                  alignX: 'right'
+                                    alignX: "right"
                 });
-                var hideButton = new qx.ui.form.Button('-').set({
+
+                                var hideButton = new qx.ui.form.Button("-").set({
                   //decorator: new qx.ui.decoration.Single(1, "solid", "black"),
                   maxWidth: 15,
                   maxHeight: 10,
@@ -358,29 +382,33 @@
                 });
                 var self = this;
                 //resourceHideButton.addListener("execute", this.hideResource, this);
-                hideButton.addListener('execute', function () {
+                                hideButton.addListener("execute", function () {
                   if (hidePane.isVisible()) {
                     hidePane.exclude();
-                    hideButton.setLabel('+');
+                                        hideButton.setLabel("+");
                   } else {
                     hidePane.show();
-                    hideButton.setLabel('-');
+                                        hideButton.setLabel("-");
                   }
-                  if (self.hasStorage)
-                  localStorage['infoSticker-' + visibilityStorageName] = !hidePane.isVisible();
+                                    if(self.hasStorage)
+                                        localStorage["infoSticker-"+visibilityStorageName] = !hidePane.isVisible();
                 });
+
                 var titleBar = new qx.ui.container.Composite(new qx.ui.layout.HBox(0));
                 titleBar.add(hideButton);
                 titleBar.add(titleLabel);
                 pane.add(titleBar);
                 pane.add(hidePane);
                 if (!visible) hidePane.exclude();
+
                 this.toFlipH.push(pane);
+
                 this.lastPane = pane;
                 parent.add(pane);
+
                 return hidePane;
-              } catch (e) {
-                console.log('InfoSticker.createSection: ', e.toString());
+                            } catch(e) {
+                                console.log("InfoSticker.createSection: ", e.toString());
                 throw e;
               }
             },
@@ -390,20 +418,23 @@
               cnt.setLayout(new qx.ui.layout.HBox(0));
               if (ele1 != null) {
                 cnt.add(ele1);
-                ele1.setAlignY('middle');
+                                ele1.setAlignY("middle");
               }
               if (ele2 != null) {
                 cnt.add(ele2);
-                ele2.setAlignY('bottom');
+                                ele2.setAlignY("bottom");
               }
               if (ele3 != null) {
                 cnt.add(ele3);
-                ele3.setAlignY('bottom');
+                                ele3.setAlignY("bottom");
               }
+
               return cnt;
             },
+
             formatCompactTime: function (time) {
-              var comps = time.split(':');
+                            var comps = time.split(":");
+
               var i = 0;
               var value = Math.round(parseInt(comps[i], 10)).toString();
               var len = comps.length;
@@ -412,30 +443,23 @@
                 len--;
               }
               var unit;
-              switch (len) {
-                case 1:
-                  unit = 's';
-                  break;
-                case 2:
-                  unit = 'm';
-                  break;
-                case 3:
-                  unit = 'h';
-                  break;
-                case 4:
-                  unit = 'd';
-                  break;
+                            switch(len) {
+                                case 1: unit = "s"; break;
+                                case 2: unit = "m"; break;
+                                case 3: unit = "h"; break;
+                                case 4: unit = "d"; break;
               }
               return value + unit;
             },
-            createImage: function (icon) {
+                        createImage: function(icon) {
               var image = new qx.ui.basic.Image(icon);
               image.setScale(true);
               image.setWidth(20);
               image.setHeight(20);
               return image;
             },
-            createMCVPane: function () {
+
+                        createMCVPane: function() {
               try {
                 this.mcvInfoLabel = new qx.ui.basic.Label();
                 this.mcvTimerLabel = new qx.ui.basic.Label().set({
@@ -468,8 +492,10 @@
                   textAlign: 'center',
                 });
                 var app = qx.core.Init.getApplication();
-                var b3 = app.getBaseNavigationBar().getChildren() [0].getChildren() [0];
-                var pane = this.createSection(b3, this.mcvInfoLabel, !this.mcvHide, 'mcvHide');
+                                var b3 = app.getBaseNavigationBar().getChildren()[0].getChildren()[0];
+
+
+                                var pane = this.createSection(b3, this.mcvInfoLabel, !this.mcvHide, "mcvHide");
                 pane.add(this.mcvTimerLabel);
                 pane.add(this.mcvTimerCreditProdLabel);
                 pane.add(this.mcvTimerRPPercLabel);
@@ -479,7 +505,7 @@
                 console.log('InfoSticker.createMCVPane', e.toString());
               }
             },
-            moveStickerUp: function () {
+                        moveStickerUp: function() {
               try {
                 var baseListBar = this.getBaseListBar();
                 this.pinLockPos = Math.max(0, this.pinLockPos - 1);
@@ -487,13 +513,13 @@
                   baseListBar.remove(this.mcvPopup);
                 }
                 if (this.hasStorage) {
-                  localStorage['infoSticker-pinLock'] = this.pinLockPos.toString();
+                                    localStorage["infoSticker-pinLock"] = this.pinLockPos.toString();
                 }
-              } catch (e) {
-                console.log('InfoSticker.moveStickerUp', e.toString());
+                            } catch(e) {
+                                console.log("InfoSticker.moveStickerUp", e.toString());
               }
             },
-            moveStickerDown: function () {
+                        moveStickerDown: function() {
               try {
                 var baseListBar = this.getBaseListBar();
                 this.pinLockPos = Math.min(baseListBar.getChildren().length, this.pinLockPos + 1);
@@ -501,38 +527,38 @@
                   baseListBar.remove(this.mcvPopup);
                 }
                 if (this.hasStorage) {
-                  localStorage['infoSticker-pinLock'] = this.pinLockPos.toString();
+                                    localStorage["infoSticker-pinLock"] = this.pinLockPos.toString();
                 }
-              } catch (e) {
-                console.log('InfoSticker.moveStickerDown', e.toString());
+                            } catch(e) {
+                                console.log("InfoSticker.moveStickerDown", e.toString());
               }
             },
             menuUpButton: null,
             menuDownButton: null,
-            createMCVPopup: function () {
+                        createMCVPopup: function() {
               try {
                 var self = this;
                 this.mcvPopup = new qx.ui.container.Composite(new qx.ui.layout.VBox().set({
-                  spacing: 3
-                })).set({
+                                    spacing: 3})).set({
                   paddingLeft: 5,
                   width: 105,
                   decorator: new qx.ui.decoration.Decorator()
                 });
+
                 var menu = new qx.ui.menu.Menu();
-                var menuPinButton = new qx.ui.menu.Button('Pin', 'FactionUI/icons/icn_thread_pin_inactive.png');
-                menuPinButton.addListener('execute', this.toPin, this);
+                                var menuPinButton = new qx.ui.menu.Button("Pin", "FactionUI/icons/icn_thread_pin_inactive.png");
+                                menuPinButton.addListener("execute", this.toPin, this);
                 menu.add(menuPinButton);
-                var menuLockButton = new qx.ui.menu.Button('Lock', 'FactionUI/icons/icn_thread_locked_inactive.png');
-                menuLockButton.addListener('execute', this.toLock, this);
+                                var menuLockButton = new qx.ui.menu.Button("Lock", "FactionUI/icons/icn_thread_locked_inactive.png");
+                                menuLockButton.addListener("execute", this.toLock, this);
                 menu.add(menuLockButton);
                 var fileManager = ClientLib.File.FileManager.GetInstance();
-                this.menuUpButton = new qx.ui.menu.Button('Move up', fileManager.GetPhysicalPath('ui/icons/icon_tracker_arrow_up.png'));
+                                this.menuUpButton = new qx.ui.menu.Button("Move up", fileManager.GetPhysicalPath("ui/icons/icon_tracker_arrow_up.png"));
                 //ui/icons/icon_tracker_arrow_up.png ui/gdi/icons/cht_opt_arrow_down.png
-                this.menuUpButton.addListener('execute', this.moveStickerUp, this);
+                                this.menuUpButton.addListener("execute", this.moveStickerUp, this);
                 menu.add(this.menuUpButton);
-                this.menuDownButton = new qx.ui.menu.Button('Move down', fileManager.GetPhysicalPath('ui/icons/icon_tracker_arrow_down.png'));
-                this.menuDownButton.addListener('execute', this.moveStickerDown, this);
+                                this.menuDownButton = new qx.ui.menu.Button("Move down", fileManager.GetPhysicalPath("ui/icons/icon_tracker_arrow_down.png"));
+                                this.menuDownButton.addListener("execute", this.moveStickerDown, this);
                 menu.add(this.menuDownButton);
                 this.mcvPopup.setContextMenu(menu);
                 if (!this.locked) {
@@ -541,63 +567,71 @@
                 ////////////////////////////----------------------------------------------------------
 
                 this.pinButton = new webfrontend.ui.SoundButton().set({
-                  decorator: 'button-forum-light',
-                  icon: this.pinned ? 'FactionUI/icons/icn_thread_pin_active.png' : 'FactionUI/icons/icn_thread_pin_inactive.png',
-                  iconPosition: 'top',
-                  show: 'icon',
-                  cursor: 'pointer',
+                                    decorator: "button-forum-light",
+                                    icon: this.pinned ? "FactionUI/icons/icn_thread_pin_active.png" : "FactionUI/icons/icn_thread_pin_inactive.png",
+                                    iconPosition: "top",
+                                    show: "icon",
+                                    cursor: "pointer",
                   height: 23,
                   width: 50,
                   //maxHeight: 25,
                   maxWidth: 33,
                   maxHeight: 19,
-                  alignX: 'center'
+                                    alignX: "center"
                 });
-                this.pinButton.addListener('execute', this.toPin, this);
+                                this.pinButton.addListener("execute", this.toPin, this);
+
                 this.pinPane = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({
                   //width: 50,
                   maxWidth: 37,
                 });
+
                 this.updatePinButtonDecoration();
+
                 this.pinPane.setDecorator(this.pinButtonDecoration);
                 this.pinPane.add(this.pinButton);
                 //this.mcvPopup.add(this.pinPane);
                 //this.toFlipH.push(this.pinPane);
-                var icon = this.pinButton.getChildControl('icon');
+
+                                var icon = this.pinButton.getChildControl("icon");
                 icon.setWidth(15);
                 icon.setHeight(15);
                 icon.setScale(true);
                 ////////////////////////////----------------------------------------------------------
                 this.lockButton = new webfrontend.ui.SoundButton().set({
-                  decorator: 'button-forum-light',
-                  icon: this.pinned ? 'FactionUI/icons/icn_thread_locked_active.png' : 'FactionUI/icons/icn_thread_locked_inactive.png',
-                  iconPosition: 'top',
-                  show: 'icon',
-                  cursor: 'pointer',
+                                    decorator: "button-forum-light",
+                                    icon: this.pinned ? "FactionUI/icons/icn_thread_locked_active.png" : "FactionUI/icons/icn_thread_locked_inactive.png",
+                                    iconPosition: "top",
+                                    show: "icon",
+                                    cursor: "pointer",
                   height: 23,
                   width: 50,
                   //maxHeight: 25,
                   maxWidth: 33,
                   maxHeight: 19,
-                  alignX: 'center'
+                                    alignX: "center"
                 });
-                this.lockButton.addListener('execute', this.toLock, this);
+                                this.lockButton.addListener("execute", this.toLock, this);
+
                 this.lockPane = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({
                   //width: 50,
                   maxWidth: 37,
                 });
+
                 this.updateLockButtonDecoration();
+
                 this.lockPane.setDecorator(this.lockButtonDecoration);
                 this.lockPane.add(this.lockButton);
                 //this.mcvPopup.add(this.pinPane);
                 //this.toFlipH.push(this.pinPane);
-                icon = this.lockButton.getChildControl('icon');
+
+                                icon = this.lockButton.getChildControl("icon");
                 icon.setWidth(15);
                 icon.setHeight(15);
                 icon.setScale(true);
                 ////////////////////////////----------------------------------------------------------
                 this.resourceTitleLabel = new qx.ui.basic.Label();
-                this.resourceTitleLabel.setValue('Base');
+                                this.resourceTitleLabel.setValue("Base");
                 var resStyle = {
                   font: qx.bom.Font.fromString('bold').set({
                     size: 14
@@ -605,12 +639,14 @@
                   textColor: '#282828',
                   height: 20,
                   width: 65,
-                  marginLeft: - 10,
+                                    marginLeft: -10,
                   textAlign: 'right'
                 };
+
                 this.resourceLabel1 = new qx.ui.basic.Label().set(resStyle);
                 this.resourceLabel2 = new qx.ui.basic.Label().set(resStyle);
                 this.resourceLabel3 = new qx.ui.basic.Label().set(resStyle);
+
                 var perStyle = {
                   font: qx.bom.Font.fromString('bold').set({
                     size: 9
@@ -623,7 +659,11 @@
                 this.resourceLabel1per = new qx.ui.basic.Label().set(perStyle);
                 this.resourceLabel2per = new qx.ui.basic.Label().set(perStyle);
                 this.resourceLabel3per = new qx.ui.basic.Label().set(perStyle);
-                var pane3 = this.createSection(this.mcvPopup, this.resourceTitleLabel, !this.resourceHide, 'resourceHide');
+
+
+                                var pane3 = this.createSection(this.mcvPopup, this.resourceTitleLabel, !this.resourceHide, "resourceHide");
+
+
                 this.repairTimerLabel = new qx.ui.basic.Label().set({
                   font: qx.bom.Font.fromString('bold').set({
                     size: 16
@@ -635,25 +675,29 @@
                   textAlign: 'center'
                 });
                 pane3.add(this.createHBox(this.createImage(this.repairIcon), this.repairTimerLabel));
+
                 pane3.add(this.createHBox(this.createImage(this.tibIcon), this.resourceLabel1, this.resourceLabel1per));
                 pane3.add(this.createHBox(this.createImage(this.cryIcon), this.resourceLabel2, this.resourceLabel2per));
                 pane3.add(this.createHBox(this.createImage(this.powIcon), this.resourceLabel3, this.resourceLabel3per));
+
                 var mcvC = this.mcvPopup.getChildren();
                 mcvC[mcvC.length - 1].getChildren() [0].add(this.pinPane);
                 mcvC[mcvC.length - 1].getChildren() [0].add(this.lockPane);
                 ////////////////////////////----------------------------------------------------------
+
                 this.productionTitleLabel = new qx.ui.basic.Label();
-                this.productionTitleLabel.setValue('db.Produce');
+                                this.productionTitleLabel.setValue("Productions");
+
                 var productionStyle = {
                   font: qx.bom.Font.fromString('bold').set({
                     size: 13
                   }),
                   textColor: '#282828',
                   height: 20,
-                  width: 85,
+                                    width: 60,
                   textAlign: 'right',
                   marginTop: 2,
-                  marginBottom: - 2
+                                    marginBottom: -2
                 };
                 this.productionLabelTiberium = new qx.ui.basic.Label().set(productionStyle);
                 this.productionLabelCrystal = new qx.ui.basic.Label().set(productionStyle);
@@ -761,11 +805,12 @@
                 console.log('InfoSticker: createMCVPopup', e.toString());
               }
             },
-            currentCityChange: function () {
+                        currentCityChange: function() {
               this.calculateInfoData();
               this.repositionSticker();
             },
-            disposeRecover: function () {
+                        disposeRecover: function() {
+
               try {
                 if (this.mcvPane == null || this.mcvPane.isDisposed()) {
                   this.createMCVPane();
@@ -775,12 +820,13 @@
                   this.repositionSticker();
                 }
                 this.waitingRecovery = false;
-              } catch (e) {
-                console.log('InfoSticker: disposeRecover', e.toString());
+                            } catch(e) {
+                                console.log("InfoSticker: disposeRecover", e.toString());
               }
+
             },
             waitingRecovery: false,
-            citiesChange: function () {
+                        citiesChange: function() {
               try {
                 var self = this;
                 var baseListBar = this.getBaseListBar();
@@ -799,8 +845,8 @@
                     self.disposeRecover();
                   }, 10);
                 }
-              } catch (e) {
-                console.log('InfoSticker: citiesChange', e.toString());
+                            } catch(e) {
+                                console.log("InfoSticker: citiesChange", e.toString());
               }
             },
             calculateInfoData: function () {
@@ -811,39 +857,41 @@
                 var cj = ClientLib.Base.Tech.GetTechIdFromTechNameAndFaction(ClientLib.Base.ETechName.Research_BaseFound, cw);
                 var cr = player.get_PlayerResearch();
                 var cd = cr.GetResearchItemFomMdbId(cj);
+
                 var app = qx.core.Init.getApplication();
                 var b3 = app.getBaseNavigationBar().getChildren() [0].getChildren() [0];
                 if (b3.getChildren().length == 0) return;
                 if (!this.infoSticker) {
                   this.infoSticker = new qx.ui.container.Composite(new qx.ui.layout.VBox().set({
-                    alignX: 'right'
+                                        alignX: "right"
                   })).set({
                     width: 105,
                   });
+
                   var top = 130;
                   if (this.hasStorage) {
-                    var l = localStorage['infoSticker-locked'] == 'true';
+                                        var l = localStorage["infoSticker-locked"] == "true";
                     if (l != null) {
                       this.locked = l;
-                      var pl = localStorage['infoSticker-pinLock'];
+                                            var pl = localStorage["infoSticker-pinLock"];
                       if (pl != null) {
                         try {
                           this.pinLockPos = parseInt(pl, 10);
-                        } catch (etm) {
+                                                } catch(etm) {}
                         }
                       }
-                    }
-                    var p = localStorage['infoSticker-pinned'];
-                    var t = localStorage['infoSticker-top'];
+
+                                        var p = localStorage["infoSticker-pinned"];
+                                        var t = localStorage["infoSticker-top"];
                     if (p != null && t != null) {
                       var tn;
                       try {
-                        this.pinned = p == 'true';
+                                                this.pinned = p == "true";
                         if (this.pinned) {
                           tn = parseInt(t, 10);
                           top = tn;
                         }
-                      } catch (etn) {
+                                            } catch (etn) {}
                       }
                     }
                     this.mcvHide = localStorage['infoSticker-mcvHide'] == 'true';
@@ -859,17 +907,19 @@
                     right: 124,
                     top: top
                   });
-                  if (this.locked) {
+                                    if(this.locked) {
                     this.infoSticker.hide();
                   }
+
                   this.stickerBackground = new qx.ui.container.Composite(new qx.ui.layout.VBox()).set({
                     //paddingLeft: 5,
                     width: 105,
                     decorator: new qx.ui.decoration.Decorator().set({
-                      backgroundImage: 'webfrontend/ui/common/bgr_region_world_select_scaler.png',
-                      backgroundRepeat: 'scale',
+                                            backgroundImage: "webfrontend/ui/common/bgr_region_world_select_scaler.png",
+                                            backgroundRepeat: "scale",
                     })
                   });
+
                   this.createMCVPane();
                   this.createMCVPopup();
                   if (this.locked && this.pinned) {
@@ -879,32 +929,48 @@
                     this.menuUpButton.setEnabled(false);
                     this.menuDownButton.setEnabled(false);
                   }
-                  this.top_image = new qx.ui.basic.Image('webfrontend/ui/common/bgr_region_world_select_end.png');
+
+                                    this.top_image = new qx.ui.basic.Image("webfrontend/ui/common/bgr_region_world_select_end.png");
                   this.infoSticker.add(this.top_image);
+
                   this.infoSticker.add(this.stickerBackground);
                   //this.infoSticker.add(this.mcvPopup);
-                  this.bot_image = new qx.ui.basic.Image('webfrontend/ui/common/bgr_region_world_select_end.png');
+
+                                    this.bot_image = new qx.ui.basic.Image("webfrontend/ui/common/bgr_region_world_select_end.png");
                   this.infoSticker.add(this.bot_image);
+
                   this.runPositionTimer();
+
                   try {
-                    this.attachEvent(ClientLib.Data.MainData.GetInstance().get_Cities(), 'CurrentOwnChange', ClientLib.Data.CurrentOwnCityChange, this, this.currentCityChange);
-                    this.attachEvent(ClientLib.Data.MainData.GetInstance().get_Cities(), 'Change', ClientLib.Data.CitiesChange, this, this.citiesChange);
-                  } catch (eventError) {
-                    console.log('InfoSticker.EventAttach:', eventError);
-                    console.log('The script will continue to run, but with slower response speed.');
+                                        this.attachEvent(ClientLib.Data.MainData.GetInstance().get_Cities(), "CurrentOwnChange", ClientLib.Data.CurrentOwnCityChange, this, this.currentCityChange);
+                                        this.attachEvent(ClientLib.Data.MainData.GetInstance().get_Cities(), "Change", ClientLib.Data.CitiesChange, this, this.citiesChange);
+                                    } catch(eventError) {
+                                        console.log("InfoSticker.EventAttach:", eventError);
+                                        console.log("The script will continue to run, but with slower response speed.");
                   }
                 }
                 this.disposeRecover();
-                if (cd == null) {
+
+                                if (cd == null)
+                                {
                   if (this.mcvPopup) {
                     //this.mcvInfoLabel.setValue("MCV ($???)");
-                    this.mcvInfoLabel.setValue('MCV<br>$???');
-                    this.mcvTimerLabel.setValue('Loading');
+                                        this.mcvInfoLabel.setValue("MCV<br>$???");
+                                        this.mcvTimerLabel.setValue("Loading");
                   }
-                } else {
+                                }
+                                else if (ClientLib.Data.MainData.GetInstance().get_Cities().get_AllCities().c == 31)
+                                {
+                                    if (this.mcvPopup)
+                                    {
+                                        this.mcvInfoLabel.setValue("MCV<br>$???");
+                                        this.mcvTimerLabel.setValue("max Bases reached");
+                                    }
+                                }
+                                else
+                                {
                   var nextLevelInfo = cd.get_NextLevelInfo_Obj();
-                  var resourcesNeeded = [
-                  ];
+                                    var resourcesNeeded = [];
                   for (var i in nextLevelInfo.rr) {
                     if (nextLevelInfo.rr[i].t > 0) {
                       resourcesNeeded[nextLevelInfo.rr[i].t] = nextLevelInfo.rr[i].c;
@@ -919,7 +985,7 @@
                   var creditGrowthPerHour = (creditsResourceData.Delta + creditsResourceData.ExtraBonusDelta) * ClientLib.Data.MainData.GetInstance().get_Time().get_StepsPerHour();
                   var currentRP = player.get_ResearchPoints();
                   var creditTimeLeftInHours = (creditsNeeded - player.GetCreditsCount()) / creditGrowthPerHour;
-                  this.mcvInfoLabel.setValue('MCV ($ ' + this.formatNumbersCompact(creditsNeeded) + ')');
+                                    this.mcvInfoLabel.setValue("MCV ($ " + this.formatNumbersCompact(creditsNeeded) + ")");
                   //this.mcvInfoLabel.setValue("MCV<br>$" + this.formatNumbersCompact(creditsNeeded));
                   this.mcvTimerCreditProdLabel.setTextColor(this.formatNumberColor(rpNeeded, currentRP));
                   if (currentRP / rpNeeded < 1) {
@@ -938,11 +1004,13 @@
                   } else {
                     if (creditTimeLeftInHours >= 24 * 100) {
                       this.mcvTimerLabel.setValue('> 99 days');
+                                            this.mcvTimerLabel.setValue("> 99 days");
                     } else {
                       this.mcvTimerLabel.setValue(this.FormatTimespan(creditTimeLeftInHours * 60 * 60));
                     }
                   }
                 }
+
                 var ncity = ClientLib.Data.MainData.GetInstance().get_Cities().get_CurrentOwnCity();
                 if (ncity == null) {
                   if (this.mcvPopup) {
@@ -1006,7 +1074,7 @@
                   }
                   var rt = Math.min(ncity.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeInf), ncity.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeVeh), ncity.GetResourceCount(ClientLib.Base.EResourceType.RepairChargeAir));
                   if (ncity.get_CityUnitsData().get_UnitLimitOffense() == 0) {
-                    this.repairTimerLabel.setValue('No army');
+                                        this.repairTimerLabel.setValue("No army");
                   } else {
                     this.repairTimerLabel.setValue(this.FormatTimespan(rt));
                   }
@@ -1044,18 +1112,21 @@
                   this.resourceLabel1.setTextColor(this.formatNumberColor(tib, tibMax));
                   this.resourceLabel1.setValue(this.formatNumbersCompact(tib));
                   this.resourceLabel1per.setValue(this.formatPercent(tibRatio));
+
                   var cry = ncity.GetResourceCount(ClientLib.Base.EResourceType.Crystal);
                   var cryMax = ncity.GetResourceMaxStorage(ClientLib.Base.EResourceType.Crystal);
                   var cryRatio = cry / cryMax;
                   this.resourceLabel2.setTextColor(this.formatNumberColor(cry, cryMax));
                   this.resourceLabel2.setValue(this.formatNumbersCompact(cry));
                   this.resourceLabel2per.setValue(this.formatPercent(cryRatio));
+
                   var power = ncity.GetResourceCount(ClientLib.Base.EResourceType.Power);
                   var powerMax = ncity.GetResourceMaxStorage(ClientLib.Base.EResourceType.Power);
                   var powerRatio = power / powerMax;
                   this.resourceLabel3.setTextColor(this.formatNumberColor(power, powerMax));
                   this.resourceLabel3.setValue(this.formatNumbersCompact(power));
                   this.resourceLabel3per.setValue(this.formatPercent(powerRatio));
+
                   var powerCont = ncity.GetResourceGrowPerHour(ClientLib.Base.EResourceType.Power, false, false);
                   var powerBonus = ncity.GetResourceBonusGrowPerHour(ClientLib.Base.EResourceType.Power);
                   var alliance = ClientLib.Data.MainData.GetInstance().get_Alliance();
@@ -1141,35 +1212,26 @@
                   this.contProductionLabelCredit.setValue(this.formatNumbersCompact(creditCont) + '/h');
                 }
               } catch (e) {
-                console.log('InfoSticker.calculateInfoData', e.toString());
+                                console.log("InfoSticker.calculateInfoData", e.toString());
               }
             },
             formatPercent: function (value) {
-              return value > 999 / 100 ? '>999%' : this.formatNumbersCompact(value * 100, 0) + '%';
+                            return value > 999 / 100 ? ">999%" : this.formatNumbersCompact(value * 100, 0) + "%";
               //return this.formatNumbersCompact(value*100, 0) + "%";
             },
             formatNumberColor: function (value, max) {
               var ratio = value / max;
+
               var color;
-              var black = [
-                40,
-                180,
-                40
-              ];
-              var yellow = [
-                181,
-                181,
-                0
-              ];
-              var red = [
-                187,
-                43,
-                43
-              ];
+                            var black = [40, 180, 40];
+                            var yellow = [181, 181, 0];
+                            var red = [187, 43, 43];
+
               if (ratio < 0.5) color = black;
                else if (ratio < 0.75) color = this.interpolateColor(black, yellow, (ratio - 0.5) / 0.25);
-               else if ((ratio < 1)) color = this.interpolateColor(yellow, red, (ratio - 0.75) / 0.25);
+                            else if (ratio < 1) color = this.interpolateColor(yellow, red, (ratio - 0.75) / 0.25);
                else color = red;
+
               //console.log(qx.util.ColorUtil.rgbToHexString(color));
               return qx.util.ColorUtil.rgbToHexString(color);
             },
@@ -1182,11 +1244,11 @@
             formatNumbersCompact: function (value, decimals) {
               if (decimals == undefined) decimals = 2;
               var valueStr;
-              var unit = '';
+                            var unit = "";
               if (value < 1000) valueStr = value.toString();
                else if (value < 1000 * 1000) {
                 valueStr = (value / 1000).toString();
-                unit = 'K';
+                                unit = "k";
               } else if (value < 1000 * 1000 * 1000) {
                 valueStr = (value / (1000 * 1000)).toString();
                 unit = 'M';
@@ -1209,16 +1271,17 @@
 			  valueStr = (value / (1000*1000*1000*1000*1000*1000*1000*1000)).toString();
               unit = 'Y';
 			  }
-              if (valueStr.indexOf('.') >= 0) {
-                var whole = valueStr.substring(0, valueStr.indexOf('.'));
+                            if (valueStr.indexOf(".") >= 0) {
+                                var whole = valueStr.substring(0, valueStr.indexOf("."));
                 if (decimals === 0) {
                   valueStr = whole;
                 } else {
-                  var fraction = valueStr.substring(valueStr.indexOf('.') + 1);
+                                    var fraction = valueStr.substring(valueStr.indexOf(".") + 1);
                   if (fraction.length > decimals) fraction = fraction.substring(0, decimals);
-                  valueStr = whole + '.' + fraction;
+                                    valueStr = whole + "." + fraction;
                 }
               }
+
               valueStr = valueStr + unit;
               return valueStr;
             },
@@ -1229,14 +1292,15 @@
               for (i = 0; i < t.length; i++) {
                 if (t.charAt(i) == ':') colonCount++;
               }
-              var r = '';
+                            var r = "";
               for (i = 0; i < t.length; i++) {
                 if (t.charAt(i) == ':') {
                   if (colonCount > 2) {
-                    r += 'd ';
+                                        r += "d ";
                   } else {
                     r += t.charAt(i);
                   }
+
                   colonCount--;
                 } else {
                   r += t.charAt(i);
@@ -1248,8 +1312,9 @@
         });
       }
     } catch (e) {
-      console.log('InfoSticker: createInfoSticker: ', e.toString());
+            console.log("InfoSticker: createInfoSticker: ", e.toString());
     }
+
     function InfoSticker_checkIfLoaded() {
       try {
         if (typeof qx != 'undefined' && qx.core.Init.getApplication() && qx.core.Init.getApplication().getUIItem(ClientLib.Data.Missions.PATH.BAR_NAVIGATION) && qx.core.Init.getApplication().getUIItem(ClientLib.Data.Missions.PATH.BAR_NAVIGATION).isVisible()) {
@@ -1272,9 +1337,9 @@
     InfoStickerScript.innerHTML = 'var InfoSticker_IsInstalled = true; (' + InfoSticker_main.toString() + ')();';
     InfoStickerScript.type = 'text/javascript';
     if (/commandandconquer\.com/i.test(document.domain)) {
-      document.getElementsByTagName('head') [0].appendChild(InfoStickerScript);
+            document.getElementsByTagName("head")[0].appendChild(InfoStickerScript);
     }
   } catch (e) {
-    console.log('InfoSticker: init error: ', e.toString());
+        console.log("InfoSticker: init error: ", e.toString());
   }
-}) ();
+})();

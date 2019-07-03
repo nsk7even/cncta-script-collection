@@ -2,7 +2,7 @@
 // @name        C&C:Tiberium Alliances Coords Button - All
 // @namespace   CNCTACoordsButtonAll
 // @description Copy & Paste selected world object coords to chat message
-// @include https://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include https://*.alliances.commandandconquer.com/*/index.aspx*
 // @version     2.0.2
 // @author Bruce Doan, Chiantii
 // ==/UserScript==

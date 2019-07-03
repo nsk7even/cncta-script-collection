@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name           Tiberium Alliances Real POI Bonus
-// @version        1.0.1
+// @version        1.0.2
 // @namespace      https://openuserjs.org/users/petui
 // @license        GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
-// @author         petui
+// @author         petui (POI factor Fix AlkalyneD4)
 // @description    Displays actual gain/loss for POIs by taking rank multiplier properly into account
-// @include        http*://prodgame*.alliances.commandandconquer.com/*/index.aspx*
+// @include        http*://cncapp*.alliances.commandandconquer.com/*/index.aspx*
+// @updateURL      https://openuserjs.org/meta/petui/Tiberium_Alliances_Real_POI_Bonus.meta.js
 // ==/UserScript==
 'use strict';
 
@@ -68,6 +69,7 @@
 					initializeHacks: function() {
 						if (typeof webfrontend.gui.region.RegionPointOfInterestStatusInfo.prototype.getObject !== 'function') {
 							var source = webfrontend.gui.region.RegionPointOfInterestStatusInfo.prototype.setObject.toString();
+							source = source.replace("function(", "function (");
 							var objectMemberName = source.match(/^function \(([A-Za-z]+)\)\{this\.([A-Za-z_]+)=\1;/)[2];
 
 							/**
@@ -104,7 +106,9 @@
 							var allianceScore = poiRankScore.s;
 							var nextAllianceScore = poiRankScore.ns;
 							var previousAllianceScore = poiRankScore.ps;
-							var currentTotalBonus = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore);
+							var bonusMultiplier = ClientLib.Data.MainData.GetInstance().get_Server().get_POIGlobalBonusFactor();
+							var currentTotalBonus = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore,bonusMultiplier);
+
 							var gainOrLoss = null;
 
 							if (visObject.get_OwnerAllianceId() === allianceId) {
@@ -112,14 +116,14 @@
 
 								if (previousAllianceScore <= 0) {
 									// No rank multiplier; no loss by rank
-									gainOrLoss = currentTotalBonus - ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore - selectedPoiScore);
+									gainOrLoss = currentTotalBonus - ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore - selectedPoiScore,bonusMultiplier);
 								}
 								else if (allianceScore - selectedPoiScore < previousAllianceScore) {
 									// Falling behind previous alliance; need to use rankings
 								}
 								else {
 									// No loss by rank; if we end up with same score as previous alliance, our rank stays the same and they get same rank
-									gainOrLoss = currentTotalBonus - ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore - selectedPoiScore);
+									gainOrLoss = currentTotalBonus - ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore - selectedPoiScore,bonusMultiplier);
 								}
 							}
 							else {
@@ -130,7 +134,7 @@
 								}
 								else if (nextAllianceScore <= 0 || allianceRank <= 1) {
 									// Already rank 1; no gain by rank
-									gainOrLoss = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore + selectedPoiScore) - currentTotalBonus;
+									gainOrLoss = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore + selectedPoiScore,bonusMultiplier) - currentTotalBonus;
 								}
 								else if (visObject.get_OwnerAllianceId() !== webfrontend.gui.widgets.AllianceLabel.ESpecialNoAllianceName) {
 									// Current owner of POI will lose score while we gain; need to use rankings
@@ -140,11 +144,11 @@
 								}
 								else if (allianceScore + selectedPoiScore < nextAllianceScore) {
 									// No gain by rank
-									gainOrLoss = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore + selectedPoiScore) - currentTotalBonus;
+									gainOrLoss = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank, allianceScore + selectedPoiScore,bonusMultiplier) - currentTotalBonus;
 								}
 								else {
 									// Same score as next alliance; same rank and same bonus as them
-									gainOrLoss = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank - 1, allianceScore + selectedPoiScore) - currentTotalBonus;
+									gainOrLoss = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(poiType, allianceRank - 1, allianceScore + selectedPoiScore,bonusMultiplier) - currentTotalBonus;
 								}
 							}
 
@@ -260,9 +264,9 @@
 								break;
 							}
 						}
-
-						var currentTotalBonus = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(context.poiType, context.currentRank, context.currentScore);
-						var newTotalBonus = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(context.poiType, i + 1, newAllianceScore);
+						var bonusMultiplier = ClientLib.Data.MainData.GetInstance().get_Server().get_POIGlobalBonusFactor();
+						var currentTotalBonus = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(context.poiType, context.currentRank, context.currentScore,bonusMultiplier);
+						var newTotalBonus = ClientLib.Base.PointOfInterestTypes.GetTotalBonusByType(context.poiType, i + 1, newAllianceScore,bonusMultiplier);
 						var gainOrLoss = isGain
 							? newTotalBonus - currentTotalBonus
 							: currentTotalBonus - newTotalBonus;

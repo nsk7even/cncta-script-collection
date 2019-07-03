@@ -3,7 +3,7 @@
 // @namespace   tiberiumalliances.com
 // @include     http://*tiberiumalliances.com/*
 // @include     https://*tiberiumalliances.com/*
-// @icon        https://prodgame13.alliances.commandandconquer.com/146/favicon.ico
+// @icon        https://cncapp05.alliances.commandandconquer.com/339/favicon.ico
 // @version     0.6.1
 // @description Open Multi C&C Tiberium Alliances Session at one Browser
 // @author	Elda1990 & DLwarez & Version 0.6.1 for Chrome adapted by Ghostleader1402
