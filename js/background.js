@@ -85,7 +85,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "C&C Tiberium Alliances POIs Analyser",
 	cat : "infotool",
 	version : "  2.0.3",
-	enabled : false
+	enabled : true
 }, {
     id : 10018,
 	greasyfork: 1856,
@@ -129,14 +129,14 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "infotool",
 	hot: true,
 	version : "  1.8.3+",
-	enabled : true
+	enabled : false
 }, {
 	id : 10041,
 	greasyfork: 13916,
 	name : "CityMoveInfoExtend",
 	cat : "infotool",
 	version : "  14.06.17",
-	enabled : false
+	enabled : true
 }, {
 	id : 10042,
 	greasyfork: 1901,
@@ -175,7 +175,7 @@ var DEFAULT_SCRIPTS = [ {
 	unique: 1,
 	hot: true,
 	version : "  1.9.0.B",
-	enabled : true
+	enabled : false
 },{
 	id : 10069,
 	name : "Maelstrom ADDON Basescanner + cncoptplus growth rate",
@@ -191,12 +191,14 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "tool",
 	unique: 1,
 	version : "  1.9.0.I",
-	enabled : false
+	enabled : true
 },{
 	id : 10056,
 	name : "Next MCV Info HUD",
 	cat : "infotool",
-	version : "  1.0 beta"
+	version : "  1.0 beta",
+	enabled : true,
+	hot : true,
 }, {
 	id : 10021,
 	greasyfork: 10436,
@@ -210,7 +212,7 @@ var DEFAULT_SCRIPTS = [ {
 	userscript: 482069,
 	name : "Massive DynamiX Attack Range",
 	version : "  2.0",
-	enabled : false
+	enabled : true
 }, {
 	id : 10050,
 	userscript: 160800,
@@ -232,7 +234,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "Tiberium Alliances Report Summary",
 	cat: "gui",
 	version : "  17.06.06",
-	enabled : false
+	enabled : true
 }, {
 	id : 10043,
 	greasyfork: 17032,
@@ -262,7 +264,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "Tiberium Alliances Attack Range",
 	version : "  2.2",
 	cat : "tool",
-	enabled : false
+	enabled : true
 }, {
 	id : 10028,
 	greasyfork: 13711,
@@ -319,11 +321,11 @@ var DEFAULT_SCRIPTS = [ {
 	version : "  1.5.1",
 	enabled : false
 }, {
-    id: 10079,
-    name: "Tiberium Alliances Transfer All Resources -KRS_L-",
+  id: 10079,
+  name: "Tiberium Alliances Transfer All Resources -KRS_L-",
 	cat : "tool",
-    version: "  1.6.1",
-    enabled: false,
+  version: "  1.6.1",
+  enabled: false,
 	hot: true
 }, {
 	id : 10054,
@@ -339,7 +341,7 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "tool",
 	hot: true,
 	version : "  0.4.1",
-	enabled : false
+	enabled : true
 }, {
 	id : 10026,
 	greasyfork: 18245,
@@ -368,7 +370,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "Tiberium Alliances The Movement",
 	cat : "infotool",
 	version : "  1.0.3.2",
-	enabled : false,
+	enabled : true,
 	hot: true
 }, {
 	id : 10003,
@@ -385,7 +387,7 @@ var DEFAULT_SCRIPTS = [ {
 	version : "  1.2.0",
 	hot: true,
 	cat : "tweak",
-	enabled : false
+	enabled : true
 }, {
 	id : 10005,
 	userscript: 204128,
@@ -439,7 +441,7 @@ var DEFAULT_SCRIPTS = [ {
 	cat : "tweak",
 	hot: true,
 	version : "  0.2",
-	enabled : true
+	enabled : false
 }, {
 	id : 10062,
 	name : "MENU FIX Chrome 55",
@@ -466,7 +468,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "Tiberium Alliances Auto Repair",
 	cat : "tool",
 	version : "  0.2.3",
-	enabled : true,
+	enabled : false,
 	hot: true
 },{
 	id : 10067,
@@ -490,62 +492,63 @@ var DEFAULT_SCRIPTS = [ {
 	name : "CENTER DRIVEN PvP Quick Map -XDaast-",
 	version : "  1.5.2b",
 	cat : "infotool",
-	enabled : false,
+	enabled : true,
 	hot: true
 },
 {
-    id: 10076,
+  id: 10076,
 	greasyfork: 30611,
-    name: "CENTER DRIVEN Player Base Info (Basic)",
+  name: "CENTER DRIVEN Player Base Info (Basic)",
 	cat : "infotool",
-    version: "  3.00",
-    enabled: false,
+  version: "  3.00",
+  enabled: true,
 	hot: true
 },
 {
-    id: 10080,
+  id: 10080,
 	greasyfork: 10434,
-    name: "Tiberium Alliances BaseNavBar Reorderer",
+  name: "Tiberium Alliances BaseNavBar Reorderer",
 	cat : "gui",
-    version: "  1.0",
-    enabled: false
+  version: "  1.0",
+  enabled: false
 },
 {
-    id: 10074,
-    name: "CENTER DRIVEN PvP Alert Status -XDaast-",
-    version: "  1.00",
-    enabled : false,
+  id: 10074,
+  name: "CENTER DRIVEN PvP Alert Status -XDaast-",
+  version: "  1.00",
+  enabled : false,
 	cat : "infotool",
 	greasyfork: 30224,
 	hot: true
 },
 {
-    id: 10075,
-    name: "CnC TA 'Auto-Login' (+ Auto repair + Auto packet collect + Auto reload)",
-    version: "  0.27",
-    enabled : false,
+  id: 10075,
+  name: "CnC TA 'Auto-Login' (+ Auto repair + Auto packet collect + Auto reload)",
+  version: "  0.27",
+  enabled : false,
 	cat : "tool",
 	greasyfork: 36231,
 	hot: false
 },
 {
-    id: 10077,
-    name: "leoStats",
-    version: "  2018.06.05",
-    enabled : false,
+  id: 10077,
+  name: "leoStats",
+  version: "  2018.06.05",
+  enabled : false,
 	cat : "infotool",
 	info: "https://leostats.000webhostapp.com/",
 	hot: false
 },
 {
-    id: 10078,
-    name: "MHTools Tiberium Alliances Available Loot Summary + Info",
-    version: "  1.8.3.2",
-    enabled : false,
+  id: 10078,
+  name: "MHTools Tiberium Alliances Available Loot Summary + Info",
+  version: "  1.8.3.2",
+  enabled : true,
 	cat : "infotool",
 	greasyfork: 715,
 	hot: false
-}  ];
+}
+];
 
 var updateopen = false;
 
