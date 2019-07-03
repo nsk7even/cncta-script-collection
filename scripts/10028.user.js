@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name            Tiberium Alliances Battle Simulator V2
-// @description     Allows you to simulate combat before actually attacking.
+// @description     Allows you to simulate combat before actually attacking. (7even: improved position)
 // @author          Eistee & TheStriker & VisiG & Lobotommi & XDaast
-// @version         18.07.12
+// @version         18.07.12+
 // @namespace       https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @include         https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @icon            http://eistee82.github.io/ta_simv2/icon.png
@@ -413,14 +413,14 @@
 						lineAZoroBasedIndex = lineA - 1;
 						lineBZeroBasedIndex = lineB - 1;
 						for (var f = 0;f < formation.length;f++) {
-							  
+
 							 switch(formation[f].y) {
 								case lineAZoroBasedIndex:
 									formation[f].y = lineBZeroBasedIndex;
 									break;
 								case lineBZeroBasedIndex:
 									formation[f].y = lineAZoroBasedIndex;
-									break;							    
+									break;
 							}
 						}
 						return formation;
@@ -668,7 +668,7 @@
                                     unitHealthPoints.setStart(buildings[i].h * 16);
 									break;
 								}
-								
+
 								unitHealthPoints.setEnd(sim[buildings[i].ci].h);
 								unitRepairCosts = this.get_RepairCosts(buildings[i].i, buildings[i].l, unitHealthPoints);
 
@@ -1372,7 +1372,7 @@
 									}
 								}
 							}
-							
+
 							formation = TABS.UTIL.Formation.set_Enabled(formation, false);
 							for (i = 0; i < formation.length; i++) {
 								for (j = 0; j < units.length; j++) {
@@ -2654,7 +2654,7 @@
 							this._Application = qx.core.Init.getApplication();
 							this._armyBarContainer = this._Application.getArmySetupAttackBar();
 							this._armyBar = this._Application.getUIItem(ClientLib.Data.Missions.PATH.BAR_ATTACKSETUP);
-							
+
 							if (PerforceChangelist >= 443425) { // 16.1 patch
 
 								for (var i in this._armyBarContainer) {
@@ -2668,7 +2668,7 @@
 										}
 									}
 								}
-						
+
 								var armyBarChildren = this._armyBar.getChildren();
 								for (var i in armyBarChildren) {
 									if (armyBarChildren[i].$$user_decorator == "pane-armysetup-right") {
@@ -2687,7 +2687,7 @@
 						var i,
 							cntWave;
 						for (i = 0; i < ClientLib.Base.Util.get_ArmyMaxSlotCountY(); i++) {
-						
+
 							if (PerforceChangelist >= 441469) { // 15.4 patch
 								cntWave = this.ArmySetupAttackBar.getMainContainer().getChildren()[(i + 3)];
 							} else { //old
@@ -2721,7 +2721,7 @@
 						});
                         var formationContainer = this.ArmySetupAttackBar.getMainContainer();
                         formationContainer.setMarginTop(formationContainer.getMarginTop() + 20);
-						
+
 						formation.bind("changeWidth", btnHBox, "width");
 
 						for (i = 0; i < ClientLib.Base.Util.get_ArmyMaxSlotCountX(); i++) {
@@ -2811,7 +2811,7 @@
 					TABS.addInit("TABS.GUI.ArmySetupAttackBar");
 				}
 			});
-			
+
             qx.Class.define("TABS.GUI.MovableBox", {
                 extend : qx.ui.container.Composite,
                 include : qx.ui.core.MMovable,
@@ -2832,7 +2832,7 @@
                     }
                 }
             });
-			
+
 			qx.Class.define("TABS.GUI.PlayArea", {						// [singleton]	View Simulation, Open Stats Window
 				type : "singleton",
 				extend : qx.core.Object,
@@ -2959,10 +2959,10 @@
 							column:2
 						});
 						this.PlayArea.add(this.boxMove, {
-							top : 400,
-							left : 65
-//							right : 5,
-//							bottom : 188
+							//top : 400,
+							//left : 65,
+							right : 5,
+							bottom : 188
 						});
 						//DS-MOD-END
 						phe.cnc.Util.attachNetEvent(ClientLib.Vis.VisMain.GetInstance(), "ViewModeChange", ClientLib.Vis.ViewModeChange, this, this._onViewChanged);
@@ -3213,9 +3213,9 @@
 						}
 					},
 					onClick_btnBlank : function (e) {
-						
+
 						try {
-							
+
 						} catch (e) {
 							console.log(e);
 						}
@@ -3369,7 +3369,7 @@
 							alignY : "middle"
 						});
 						this.setStatus("0 " + this.tr("simulations in cache"));
-                        
+
                         //Enemy Health Section//
 						this.EnemyHeader = this.makeHeader(this.tr("tnf:combat target"));
 						this.EnemyHeader.addListener("click", function () {
@@ -3671,10 +3671,10 @@
 						if (newMode != ClientLib.Vis.Mode.CombatSetup && newMode != ClientLib.Vis.Mode.Battleground)
 							this.close();
 					},
-					makeHeader : function (text) {  
+					makeHeader : function (text) {
                         var Header = new qx.ui.container.Composite(new qx.ui.layout.Grow()).set({
                             alignX : "center",
-                            alignY : "middle", 
+                            alignY : "middle",
                             zIndex : 11
                         });
                         Header.add(new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({
@@ -4487,7 +4487,7 @@
                         {
                             res = 0;
                             res = this.Resource.getCrystal();
-                            
+
                             return {
 								text : phe.cnc.gui.util.Numbers.formatNumbersCompact(res),
 
@@ -4630,7 +4630,7 @@
 						ClientLib.Data.MainData.GetInstance().get_Server().get_WorldId() !== 0) {
 						try {
 							console.time("loaded in");
-							
+
 							// replacing LoadCombatDirect
 							if (ClientLib.Vis.Battleground.Battleground.prototype.LoadCombatDirect === undefined) {
 							var sBString = ClientLib.API.Battleground.prototype.SimulateBattle.toString();

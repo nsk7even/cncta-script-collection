@@ -271,7 +271,7 @@ var DEFAULT_SCRIPTS = [ {
 	name : "Tiberium Alliances Battle Simulator - V2",
 	cat : "simulator",
 	hot: true,
-	version : "  18.07.12",
+	version : "  18.07.12+",
 	enabled : true
 }, {
 	id : 10000,
