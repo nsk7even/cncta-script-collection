@@ -424,7 +424,9 @@ function injectBody()
           // add
           this.extItems.push(cntButtons);
 
+          // 2019-07-12: changed to be minimized as default
           //for(var k in this.extItems) this.win.add(this.extItems[k]);
+          this.extMinimized = true;
 
           this.win.open();
 
