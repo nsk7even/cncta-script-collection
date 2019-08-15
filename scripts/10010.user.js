@@ -2,9 +2,9 @@
 // @name          PluginsLib - mhNavigator - Tiberium Alliances
 // @namespace     https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
 // @include       https://cncapp*.alliances.commandandconquer.com/*/index.aspx*
-// @description   Creates compass poiting to the currently selected base (compass points from itself). [+7even: modified init to start minimized]
+// @description   Creates compass poiting to the currently selected base (compass points from itself).
 // @version       1.36+
-// @author        MrHIDEn (in game PEEU) based on Caine code. Extended
+// @author        MrHIDEn (in game PEEU) based on Caine code. Extended [+7even: modified init to start minimized]
 // @grant         none
 // ==/UserScript==
 (function () {
@@ -186,7 +186,7 @@ function injectBody()
       },
       construct: function() {
         try {
-          this.stats.src = 'http://goo.gl/aeCxf';//1.0.0 1.1.0 1.2.0 1.3x
+          this.stats.src = 'https://i.imgur.com/tju5DQt.png';//1.0.0 1.1.0 1.2.0 1.3x
           this.Self = this;
           var backColor = '#eeeeff';
           //var STATIC = PluginsLib[this.basename];
@@ -213,17 +213,18 @@ function injectBody()
             resizable:false,
             toolTipText: "MrHIDEn tool - Navigator."
           });
-          this.win.addListener("minimize",function(e) {
-            if(this.extMinimized) {
-              this.extMinimized = false;
-              for(var k in this.extItems) this.win.add(this.extItems[k]);
-            }
-            else {
-              this.extMinimized = true;
-              this.win.removeAll();
-            }
-            this.win.restore();//trick
-          },this);
+          // this.win.addListener("minimize",function(e) {
+          //   if(this.extMinimized) {
+          //     this.extMinimized = false;
+          //     for(var k in this.extItems) this.win.add(this.extItems[k]);
+          //     console.log("unminimized");
+          //   }
+          //   else {
+          //     this.extMinimized = true;
+          //     this.win.removeAll();
+          //   }
+          //   this.win.restore();//trick
+          // },this);
           this.win.addListener("move", function(e) {
             var pos = {left:e.getData().left, top:e.getData().top};
             this.saveToStorage('winpos', pos);
@@ -424,9 +425,7 @@ function injectBody()
           // add
           this.extItems.push(cntButtons);
 
-          // 2019-07-12: changed to be minimized as default
-          //for(var k in this.extItems) this.win.add(this.extItems[k]);
-          this.extMinimized = true;
+          for(var k in this.extItems) this.win.add(this.extItems[k]);
 
           this.win.open();
 
@@ -436,7 +435,10 @@ function injectBody()
           //REGISTER PLUGIN
           //this.constructor.ONPLUGIN = function(){this.constructor.getInstance().open();};
           //this.constructor.ONOPTIONS = function(){this.constructor.getInstance().open();};//test
-          PluginsLib.Menu.getInstance().RegisterPlugin(this);
+          if (PluginsLib.Menu)
+          {
+            PluginsLib.Menu.getInstance().RegisterPlugin(this);
+          }
 
           //READY
           console.info("Plugin '"+pluginName+"' LOADED");
@@ -471,6 +473,7 @@ function injectBody()
         cenY: 0,
         selected: null,
         visObject: null,
+        init: true,
         loadFromStorage: function(key,preval) {
           var S = ClientLib.Base.LocalStorage;
           if (S.get_IsSupported()) {
@@ -490,6 +493,13 @@ function injectBody()
         onPositionChange: function (e) {
           //console.log('onPositionChange');
           this.posTimer.restartWith(200);
+
+          // 2019-08-15: 7even: found no other way to automatically minimize it, without destroying the layout
+          if (this.init)
+          {
+            this.init = false;
+            this.win.minimize();
+          }
         },
         onPosTimer: function (e) {
           //console.log('onPosTimer');
